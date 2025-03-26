@@ -1,0 +1,65 @@
+/* Google Fonts 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap');
+
+/* Home 페이지 스타일 */
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* 부드러운 그라디언트 */
+  margin: 0;
+  color: white;
+  text-align: center;
+}
+
+.home-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 50px;
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, #fff, #ddd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.headline {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+.subtext {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* 로그인 버튼 */
+.login-btn {
+  background: linear-gradient(to right, #ff7eb3, #ff758c);
+  color: white;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 25px;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+  background: linear-gradient(to right, #ff6392, #ff4f6f);
+  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+}

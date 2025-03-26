@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  margin: 0;
+  color: white;
+}
+
+/* 회원가입 컨테이너 */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+/* 회원가입 박스 */
+.signup-box {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  width: 350px;
+}
+
+/* 제목 스타일 */
+.signup-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* 폼 스타일 */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 입력 필드 스타일 */
+.signup-input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  outline: none;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.signup-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.signup-input:focus {
+  background: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+
+/* 비밀번호 필드 정렬 */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  outline: none;
+}
+
+.eye-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* 회원가입 버튼 스타일 */
+.signup-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 20px;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(to right, #ff7eb3, #ff758c);
+  transition: all 0.3s ease-in-out;
+}
+
+.signup-btn:hover {
+  background: linear-gradient(to right, #ff6392, #ff4f6f);
+  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+}
+
+/* 오류 메시지 */
+.error-text {
+  color: #ff4f6f;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.login-link {
+  margin-top: 15px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* 로그인 링크 스타일 */
+.login-link span{
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  
+}
+
+.login-text {
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color 0.3s;
+  cursor: pointer !important;
+}
+
+.login-text:hover {
+  color: #ff7eb3;
+}
