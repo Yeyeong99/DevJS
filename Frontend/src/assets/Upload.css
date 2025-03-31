@@ -1,0 +1,126 @@
+/* src/assets/Upload.css */
+
+:root {
+  --gray-border: #e5e7eb;
+  --gray-bg: #ffffff; /* 완전히 흰색 배경 */
+  --gray-text: #6b7280;
+  --button-bg: #4f46e5;
+  --button-text: #ffffff;
+}
+
+body {
+  background-color: var(--gray-bg);
+  margin: 0;
+  padding: 0;
+}
+
+.upload-wrapper {
+  padding: 4rem 2rem;
+  font-family: 'Pretendard', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--gray-bg);
+}
+
+.upload-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: #111827;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.upload-columns {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.upload-column {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.input-box {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-border);
+  border-radius: 8px;
+  background-color: var(--gray-bg);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.input-box span {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  color: var(--gray-text);
+}
+
+.textarea-box {
+  width: 100%;
+  height: 130px;
+  padding: 1rem;
+  border: 1px solid var(--gray-border);
+  border-radius: 8px;
+  background-color: var(--gray-bg);
+  resize: none;
+  font-size: 0.95rem;
+  color: #111827;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.add-button {
+  background: none;
+  border: none;
+  color: var(--gray-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  text-align: left;
+}
+
+.submit-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+
+/* placeholder 색상 명시 설정 */
+.input-box::placeholder,
+.textarea-box::placeholder {
+  color: #9ca3af; /* 연회색 텍스트 (Tailwind의 gray-400) */
+  opacity: 1;
+}

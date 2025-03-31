@@ -1,10 +1,8 @@
 // Login.jsx
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import Kakao from "kakao-js-sdk";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../assets/Login.css";
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -13,14 +11,7 @@ const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
 function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
-  const [passwordFocused, setPasswordFocused] = useState(false);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (typeof window.Kakao !== "undefined" && !window.Kakao.isInitialized()) {
       window.Kakao.init(KAKAO_JS_KEY);
       console.log("✅ Kakao SDK Initialized:", window.Kakao.isInitialized());
@@ -41,73 +32,44 @@ function Login() {
     }
   };
 
+  const handleNaverLogin = () => {
+    // 실제 네이버 로그인 URL로 변경 필요
+    window.location.href = "https://nid.naver.com/oauth2.0/authorize?client_id=YOUR_NAVER_CLIENT_ID&redirect_uri=http://localhost:5173/naver/callback&response_type=code";
+  };
+
+  const handleGithubLogin = () => {
+    // 실제 깃허브 로그인 URL로 변경 필요
+    window.location.href = "https://github.com/login/oauth/authorize?client_id=YOUR_GITHUB_CLIENT_ID";
+  };
+
   return (
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <div className="login-container">
-        <div className="logo" onClick={goHome} style={{ cursor: "pointer" }}>
-          DEVJS
-        </div>
+
 
         <div className="login-box">
+          <div className="logo" onClick={goHome} style={{ cursor: "pointer" }}>
+            DEVJS
+          </div>
           <h2>로그인</h2>
-          {error && <p className="error-message">{error}</p>}
 
-          <form>
-            <div className="input-wrapper">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onFocus={() => setEmailFocused(true)}
-                onBlur={() => setEmailFocused(email.length > 0)}
-                placeholder={emailFocused ? "" : "이메일"}
-              />
-            </div>
+          <div className="social-button-list">
+            <GoogleLogin width="100%" className="social-button" />
 
-            <div className="input-wrapper password-wrapper">
-              <input
-                type={isPasswordVisible ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setPasswordFocused(true)}
-                onBlur={() => setPasswordFocused(password.length > 0)}
-                placeholder={passwordFocused ? "" : "비밀번호"}
-                style={{ paddingRight: "40px" }}
-              />
-              <button
-                type="button"
-                className="toggle-password"
-                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-              >
-                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
-
-            <button type="submit" className="login-btn">
-              로그인
+            <button onClick={handleKakaoLogin} className="social-button kakao">
+              <img src="/kakao_login_medium.png" alt="카카오 로그인" />
             </button>
-          </form>
 
-          <div className="social-login">
-            <div className="google-login hover-button">
-              <GoogleLogin />
-            </div>
+            <button onClick={handleNaverLogin} className="social-button naver">
+              <img src="https://static.nid.naver.com/oauth/small_g_in.PNG" alt="네이버 로그인" />
+            </button>
 
-            <div className="kakao-login">
-              <button onClick={handleKakaoLogin} className="kakao-btn hover-button">
-                <img
-                  src="/kakao_login_medium.png"
-                  alt="카카오 로그인"
-                  className="kakao-img"
-                />
-              </button>
-            </div>
+            <button onClick={handleGithubLogin} className="social-button github">
+              <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="깃허브 로그인" style={{ width: '20px', marginRight: '10px' }} />
+              <span>GitHub 로그인</span>
+            </button>
           </div>
         </div>
-
-        <p className="signup-text">
-          계정이 없으신가요? <span onClick={() => navigate("/signup")}>회원가입</span>
-        </p>
       </div>
     </GoogleOAuthProvider>
   );

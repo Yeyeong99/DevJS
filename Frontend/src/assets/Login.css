@@ -1,179 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap'); 
+/* Login.css */
 
-body {
-  font-family: "Poppins", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  margin: 0;
-  color: white;
-  text-align: center;
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: rgb(255, 255, 255);
 }
 
-/* 로그인 컨테이너 */
-.login-container {
+.login-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2.5rem 2rem;
+  border-radius: 24px;
   width: 100%;
   max-width: 400px;
-  padding: 50px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* 로고 */
-.logo {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(45deg, #fff, #ddd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* 로그인 박스 */
-.login-box {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* 입력 필드 */
-.input-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto 15px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 5px 10px; /* 내부 여백 추가 */
 }
 
-input {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-family: "Inter", sans-serif;
-  background: transparent;
-  color: white;
-  outline: none;
-  text-align: left;
-  transition: all 0.3s ease-in-out;
+.login-box h2 {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #ffffff;
 }
 
-/* 플레이스홀더 스타일 */
-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  font-family: "Inter", sans-serif;
-}
-
-/* 비밀번호 입력 필드 */
-.password-wrapper {
+.social-button-list {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
   align-items: center;
-  position: relative;
 }
 
-/* 비밀번호 보기 버튼 */
-.toggle-password {
-  position: absolute;
-  right: 10px;
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  height: 100%;
+.social-button {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.toggle-password:hover {
-  color: #ff7eb3;
-}
-
-/* 로그인 버튼 */
-.login-btn {
   width: 100%;
-  padding: 14px;
+  height: 50px;
   border: none;
-  border-radius: 10px;
-  font-size: 18px;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #f1f1f1;
   color: white;
-  background: linear-gradient(to right, #ff7eb3, #ff758c);
-  transition: all 0.3s ease-in-out;
 }
 
-.login-btn:hover {
-  background: linear-gradient(to right, #ff6392, #ff4f6f);
-  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+.social-button img {
+  height: 24px;
+  object-fit: contain;
+  margin-right: 10px;
 }
 
-/* 회원가입 텍스트 */
-.signup-text {
-  margin-top: 15px;
-  font-size: 14px;
-  opacity: 0.8;
+.kakao {
+  background-color: #FEE500;
+  color: white;
 }
 
-.signup-text span {
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: underline;
+.kakao img {
+  height: 24px;
 }
 
-.signup-text span:hover {
-  color: #ff7eb3;
+.naver {
+  background-color: #03c75a;
+  color: white;
 }
 
-/* [변경 없음] 기본 셋업 ~ .login-btn 까지는 유지 */
-
-/* Google 로그인 버튼 영역 */
-.google-login {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  transition: all 0.3s ease-in-out;
+.github {
+  background-color: #24292e;
+  color: white;
 }
 
-.google-login:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+.github img {
+  height: 24px;
 }
 
-/* Kakao 로그인 버튼 */
-.kakao-login {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
+.github span {
+  font-size: 1rem;
 }
 
-.kakao-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
 
-.kakao-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* 카카오 버튼 이미지 스타일 */
-.kakao-btn img {
-  height: 45px;
-  width: auto;
-  display: block;
-}
