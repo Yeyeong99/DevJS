@@ -15,7 +15,7 @@ const Dashboard = () => {
       return;
     }
 
-    axios.get("http://localhost:8000/api/user/", {
+    axios.get("http://localhost:8000/api/auth/user/", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       }
@@ -40,7 +40,7 @@ const Dashboard = () => {
           localStorage.setItem("access_token", newAccessToken);
     
           // access_token 재발급 성공 → 다시 유저 정보 요청
-          const retry = await axios.get("http://localhost:8000/api/user/", {
+          const retry = await axios.get("http://localhost:8000/api/auth/user/", {
             headers: {
               Authorization: `Bearer ${newAccessToken}`,
             }
