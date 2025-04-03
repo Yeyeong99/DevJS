@@ -22,6 +22,14 @@ function Login() {
     navigate("/");
   };
 
+  const handleGoogleLogin = () => {
+    const redirectUri = "http://localhost:5173/google/callback";
+    const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
+  
+    window.location.href = oauthUrl;
+  };
+  
+
   const handleKakaoLogin = () => {
     if (window.Kakao) {
       window.Kakao.Auth.authorize({
@@ -54,7 +62,9 @@ function Login() {
           <h2>로그인</h2>
 
           <div className="social-button-list">
-            <GoogleLogin width="100%" className="social-button" />
+            <button onClick={handleGoogleLogin} className="social-button google">
+              <img src="/google_logo.webp" alt="구글 로그인" />
+            </button>
 
             <button onClick={handleKakaoLogin} className="social-button kakao">
               <img src="/kakao_login_medium.png" alt="카카오 로그인" />
