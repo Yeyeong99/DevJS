@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
+
+KAKAO_CLIENT_ID = config("KAKAO_CLIENT_ID")
+GOOGLE_CLIENT_ID = config("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = config("GOOGLE_CLIENT_SECRET")
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-axov4+5ad_95vralwe1dxa86ick*_$b=n@e1%-%e!_ibgl3+-v'
+SECRET_KEY = 'django-insecure-+%!2#rv2sii+=a&e%u0d$g&!hnqm7o5#e&ky_1jcuu8bh%=3l8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,27 +38,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 1. 주요 앱
-    'users',
-    'resumes',
-    'jds',
+    # app
+    'accounts',
+    'analyzes',
+    'feedbacks',
     'coverletters',
-    'feedback',
-    'core',
-    'config',
-    # 2. 서드파티 앱
+    'jobdescriptions',
+
+    # third-party libraries
     'rest_framework',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.kakao',
-    'allauth.socialaccount.providers.naver',
-    # 3. Djnago 기본 앱
+    'rest_framework_simplejwt',
+    'corsheaders',
+
+    # django-core
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,32 +58,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-# 소셜 로그인 연동을 위해 필요한 세팅
-##################################################
-SITE_ID = 1
 
+# JWT 인증 설정
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    )
 }
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-
-REST_USE_JWT = True
-
-AUTH_USER_MODEL = 'users.User'
-##############################################
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -124,6 +112,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -139,13 +129,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# OAuth 관련 키 (환경변수 권장)
+KAKAO_CLIENT_ID = KAKAO_CLIENT_ID
+GOOGLE_CLIENT_ID = GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET = GOOGLE_CLIENT_SECRET
+
+# CORS 설정
+CORS_ALLOW_ALL_ORIGINS = True  # 개발용
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 

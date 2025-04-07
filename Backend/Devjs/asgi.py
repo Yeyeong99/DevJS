@@ -1,5 +1,5 @@
 """
-ASGI config for Devjs project.
+ASGI config for devjs project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
