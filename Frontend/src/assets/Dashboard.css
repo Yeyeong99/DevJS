@@ -10,17 +10,18 @@
   font-size: 36px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: black;
 }
 
 .welcome {
   font-size: 18px;
-  color: #c5c3d9;
+  color: #000000;
   margin-bottom: 30px;
 }
 
 .create-button {
   background-color: #8758f1;
-  color: white;
+  color: rgb(255, 255, 255);
   font-weight: bold;
   padding: 10px 20px;
   border-radius: 8px;
@@ -34,6 +35,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 60px;
+  color: black;
 }
 
 .job-table th,
@@ -44,7 +46,7 @@
 }
 
 .job-table th {
-  color: #fdfdfd;
+  color: #000000;
   font-weight: 600;
 }
 
@@ -68,6 +70,6 @@
 .see-more {
   margin-top: 15px;
   font-weight: 500;
-  color: #dcd7d7;
+  color: #000000;
   cursor: pointer;
 }
