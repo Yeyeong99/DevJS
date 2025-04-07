@@ -8,9 +8,9 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to right, #6a11cb, #2575fc); /* 부드러운 그라디언트 */
+  background: white; /* 부드러운 그라디언트 */
   margin: 0;
-  color: white;
+  color: rgb(255, 255, 255);
   text-align: center;
 }
 
@@ -24,22 +24,24 @@ body {
 }
 
 .logo {
-  font-size: 3rem;
+  font-size: 5rem;
   font-weight: 700;
   letter-spacing: 1px;
-  text-transform: uppercase;
-  background: linear-gradient(45deg, #fff, #ddd);
+  /* text-transform: uppercase; */
+  background: linear-gradient(45deg, #000000, #000000);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .headline {
+  color : black;
   font-size: 2rem;
   font-weight: 600;
   margin: 20px 0;
 }
 
 .subtext {
+  color : black;
   font-size: 1.1rem;
   opacity: 0.9;
   font-weight: 400;

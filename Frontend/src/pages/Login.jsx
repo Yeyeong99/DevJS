@@ -61,24 +61,25 @@ function Login() {
           </div>
           <h2>로그인</h2>
 
-          <div className="social-button-list">
-            <button onClick={handleGoogleLogin} className="social-button google">
-              <img src="/google_logo.webp" alt="구글 로그인" />
-            </button>
+          <div className="social-login-buttons">
+            
+            <GoogleLogin width="100%" className="social-button" />
 
             <button onClick={handleKakaoLogin} className="social-button kakao">
-              <img src="/kakao_login_medium.png" alt="카카오 로그인" />
+              <img src="/kakao_logo.png" alt="kakao" />
+              <span>카카오톡 계정으로 로그인</span>
             </button>
-
             <button onClick={handleNaverLogin} className="social-button naver">
-              <img src="https://static.nid.naver.com/oauth/small_g_in.PNG" alt="네이버 로그인" />
+              <img src="/naver_logo.png" alt="naver" />
+              <span>네이버 계정으로 로그인</span>
+            </button>
+            <button onClick={handleGithubLogin} className="social-button github">
+              <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="깃허브 로그인" />
+              <span>GitHub 계정으로 로그인</span>
             </button>
 
-            <button onClick={handleGithubLogin} className="social-button github">
-              <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="깃허브 로그인" style={{ width: '20px', marginRight: '10px' }} />
-              <span>GitHub 로그인</span>
-            </button>
           </div>
+
         </div>
       </div>
     </GoogleOAuthProvider>
