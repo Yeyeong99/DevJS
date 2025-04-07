@@ -2,7 +2,7 @@ from django.urls import path
 from .views import KakaoLoginView, GoogleLoginView, GithubLoginView, NaverLoginView, UserInfoView
 from rest_framework_simplejwt.views import TokenRefreshView
 
-
+app_name = 'accounts'
 urlpatterns = [
     path("auth/kakao/", KakaoLoginView.as_view(), name="kakao-login"),
     path("auth/google/", GoogleLoginView.as_view(), name="google-login"),

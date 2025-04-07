@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'feedbacks',
     'coverletters',
     'jobdescriptions',
-
+    'ragapp',
     # third-party libraries
     'rest_framework',
     'rest_framework_simplejwt',
