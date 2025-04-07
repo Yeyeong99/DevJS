@@ -2,7 +2,7 @@
 
 :root {
   --gray-border: #e5e7eb;
-  --gray-bg: #ffffff; /* 완전히 흰색 배경 */
+  --gray-bg: #ffffff; 
   --gray-text: #6b7280;
   --button-bg: #4f46e5;
   --button-text: #ffffff;

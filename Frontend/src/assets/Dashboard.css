@@ -1,74 +1,73 @@
 /* Dashboard.css */
 .dashboard-container {
-    max-width: 960px;
-    margin: 100px auto;
-    text-align: center;
-    font-family: 'Pretendard', sans-serif;
-  }
-  
-  .greeting {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .welcome {
-    font-size: 18px;
-    color: #c5c3d9;
-    margin-bottom: 30px;
-  }
-  
-  .create-button {
-    background-color: #8758f1;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    float: right;
-    margin-bottom: 20px;
-    cursor: pointer;
-  }
-  
-  .job-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 60px;
-  }
-  
-  .job-table th,
-  .job-table td {
-    padding: 14px 12px;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: center;
-  }
-  
-  .job-table th {
-    color: #fdfdfd;
-    font-weight: 600;
-  }
-  
-  .status {
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 14px;
-  }
-  
-  .status.editing {
-    background-color: #e0f7fa;
-    color: #007b8f;
-  }
-  
-  .status.submitted {
-    background-color: #e0f2e9;
-    color: #388e3c;
-  }
-  
-  .see-more {
-    margin-top: 15px;
-    font-weight: 500;
-    color: #dcd7d7;
-    cursor: pointer;
-  }
-  
+  max-width: 960px;
+  margin: 100px auto;
+  text-align: center;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.greeting {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.welcome {
+  font-size: 18px;
+  color: #c5c3d9;
+  margin-bottom: 30px;
+}
+
+.create-button {
+  background-color: #8758f1;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  float: right;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.job-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 60px;
+}
+
+.job-table th,
+.job-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.job-table th {
+  color: #fdfdfd;
+  font-weight: 600;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.status.editing {
+  background-color: #e0f7fa;
+  color: #007b8f;
+}
+
+.status.submitted {
+  background-color: #e0f2e9;
+  color: #388e3c;
+}
+
+.see-more {
+  margin-top: 15px;
+  font-weight: 500;
+  color: #dcd7d7;
+  cursor: pointer;
+}
