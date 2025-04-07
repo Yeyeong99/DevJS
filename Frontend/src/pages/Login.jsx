@@ -63,8 +63,10 @@ function Login() {
 
           <div className="social-login-buttons">
             
-            <GoogleLogin width="100%" className="social-button" />
-
+            <button onClick={handleGoogleLogin} className="social-button google">
+              <img src="/google_logo.png" alt="google" />
+              <span>구글 계정으로 로그인</span>
+            </button>
             <button onClick={handleKakaoLogin} className="social-button kakao">
               <img src="/kakao_logo.png" alt="kakao" />
               <span>카카오톡 계정으로 로그인</span>
