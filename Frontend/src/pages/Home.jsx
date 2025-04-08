@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import "../assets/Home.css"; // 스타일 파일 유지
+import "../assets/Home.css"; 
 
 function Home() {
   const navigate = useNavigate();

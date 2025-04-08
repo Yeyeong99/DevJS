@@ -1,77 +1,167 @@
 body {
-    margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #fff;
-  }
-  
-  .container {
-    padding: 40px;
-  }
-  
-  .logo {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 30px;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 40px;
-  }
-  
-  
-  .content {
-    display: flex;
-    justify-content: space-between;
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #fff;
+}
 
-  }
-  
-  .left-section,
-  .right-section {
-    color: black;
-    flex: 1;
-    margin: 0 20px;
+.container {
+  padding: 40px;
+}
 
-  }
-  
-  .left-section table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .left-section th,
-  .left-section td {
-    border-bottom: 1px solid #000000;
-    padding: 12px;
-    text-align: left;
-    font-size: 14px;
-    color : rgb(0, 0, 0);
-  }
-  
-  .right-section textarea {
-    width: 100%;
-    height: 350px;
-    padding: 15px;
-    font-size: 14px;
-    border: 1px solid #ffffff;
-    border-radius: 6px;
-    resize: none;
-    margin-top: 20px;
-    box-sizing: border-box;
-    line-height: 1.6;
-    background-color: rgb(245, 240, 235);
-    color: black;
-  }
-  
-  .submit-btn {
-    display: block;
-    margin: 40px auto 0;
-    padding: 10px 30px;
-    background-color: #8246ff;
-    color: rgb(255, 255, 255);
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  left: 40px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-section,
+.right-section {
+  color: black;
+  flex: 1;
+  margin: 0 20px;
+}
+
+.left-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.left-section th,
+.left-section td {
+  border-bottom: 1px solid #000000;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+}
+
+/* ✅ 모든 체크박스 공통 스타일 */
+input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  cursor: pointer;
+  position: relative;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✔';
+  color: #8246ff;
+  position: absolute;
+  left: 2px;
+  top: -2px;
+  font-size: 16px;
+}
+
+input[type="checkbox"]:hover {
+  border-color: #8246ff;
+}
+
+.textarea-wrapper {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  gap: 8px; 
+}
+
+.right-section textarea {
+  width: 100%;
+  height: 350px;
+  padding: 15px;
+  font-size: 14px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  resize: none;
+  margin-top: 0;
+  box-sizing: border-box;
+  line-height: 1.6;
+  background-color: rgb(248, 244, 247);
+  color: black;
+  overflow-y: auto;
+}
+
+
+.submit-btn {
+  background: linear-gradient(to right, #8758f1, #9678da);
+  color: white;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 25px;
+  transition: all 0.3s ease-in-out;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(to right, #8758f1, #a520c6);
+  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+}
+
+
+.jd-preview {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.jd-text {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  white-space: pre-line;
+}
+
+.uploaded-questions .question-block {
+  background-color: #f5f5f5;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.uploaded-questions .question {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.uploaded-questions .answer {
+  margin-left: 10px;
+  white-space: pre-line;
+}
+
+
+.question-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.question {
+  margin: 0;
+}

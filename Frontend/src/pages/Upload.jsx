@@ -1,9 +1,9 @@
-// src/pages/Upload.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // ✅ 추가
+import { Link, useNavigate } from 'react-router-dom'; // ✅ navigate 추가
 import '../assets/Upload.css';
 
 function Upload() {
+  const navigate = useNavigate(); // ✅
   const [jdFile, setJdFile] = useState(null);
   const [jdText, setJdText] = useState('');
   const [questions, setQuestions] = useState([{ question: '', answer: '' }]);
@@ -27,12 +27,20 @@ function Upload() {
     console.log('JD File:', jdFile);
     console.log('JD Text:', jdText);
     console.log('Questions:', questions);
-    alert('제출 완료!');
+
+    // ✅ 페이지 이동 + state로 데이터 전달
+    navigate('/jd-selection', {
+      state: {
+        jdText,
+        questions,
+        jdFileName: jdFile?.name || null, // 파일명도 필요시 함께 전달 가능
+      },
+    });
   };
 
   return (
     <div className="upload-wrapper">
-      <Link to="/" className="upload-title">DevJS</Link> {/* ✅ 수정된 부분 */}
+      <Link to="/" className="upload-title">DevJS</Link>
       <form className="upload-form" onSubmit={handleSubmit}>
         <div className="upload-columns">
           <div className="upload-column">
@@ -79,9 +87,7 @@ function Upload() {
             </button>
           </div>
         </div>
-        <button type="submit" className="submit-button">
-          완료
-        </button>
+        <button className="submit-btn" type="submit">완료</button>
       </form>
     </div>
   );
