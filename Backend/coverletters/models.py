@@ -14,3 +14,14 @@ class CoverLetter(models.Model):
 
     def __str__(self):
         return self.title or f'CoverLetter #{self.id}'
+
+
+
+class CoverLetterItem(models.Model):
+    cover_letter = models.ForeignKey(CoverLetter, related_name='items', on_delete=models.CASCADE)
+    question = models.TextField()
+    answer = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"[{self.cover_letter_id}] {self.question[:20]}"

@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/analyzes/', include('analyzes.urls')),    # 분석 관련
     path('api/feedbacks/', include('feedbacks.urls')),    # 피드백 관련
     path('api/', include('coverletters.urls')),   # 자기소개서 관련
+    path('api/', include('jobdescriptions.urls')),  # JD 관련
 ]
