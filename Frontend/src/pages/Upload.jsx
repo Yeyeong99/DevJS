@@ -138,7 +138,7 @@ function Upload() {
             </button>
           </div>
         </div>
-        <button type="submit" className="submit-button" disabled={isSubmitting}>
+        <button type="submit" className="submit-btn" disabled={isSubmitting}>
           {isSubmitting ? "제출 중..." : "완료"}
         </button>
       </form>

@@ -4,7 +4,6 @@
   --gray-border: #e5e7eb;
   --gray-bg: #ffffff; 
   --gray-text: #6b7280;
-  --button-bg: #4f46e5;
   --button-text: #ffffff;
 }
 
@@ -22,11 +21,16 @@ body {
   background-color: var(--gray-bg);
 }
 
+
 .upload-title {
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 3rem;
-  color: #111827;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  cursor: pointer;
+  position: absolute;
+  color:black;
+  top: 20px;
+  left: 40px;
 }
 
 .upload-form {
@@ -105,17 +109,6 @@ body {
   text-align: left;
 }
 
-.submit-button {
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  font-weight: 600;
-  padding: 0.75rem 2rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-}
 
 
 /* placeholder 색상 명시 설정 */
@@ -123,4 +116,22 @@ body {
 .textarea-box::placeholder {
   color: #9ca3af; /* 연회색 텍스트 (Tailwind의 gray-400) */
   opacity: 1;
+}
+
+.submit-button {
+  background: linear-gradient(to right, #8758f1, #9678da);
+  color: white;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 25px;
+  transition: all 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+  background: linear-gradient(to right, #8758f1, #a520c6);
+  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
 }
