@@ -42,6 +42,9 @@ model-server/
 
 2. FastAPI에 LLM 생성기능 -> JD + 자기소개서 문장을 기반으로 **추천 문장 자동 생성**
 
+- Model : Gemma2-9b-it
+- [About Gemma2](https://huggingface.co/docs/transformers/main/ko//model_doc/gemma2)
+
 ## 🔁 사용자 요청 흐름:
 
 1. Django에서 분석 요청 → `Analysis` 객체만 생성 → **응답 바로 보냄**
@@ -63,3 +66,9 @@ model-server/
 | ✅ 확장성 | 나중에 프롬프트 튜닝 or 다양한 문장 스타일 적용 가능
 
 ---
+
+### 문제
+
+1. 모델이 너무 크다.
+
+    - 파이프라인 말고 직접 가져와서 AutoTokenizer로 사용해야 함.. (egmentation fault)

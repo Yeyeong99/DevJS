@@ -1,14 +1,25 @@
 import re
 from typing import List
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 from models import FeedbackItem
 from sentence_transformers import SentenceTransformer, util
 from transformers import pipeline
 
+HF_TOKEN = os.getenv('HF_API_TOKEN')
 
 # 1. 모델 로딩 (FastAPI 시작 시 1회)
 model = SentenceTransformer('jhgan/ko-sbert-nli')
-generator = pipeline('text-generation', model='EleutherAI/polyglot-ko-1.3b')    # 파이프 라인 사용
+generator = pipeline('text-generation', model="google/gemma-2-9b-it", token=HF_TOKEN)    # 파이프 라인 사용
+
+
+messages = [
+    {"role": "user", "content": "Who are you?"},
+]
+pipe = pipeline("text-generation", model="google/gemma-2-9b-it")
+pipe(messages)
 
 
 # 2. 문장 단위로 분리하는 함수
