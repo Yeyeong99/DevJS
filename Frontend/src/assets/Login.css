@@ -47,7 +47,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   position: relative;
-  height: 44px; 
+  height: 48px; 
 }
 
 .social-button img {
@@ -73,10 +73,13 @@
   color: #ffffff;
 }
 
-.social-button.naver span {
-  margin-left: 71px;
+.social-button.kakao span {
+  margin-left: 55px;
 }
 
+.social-button.github span {
+  margin-left: 60px;
+}
 
 .social-button.github {
   background-color: #000000;

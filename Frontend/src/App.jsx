@@ -12,6 +12,7 @@ import JDSelection from './pages/JDSelection';
 
 import KakaoCallback from "./pages/oauth/KakaoCallback";
 import GoogleCallback from "./pages/oauth/GoogleCallback";
+import GitHubCallback from "./pages/oauth/GithubCallback";
 
 
 
@@ -31,6 +32,8 @@ function App() {
 
         <Route path="/kakao/callback" element={<KakaoCallback />} />
         <Route path="/google/callback" element={<GoogleCallback />} />
+        <Route path="/github/callback" element={<GitHubCallback />} />
+
         
       </Routes>
   
