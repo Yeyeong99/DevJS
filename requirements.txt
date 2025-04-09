@@ -20,6 +20,7 @@ django-allauth==65.6.0
 django-cors-headers==4.7.0
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.5.0
+drf-nested-routers==0.94.1
 emoji==1.2.0
 exceptiongroup==1.2.2
 fastapi==0.115.12
