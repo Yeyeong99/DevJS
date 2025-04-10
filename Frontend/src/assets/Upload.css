@@ -22,7 +22,7 @@ body {
 }
 
 
-.upload-title {
+/* .upload-title {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 30px;
@@ -31,7 +31,7 @@ body {
   color:black;
   top: 20px;
   left: 40px;
-}
+} */
 
 .upload-form {
   display: flex;

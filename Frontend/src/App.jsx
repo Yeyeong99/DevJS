@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Upload from './pages/Upload';
 import Feedback from './pages/Feedback';
 import JDSelection from './pages/JDSelection';
+import SetNickname from './pages/SetNickname';
 
 
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/upload" element={<Upload />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/jd-selection" element={<JDSelection />} />
+        <Route path="/setnickname" element={<SetNickname />} />
 
 
 

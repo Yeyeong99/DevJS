@@ -1,0 +1,35 @@
+.devjs-header {
+  display: flex;
+  justify-content: space-between; /* ← 좌우 끝으로 정렬 */
+  align-items: center;
+  padding: 16px 32px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  font-family: 'Pretendard Variable', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  height: 60px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #a48ce2;
+  cursor: pointer;
+}
+
+.logout-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}

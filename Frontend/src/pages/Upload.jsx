@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/Upload.css";
 import axiosInstance from "../api/axiosInstance";
+import Header from "../components/Header";
+
 
 function Upload() {
   const [jdFile, setJdFile] = useState(null);
@@ -74,7 +76,7 @@ function Upload() {
       );
 
       alert("자기소개서 업로드 완료!");
-      navigate("/dashboard"); // 혹은 결과 페이지로 이동
+      navigate("/jd-selection"); // 혹은 결과 페이지로 이동
     } catch (err) {
       console.error("업로드 실패:", err);
       alert("업로드 중 오류가 발생했습니다.");
@@ -85,9 +87,12 @@ function Upload() {
 
   return (
     <div className="upload-wrapper">
-      <Link to="/" className="upload-title">
+      <Header />
+
+
+      {/* <Link to="/" className="upload-title">
         DevJS
-      </Link>
+      </Link> */}
       <form className="upload-form" onSubmit={handleSubmit}>
         <div className="upload-columns">
           <div className="upload-column">

@@ -1,0 +1,59 @@
+.nickname-container {
+    max-width: 500px;
+    margin: 80px auto;
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    text-align: center;
+    font-family: 'Pretendard Variable', sans-serif;
+  }
+  
+  .nickname-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #222;
+  }
+  
+  .nickname-input {
+    width: 300px; /* 고정 너비 설정 */
+    margin: 25px auto 20px auto; /* 좌우 자동 = 가운데 정렬 */
+    display: block;    
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+    color: black;
+
+
+  }
+  
+  .nickname-input:focus {
+    outline: none;
+    border-color: #a48ce2;
+    box-shadow: 0 0 0 2px rgba(164, 140, 226, 0.2);
+  }
+
+
+  .nickname-submit {
+    background: linear-gradient(to right, #8758f1, #9678da);
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 25px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  
+  .nickname-submit:hover {
+    background: linear-gradient(to right, #8758f1, #a520c6);
+    box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+  }

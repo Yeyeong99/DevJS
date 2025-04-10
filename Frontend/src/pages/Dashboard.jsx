@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../assets/Dashboard.css";
+import Header from "../components/Header";
+
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -118,6 +120,12 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <Header />
+
+
+      {/* 닉네임(유저정보) (api/auth/user) API 적용 시 */}
+      {/* <h1>안녕하세요, {nickname || username}님</h1> */}
+
       <h1 className="greeting">안녕하세요, {user.username}님</h1>
       <p className="welcome">개발자를 위한 자기소개서 첨삭 서비스 DevJS에 오신 것을 환영합니다.</p>
       <button className="create-button" onClick={handleCreateClick}>+ 새로 만들기</button>

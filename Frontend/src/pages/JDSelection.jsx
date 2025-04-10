@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../assets/JDSelection.css';
+import Header from "../components/Header";
+
 
 const JDSelection = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { jdText = '', questions = [] } = location.state || {}; // ✅ 전달받은 데이터 추출
+
+  const [jdItems, setJdItems] = useState([]); // 💡 API로 가져온 JD 리스트 저장
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/job-descriptions/')
+      .then((res) => res.json())
+      .then((data) => setJdItems(data))
+      .catch((error) => console.error('JD 데이터 불러오기 실패:', error));
+  }, []);
+
+  const { jdText = '', questions = [] } = location.state || {}; // 전달받은 데이터 추출
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [highlightedList, setHighlightedList] = useState(
@@ -31,14 +43,7 @@ const JDSelection = () => {
     navigate('/dashboard');
   };
 
-  // const handleSubmit = () => {
-  //   navigate('/feedback', {
-  //     state: {
-  //       jdItems: selectedItems,
-  //       coverLetter,
-  //     },
-  //   });
-  // };
+
   const handleSubmit = () => {
     const selectedEssays = questions
       .map((q, i) =>
@@ -58,7 +63,8 @@ const JDSelection = () => {
 
   return (
     <div className="container">
-      <div className="logo" onClick={handleLogoClick}>DevJS</div>
+            <Header />
+
 
       <div className="content">
         {/* 1번 영역 */}
@@ -80,8 +86,10 @@ const JDSelection = () => {
                 <th>내용</th>
               </tr>
             </thead>
+
+
+{/* 여기 아래부분이 API 적용 전 */}
             <tbody>
-              {/* ===================이 부분에 데이터 가지고와서 해야함====================== */}
               {[     
                 "DW 및 Datalake 관련 Platform/Architecture 구축 및 운영",
                 "Data 모델링 및 구축 및 운영",
@@ -100,6 +108,37 @@ const JDSelection = () => {
               ))}
             </tbody>
           </table>
+
+
+{/* 여기 아래부분이 API 적용 후 */}
+
+          {/* <tbody>
+            {jdItems.map((item, index) => (
+              <tr key={item.id || index}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.includes(item.title)}
+                    onChange={() => handleCheckboxChange(item.title)}
+                  />
+                </td>
+                <td>{item.title}</td>
+              </tr>
+            ))}
+          </tbody> */}
+
+{/* API 적용 후 코드는 API에서 오는 데이터가 다음과 같다고 가정하고 있음. */}
+{/* 
+[
+  { "id": 1, "title": "DW 및 Datalake 관련 Platform/Architecture 구축 및 운영" },
+  { "id": 2, "title": "Data 모델링 및 구축 및 운영" },
+  { "id": 3, "title": "AI/ML 개발 및 운영" }
+] */}
+
+
+
+
+
         </div>
 
         {/* 2번 영역 */}

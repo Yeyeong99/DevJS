@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import "../assets/Feedback.css";
+import Header from "../components/Header";
+
 
 const JD_LABELS = [
   "DW 및 Datalake 관련 Platform/Architecture 구축 및 운영",
@@ -24,7 +26,8 @@ const DevJSFeedbackPage = () => {
 
   return (
     <div className="container">
-      <h1 className="title">DevJS</h1>
+            <Header />
+
       
       <div className="layout">
         <section className="question-section">

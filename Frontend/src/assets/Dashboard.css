@@ -19,16 +19,25 @@
   margin-bottom: 30px;
 }
 
+
 .create-button {
-  background-color: #8758f1;
-  color: rgb(255, 255, 255);
-  font-weight: bold;
+  background: linear-gradient(to right, #8758f1, #9678da);
+  color: white;
   padding: 10px 20px;
-  border-radius: 8px;
   border: none;
-  float: right;
-  margin-bottom: 20px;
+  border-radius: 10px;
   cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  float: right;
+  transition: all 0.3s ease-in-out;
+}
+
+.create-button:hover {
+  background: linear-gradient(to right, #8758f1, #a520c6);
+  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
 }
 
 .job-table {
@@ -72,4 +81,12 @@
   font-weight: 500;
   color: #000000;
   cursor: pointer;
+  transition: all 0.2s ease; 
+}
+
+.see-more:hover {
+  color: #1a73e8; 
+  font-weight: 600;
+  transform: scale(1.05);
+  text-decoration: underline;
 }
