@@ -15,9 +15,12 @@ from pathlib import Path
 from decouple import config
 
 KAKAO_CLIENT_ID = config("KAKAO_CLIENT_ID")
+
 GOOGLE_CLIENT_ID = config("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = config("GOOGLE_CLIENT_SECRET")
 
+GITHUB_CLIENT_ID = config("GITHUB_CLIENT_ID")
+GITHUB_CLIENT_SECRET = config("GITHUB_CLIENT_SECRET")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -139,8 +142,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # OAuth 관련 키 (환경변수 권장)
 KAKAO_CLIENT_ID = KAKAO_CLIENT_ID
+
 GOOGLE_CLIENT_ID = GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET = GOOGLE_CLIENT_SECRET
+
+GITHUB_CLIENT_ID = GITHUB_CLIENT_ID
+GITHUB_CLIENT_SECRET = GITHUB_CLIENT_SECRET
+
 
 # CORS 설정
 CORS_ALLOW_ALL_ORIGINS = True  # 개발용
