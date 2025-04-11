@@ -11,11 +11,36 @@ function Upload() {
   const [jdText, setJdText] = useState("");
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null); // 붙여넣은 이미지 미리보기용
+  const [jdImages, setJdImages] = useState([]);
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     setJdFile(e.target.files[0]);
   };
+
+
+
+  const handlePasteImage = (e) => {
+    const items = Array.from(e.clipboardData?.items || []);
+    const imageItems = items.filter(item => item.type.startsWith("image/"));
+  
+    if (imageItems.length === 0) return;
+  
+    imageItems.forEach((imageItem) => {
+      const file = imageItem.getAsFile();
+      if (file) {
+        setJdFile(file); // 첫 번째 이미지는 여전히 업로드 대상
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setJdImages((prev) => [...prev, event.target.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+  
+  
 
   const handleQuestionChange = (index, field, value) => {
     const newQuestions = [...questions];
@@ -106,13 +131,25 @@ function Upload() {
                 className="hidden-input"
               />
             </label>
-            <input
-              type="text"
-              placeholder="직접 입력"
+            <textarea
+              placeholder="직접 입력 (이미지 복수 붙여넣기 가능)"
               value={jdText}
               onChange={(e) => setJdText(e.target.value)}
-              className="input-box"
+              onPaste={handlePasteImage}
+              className="input-box textarea-box"
             />
+
+            {jdImages.length > 0 && (
+              <div className="image-preview-list">
+                {jdImages.map((src, idx) => (
+                  <div className="image-preview-square" key={idx}>
+                    <img src={src} alt={`붙여넣은 이미지 ${idx + 1}`} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+
           </div>
 
           <div className="upload-column">

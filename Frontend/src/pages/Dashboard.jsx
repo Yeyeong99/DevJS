@@ -1,14 +1,15 @@
+// Dashboard.jsx
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../assets/Dashboard.css";
 import Header from "../components/Header";
 
-
 const Dashboard = () => {
   const [user, setUser] = useState(null);
+  const [jobs, setJobs] = useState([]); // 기존 const → useState로 변경
 
-  // 더보기, 정렬, 새로 업로드 기능 추가
   const [showMore, setShowMore] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const navigate = useNavigate();
@@ -28,6 +29,15 @@ const Dashboard = () => {
     })
       .then((res) => {
         setUser(res.data);
+
+        // ✅ 여기서 자소서 목록도 불러올 수 있음 (임시 하드코딩)
+        setJobs([
+          // { company: '삼성전자', deadline: '2025-03-19', status: '수정 중' },
+          // { company: '삼성카드', deadline: '2025-03-19', status: '제출 완료' },
+          // { company: '제일기획', deadline: '2025-03-19', status: '수정 중' },
+          // { company: 'LG전자', deadline: '2025-03-22', status: '수정 중' },
+          // { company: '카카오', deadline: '2025-03-25', status: '제출 완료' },
+        ]);
       })
       .catch(async (err) => {
         const errorCode = err.response?.data?.code;
@@ -45,7 +55,6 @@ const Dashboard = () => {
             const newAccessToken = res.data.access;
             localStorage.setItem("access_token", newAccessToken);
 
-            // access_token 재발급 성공 → 다시 유저 정보 요청
             const retry = await axios.get("http://localhost:8000/api/auth/user/", {
               headers: {
                 Authorization: `Bearer ${newAccessToken}`,
@@ -65,14 +74,6 @@ const Dashboard = () => {
       });
 
   }, []);
-
-  const jobs = [
-    { company: '삼성전자', deadline: '2025-03-19', status: '수정 중' },
-    { company: '삼성카드', deadline: '2025-03-19', status: '제출 완료' },
-    { company: '제일기획', deadline: '2025-03-19', status: '수정 중' },
-    { company: 'LG전자', deadline: '2025-03-22', status: '수정 중' },
-    { company: '카카오', deadline: '2025-03-25', status: '제출 완료' },
-  ];
 
   const visibleJobs = showMore ? jobs : jobs.slice(0, 3);
 
@@ -111,7 +112,7 @@ const Dashboard = () => {
   };
 
   const handleCreateClick = () => {
-    navigate("/upload");
+    navigate("/companyinfo");
   };
 
   const handleSeeMore = () => setShowMore(true);
@@ -122,45 +123,50 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <Header />
 
-
-      {/* 닉네임(유저정보) (api/auth/user) API 적용 시 */}
-      {/* <h1>안녕하세요, {nickname || username}님</h1> */}
-
       <h1 className="greeting">안녕하세요, {user.username}님</h1>
       <p className="welcome">개발자를 위한 자기소개서 첨삭 서비스 DevJS에 오신 것을 환영합니다.</p>
       <button className="create-button" onClick={handleCreateClick}>+ 새로 만들기</button>
 
-      <table className="job-table">
-        <thead>
-          <tr>
-            <th>기업</th>
-            <th onClick={() => handleSort('deadline')} style={{ cursor: 'pointer' }}>
-              마감일 {getSortIndicator('deadline')}
-            </th>
-            <th onClick={() => handleSort('status')} style={{ cursor: 'pointer' }}>
-              상태 {getSortIndicator('status')}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedJobs.map((job, index) => (
-            <tr key={index}>
-              <td>{job.company}</td>
-              <td>{job.deadline}</td>
-              <td>
-                <span className={`status ${job.status === '수정 중' ? 'editing' : 'submitted'}`}>
-                  {job.status}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {!showMore && (
-        <div className="see-more" onClick={handleSeeMore}>
-          더보기
+      {jobs.length === 0 ? (
+        <div className="no-jobs">
+          <p>📝 아직 등록된 자소서가 없습니다.</p>
+          <p>+ 새로 만들기를 눌러 자소서를 등록해보세요!</p>
         </div>
+      ) : (
+        <>
+          <table className="job-table">
+            <thead>
+              <tr>
+                <th>기업</th>
+                <th onClick={() => handleSort('deadline')} style={{ cursor: 'pointer' }}>
+                  마감일 {getSortIndicator('deadline')}
+                </th>
+                <th onClick={() => handleSort('status')} style={{ cursor: 'pointer' }}>
+                  상태 {getSortIndicator('status')}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedJobs.map((job, index) => (
+                <tr key={index}>
+                  <td>{job.company}</td>
+                  <td>{job.deadline}</td>
+                  <td>
+                    <span className={`status ${job.status === '수정 중' ? 'editing' : 'submitted'}`}>
+                      {job.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {!showMore && (
+            <div className="see-more" onClick={handleSeeMore}>
+              더보기
+            </div>
+          )}
+        </>
       )}
     </div>
   );

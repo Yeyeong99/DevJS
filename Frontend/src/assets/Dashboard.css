@@ -40,6 +40,12 @@
   box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
 }
 
+
+.no-jobs {
+  margin: 40px 100px;
+
+}
+
 .job-table {
   width: 100%;
   border-collapse: collapse;

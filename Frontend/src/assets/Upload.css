@@ -135,3 +135,27 @@ body {
   background: linear-gradient(to right, #8758f1, #a520c6);
   box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
 }
+
+
+
+.image-preview-list {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.image-preview-square {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.image-preview-square img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
