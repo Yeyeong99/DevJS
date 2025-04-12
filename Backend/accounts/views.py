@@ -109,6 +109,8 @@ class GithubLoginView(APIView):
             "code": code,
             "redirect_uri": redirect_uri,
         }, headers={"Accept": "application/json"})
+        
+        print("🔴 Github Token Response:", token_res.text)
 
         token_data = token_res.json()
         access_token = token_data.get("access_token")
@@ -117,6 +119,8 @@ class GithubLoginView(APIView):
             "Authorization": f"token {access_token}"
         })
         user_data = user_res.json()
+        
+        print("🔵 Github User Info:", user_data)
 
         github_id = str(user_data.get("id"))
         email = user_data.get("email") or f"github_{github_id}@example.com"
