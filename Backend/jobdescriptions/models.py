@@ -14,7 +14,7 @@ class JobDescription(models.Model):
 # 강점만 받을 모델 클래스
 class Skill(models.Model):
     jd = models.ForeignKey(JobDescription, on_delete=models.CASCADE, related_name='skills')    # jd 원문
-    content = models.CharField(max_length=200)    # OCR로 뽑은 역량
+    content = models.CharField(max_length=200)    # JD 주요 역량
     
     def __str__(self):
         return self.content

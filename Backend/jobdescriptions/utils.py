@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()    # 꼭 실행할 때 Backend에서 할것!
 
-image_path = './jds/GEg_Xk.jpg'
+# image_path = './jds/GEg_Xk.jpg'
 
 API_URL = os.getenv('OCR_API_URL')
 X_OCR_SECRET = os.getenv('X_OCR_SECRET')
@@ -51,8 +51,7 @@ def ocr_naver(image_path):
             documents.append(text)
             text = ''
             
-
-    print(documents)
+    return documents
 
 
 # google
@@ -124,6 +123,12 @@ def save_and_print_ocr_results(ocr_response, output_text_path="full_text.txt", o
     #     json.dump(ocr_response, json_file, indent=4, ensure_ascii=False)
     # print(f"✅ OCR 결과 JSON 저장 완료: {output_json_path}")
 
-# ✅ 실행
-ocr_response = call_google_vision_api(image_path)
-save_and_print_ocr_results(ocr_response)
+# # ✅ 실행
+# ocr_response = call_google_vision_api(image_path)
+# save_and_print_ocr_results(ocr_response)
+
+# JD 역량 추출하기
+def extract_skills(content):
+    # 줄바꿈으로 jd 자격요건이 작성되었다고 가정
+    return content.split('\n')
+    
