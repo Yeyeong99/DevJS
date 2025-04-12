@@ -7,7 +7,7 @@ class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = '__all__'
-        read_only_fields = '__all__'   # 완전 조회용으로 만들었음.
+        read_only_fields = ('id', 'jd', 'content', )   # 완전 조회용으로 만들었음.
 
 
 class JobDescriptionSerializer(serializers.ModelSerializer):
