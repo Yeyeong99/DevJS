@@ -178,7 +178,6 @@ class UserInfoView(APIView):
             "email": user.email,
             "username": user.username,
             "provider": user.provider,
-            'nickname': user.nickname,
         })
         
         

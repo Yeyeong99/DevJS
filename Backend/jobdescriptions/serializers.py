@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import JobDescription, Skill, Company
+from .models import JobDescription, Skill
 
-# json 형식으로 데이터 변환을 위한 직렬화 클래스
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = '__all__'
+# # json 형식으로 데이터 변환을 위한 직렬화 클래스
+# class CompanySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Company
+#         fields = '__all__'
 
 
 # read_only_fields : 클라이언트가 보낼 수 없고, "조회(응답)"만 가능하게 만들겠다!

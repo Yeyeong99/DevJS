@@ -19,11 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include([
-        path('', include('accounts.urls')),    # 로그인 관련
-        path('', include('coverletters.urls')),   # 자기소개서 관련
-        path('', include('jobdescriptions.urls')),  # JD 관련
-        path('analyzes/', include('analyzes.urls')),    # 분석 관련
-        path('feedbacks/', include('feedbacks.urls')),    # 피드백 관련
-    ]))
+    path('api/', include('accounts.urls')),    # 로그인 관련
+    path('api/analyzes/', include('analyzes.urls')),    # 분석 관련
+    path('api/feedbacks/', include('feedbacks.urls')),    # 피드백 관련
+    path('api/', include('coverletters.urls')),   # 자기소개서 관련
+    path('api/', include('jobdescriptions.urls')),  # JD 관련
 ]
