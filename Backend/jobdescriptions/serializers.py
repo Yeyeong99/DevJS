@@ -22,5 +22,5 @@ class JobDescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobDescription
         fields = '__all__'
-        read_only_fields = ('user', 'content', 'skills', )    # 
+        read_only_fields = ('user', 'content', 'skills', 'created_at', )    # 
         

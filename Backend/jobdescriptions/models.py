@@ -18,6 +18,10 @@ class JobDescription(models.Model):
     content = models.TextField()    # OCR 전체 원문
     created_at = models.DateTimeField(auto_now_add=True)    # 생성 시간
     
+    # 자소서 업로드 페이지 이전 회사이름과 마감일 저장하는필드
+    company = models.CharField(max_length=100) 
+    deadline = models.DateField()
+
     # class Meta:
     #     constraints = [
     #         models.UniqueConstraint(fields=['company', 'position'], name='unique_company_position'),    # 회사명과 직무가 같으면 또 저장되지 않는다.
