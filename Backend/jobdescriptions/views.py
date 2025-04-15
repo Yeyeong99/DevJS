@@ -33,8 +33,6 @@ class JobDescriptionViewSet(viewsets.ModelViewSet):
             ocr_text = jd.content    # 파일 없으면 원래 content 그래도 받기
             
         jd.save()    # 다시 저장
-        
-        logger.info(f'JD created: {jd.id} | user: {jd.user} | company: {jd.company} | position: {jd.position}')    # 디버깅용 - 나중에 삭제해도 된다.
             
         main_skills = extract_skills(ocr_text)    # utils.py에서 함수 받아서 주요 역량 추출하기
         for main_skill in main_skills:

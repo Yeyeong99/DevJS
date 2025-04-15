@@ -22,6 +22,11 @@ const Dashboard = () => {
       return;
     }
 
+    // axios.get("http://localhost:8000/api/coverletters/", {
+    //   headers: { Authorization: `Bearer ${accessToken}` }
+    // })
+    // .then(res => setJobs(res.data));  자소서 가져오기. (유현)
+    
     axios.get("http://localhost:8000/api/auth/user/", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
