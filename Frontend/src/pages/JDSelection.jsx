@@ -170,8 +170,34 @@ const JDSelection = () => {
         </div>
       </div>
 
-      <button className="submit-btn" onClick={handleSubmit}>완료</button>
-    </div>
+      <div className="button-wrapper">
+        <div className="button-group">
+          <button
+            className="back-button"
+            onClick={() => {
+              const confirmBack = window.confirm("작성 중인 내용이 사라질 수 있습니다. 이전 페이지로 돌아가시겠습니까?");
+              if (confirmBack) {
+                navigate("/upload", {
+                  state: {
+                    ...location.state, 
+                    selectedItems,
+                    highlightedList,
+                    coverLetter,
+                  },
+                });
+              }
+            }}
+          >
+            이전으로
+          </button>
+
+          <button className="submit-btn" onClick={handleSubmit}>
+            다음으로
+          </button>
+        </div>
+      </div>
+ 
+  </div>
   );
 };
 
