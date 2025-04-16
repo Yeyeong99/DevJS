@@ -118,23 +118,7 @@ body {
   opacity: 1;
 }
 
-.submit-button {
-  background: linear-gradient(to right, #8758f1, #9678da);
-  color: white;
-  padding: 14px 28px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 25px;
-  transition: all 0.3s ease-in-out;
-}
 
-.submit-button:hover {
-  background: linear-gradient(to right, #8758f1, #a520c6);
-  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
-}
 
 
 
@@ -159,3 +143,48 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 2rem;
+  align-items: center;
+  transition: background-color 0.2s ease-in-out;
+
+}
+
+.back-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0e0e0;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #ccc;
+}
+
+.submit-btn {
+  padding: 0.8rem 1.5rem !important;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(to right, #8758f1, #9678da);
+  color: white;
+  cursor: pointer;
+  margin-top: 0 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(to right, #8758f1, #a520c6);
+  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+}
+
+

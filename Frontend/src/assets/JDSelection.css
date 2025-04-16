@@ -104,7 +104,7 @@ input[type="checkbox"]:hover {
 }
 
 
-.submit-btn {
+/* .submit-btn {
   background: linear-gradient(to right, #8758f1, #9678da);
   color: white;
   padding: 14px 28px;
@@ -120,7 +120,7 @@ input[type="checkbox"]:hover {
 .submit-btn:hover {
   background: linear-gradient(to right, #8758f1, #a520c6);
   box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
-}
+} */
 
 
 .jd-preview {
@@ -164,4 +164,50 @@ input[type="checkbox"]:hover {
 
 .question {
   margin: 0;
+}
+
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 2rem;
+}
+
+.back-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0e0e0;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #ccc;
+}
+
+.submit-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #4f46e5;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submit-btn:hover {
+  background-color: #4338ca;
+}
+
+
+.button-wrapper {
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  margin-top: 40px;
+  margin-bottom: 60px; /* 아래쪽 여백 추가 */
 }

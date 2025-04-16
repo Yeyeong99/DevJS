@@ -66,22 +66,41 @@
   }
 
 
-  .next-button {
-    background: linear-gradient(to right, #8758f1, #9678da);
-    color: white;
-    padding: 14px 28px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 17px;
-    transition: all 0.3s ease-in-out;
-    width: 100%;
-  }
-  
-  .next-button:hover {
-    background: linear-gradient(to right, #8758f1, #a520c6);
-    box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
-  }
-  
+
+
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.back-button,
+.next-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.back-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.back-button:hover {
+  background-color: #d5d5d5;
+}
+
+.next-button {
+  background: linear-gradient(to right, #8758f1, #9678da);
+  color: white;
+}
+
+.next-button:hover {
+  background: linear-gradient(to right, #8758f1, #a520c6);
+  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+}

@@ -1,6 +1,6 @@
 // src/pages/Upload.jsx
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../assets/Upload.css";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header";
@@ -14,11 +14,31 @@ function Upload() {
   const [imagePreview, setImagePreview] = useState(null); // 붙여넣은 이미지 미리보기용
   const [jdImages, setJdImages] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [highlightedList, setHighlightedList] = useState([]);
+  const [coverLetter, setCoverLetter] = useState('');
+
+  useEffect(() => {
+    if (location.state) {
+      setJdText(location.state.jdText || "");
+      setQuestions(location.state.questions || [{ question: "", answer: "" }]);
+      setSelectedItems(location.state.selectedItems || []);
+      setHighlightedList(location.state.highlightedList || []);
+      setCoverLetter(location.state.coverLetter || "");
+    }
+  }, [location.state]);
 
   const handleFileChange = (e) => {
     setJdFile(e.target.files[0]);
   };
 
+  const handleBack = () => {
+    const confirmBack = window.confirm("작성 중인 내용이 사라질 수 있습니다. 이전 페이지로 돌아가시겠습니까?");
+    if (confirmBack) {
+      navigate("/companyinfo", { state: location.state }); // ✅ 이전 state 그대로 전달
+    }
+  };
 
 
   const handlePasteImage = (e) => {
@@ -30,7 +50,7 @@ function Upload() {
     imageItems.forEach((imageItem) => {
       const file = imageItem.getAsFile();
       if (file) {
-        setJdFile(file); // 첫 번째 이미지는 여전히 업로드 대상
+        setJdFile(file);
         const reader = new FileReader();
         reader.onload = (event) => {
           setJdImages((prev) => [...prev, event.target.result]);
@@ -51,6 +71,8 @@ function Upload() {
   const addQuestion = () => {
     setQuestions([...questions, { question: "", answer: "" }]);
   };
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -180,9 +202,19 @@ function Upload() {
             </button>
           </div>
         </div>
-        <button type="submit" className="submit-btn" disabled={isSubmitting}>
-          {isSubmitting ? "제출 중..." : "완료"}
-        </button>
+        <div className="button-group">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="back-button"
+            disabled={isSubmitting}
+          >
+            이전으로
+          </button>
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? "제출 중..." : "다음으로"}
+          </button>
+        </div>
       </form>
     </div>
   );
