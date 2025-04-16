@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import KakaoLoginView, GoogleLoginView, GithubLoginView, NaverLoginView, UserInfoView, LogoutView
+from .views import KakaoLoginView, GoogleLoginView, GithubLoginView, NaverLoginView, UserInfoView, LogoutView, user_info, update_nickname
 from rest_framework_simplejwt.views import TokenRefreshView
 
 app_name = 'accounts'
@@ -14,4 +14,7 @@ urlpatterns = [
     
     path("auth/user/", UserInfoView.as_view(), name="user-info"),  
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+
+    path('user-info/', user_info),  # 유찬 추가
+    path("user/", update_nickname),
 ]

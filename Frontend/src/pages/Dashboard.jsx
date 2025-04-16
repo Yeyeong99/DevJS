@@ -123,13 +123,29 @@ const Dashboard = () => {
 
   const handleSeeMore = () => setShowMore(true);
 
+  const fetchUser = async () => {
+    const access = localStorage.getItem("access_token");
+    try {
+      const res = await axios.get("http://localhost:8000/api/user-info/", {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      });
+      setUser(res.data);  // nickname 포함된 사용자 정보 저장!
+    } catch (err) {
+      console.error("유저 정보 가져오기 실패:", err);
+    }
+  };
+
+  fetchUser();
+
   if (!user) return <p className="loading">유저 정보를 불러오는 중입니다...</p>;
 
   return (
     <div className="dashboard-container">
       <Header />
 
-      <h1 className="greeting">안녕하세요, {user.username}님</h1>
+      <h1 className="greeting">안녕하세요, {user.nickname}님</h1>
       <p className="welcome">개발자를 위한 자기소개서 첨삭 서비스 DevJS에 오신 것을 환영합니다.</p>
       <button className="create-button" onClick={handleCreateClick}>+ 새로 만들기</button>
 

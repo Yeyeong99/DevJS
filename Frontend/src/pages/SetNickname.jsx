@@ -11,7 +11,7 @@ const SetNickname = () => {
   const handleSubmit = async () => {
     const access = localStorage.getItem("access_token");
 
-    await axios.patch("http://localhost:8000/api/auth/user/", 
+    await axios.patch("http://localhost:8000/api/user/", 
       { nickname },
       { headers: { Authorization: `Bearer ${access}` } }
     );

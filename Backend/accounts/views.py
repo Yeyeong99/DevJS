@@ -7,6 +7,14 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 
+
+# 유찬 추가
+from .serializers import UserSerializer
+from rest_framework.decorators import api_view, permission_classes
+
+
+
+
 from django.conf import settings
 
 from .utils import get_or_create_social_user, generate_jwt_for_user
@@ -194,3 +202,25 @@ class LogoutView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+# 유찬 추가
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_info(request):
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
+
+@api_view(['GET', 'PATCH'])  # 테스트용
+@permission_classes([IsAuthenticated])
+def update_nickname(request):
+    if request.method == 'GET':
+        return Response({"message": "GET 작동함"})
+
+    if request.method == 'PATCH':
+        nickname = request.data.get("nickname")
+        if not nickname:
+            return Response({"error": "닉네임을 입력해주세요."}, status=400)
+        request.user.nickname = nickname
+        request.user.save()
+        return Response({"message": "닉네임 저장 완료!"})

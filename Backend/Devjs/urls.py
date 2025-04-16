@@ -24,4 +24,6 @@ urlpatterns = [
     path('api/feedbacks/', include('feedbacks.urls')),    # 피드백 관련
     path('api/', include('coverletters.urls')),   # 자기소개서 관련
     path('api/', include('jobdescriptions.urls')),  # JD 관련
+    # path('api/auth/', include('accounts.urls')),  # 닉네임 관련 (유찬 추가)
+
 ]
