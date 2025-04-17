@@ -14,4 +14,4 @@ class Company_User(models.Model):
     question = models.CharField(max_length=200)
     coverletter = models.TextField()
     new_coverletter = models.TextField(blank=True)
-    is_reviewsd = models.CharField(max_length=20)
+    is_reviewed = models.CharField(max_length=20)
