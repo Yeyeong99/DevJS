@@ -118,7 +118,7 @@ const Dashboard = () => {
   };
 
   const handleCreateClick = () => {
-    navigate("/companyinfo");
+    navigate("/totalupload");
   };
 
   const handleSeeMore = () => setShowMore(true);

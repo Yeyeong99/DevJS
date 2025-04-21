@@ -4,7 +4,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../assets/Upload.css";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header";
-
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 function Upload() {
   const [jdFile, setJdFile] = useState(null);
@@ -76,42 +77,64 @@ function Upload() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!jdFile && !jdText) {
       alert("JD를 업로드하거나 직접 입력해 주세요.");
       return;
     }
-
+  
     if (questions.some((q) => !q.question || !q.answer)) {
       alert("모든 질문과 답변을 입력해 주세요.");
       return;
     }
-
+  
     setIsSubmitting(true);
-
+  
     try {
-      // 1. JD 업로드
-      const formData = new FormData();
-      if (jdFile) formData.append("file", jdFile);
-      if (jdText) formData.append("content", jdText);
-
-      const jdRes = await axiosInstance.post("job-descriptions/", formData, {
+      const accessToken = localStorage.getItem("access_token");
+  
+      // ✅ 1. JD 생성 (회사정보 포함)
+      const jdPayload = {
+        title: "지원서 작성",
+        content: jdText || "",
+        company: company,
+        deadline: deadline,
+      };
+  
+      const jdRes = await axiosInstance.post("jobdescriptions/", jdPayload, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
         },
       });
-
+  
       const jdId = jdRes.data.id;
-
-      // 2. CoverLetter 생성
+  
+      // ✅ 2. 파일이 있을 경우 업로드
+      if (jdFile) {
+        const fileForm = new FormData();
+        fileForm.append("file", jdFile);
+  
+        await axiosInstance.post(
+          `jobdescriptions/${jdId}/upload/`,
+          fileForm,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
+  
+      // ✅ 3. CoverLetter 생성
       const clRes = await axiosInstance.post("coverletters/", {
         job_description: jdId,
-        title: "내 자기소개서", // 향후 사용자 입력값으로 대체 가능
+        title: "내 자기소개서",
       });
-
+  
       const coverLetterId = clRes.data.id;
-
-      // 3. CoverLetterItem 생성 (질문/답변 반복)
+  
+      // ✅ 4. CoverLetterItem 생성
       await Promise.all(
         questions.map((q, index) =>
           axiosInstance.post(`coverletters/${coverLetterId}/items/`, {
@@ -121,9 +144,9 @@ function Upload() {
           })
         )
       );
-
+  
       alert("자기소개서 업로드 완료!");
-      navigate("/jd-selection"); // 혹은 결과 페이지로 이동
+      navigate("/jd-selection");
     } catch (err) {
       console.error("업로드 실패:", err);
       alert("업로드 중 오류가 발생했습니다.");
@@ -131,6 +154,7 @@ function Upload() {
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <div className="upload-wrapper">

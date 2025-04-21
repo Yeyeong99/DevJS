@@ -1,24 +1,21 @@
-/* CoverLetterUploadPage.css */
+/* TotalUploadPage.css */
 
 .container {
-  padding: 3rem;
+  padding: 2rem;
   font-family: 'Pretendard', sans-serif;
   padding-top: 10rem;
-  background-color: #f9f9f9;
   min-height: 100vh;
+  
 }
 
-.logo {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 2rem;
-}
+
 
 .form-wrapper {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
+  margin-top: 5rem;
 }
 
 .left-form,
@@ -26,6 +23,11 @@
   flex: 1;
   min-width: 380px;
 }
+
+.right-form{
+  margin-top: 50px;
+}
+
 
 .form-group {
   margin-bottom: 2rem;
@@ -57,14 +59,19 @@ textarea {
   color: #000;
   resize: none;
   box-sizing: border-box;
+  margin: 20px 0rem 1rem 0rem;
+
+  
 }
+
+
 
 textarea {
   height: 80px;
 }
 
 .right-form textarea {
-  height: 180px;
+  height: 380px;
   margin-top: 1rem;
 }
 

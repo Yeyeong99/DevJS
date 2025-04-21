@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/CoverLetterUploadPage.css";
+import "../assets/TotalUploadPage.css";
 import axios from "axios";
 import Header from "../components/Header";
 
-const CoverLetterUploadPage = () => {
+const TotalUploadPage = () => {
   const [keywords, setKeywords] = useState("");
   const [company, setCompany] = useState("");
   const [position, setPosition] = useState("");
@@ -13,6 +13,8 @@ const CoverLetterUploadPage = () => {
   const [answer, setAnswer] = useState("");
 
   const navigate = useNavigate();
+
+
 
   const handleSubmit = async () => {
     try {
@@ -41,7 +43,6 @@ const CoverLetterUploadPage = () => {
     <div className="container">
         <Header/>
 
-      <h1 className="logo">DevJS</h1>
       <div className="form-wrapper">
         <div className="left-form">
           <div className="form-group">
@@ -71,12 +72,14 @@ const CoverLetterUploadPage = () => {
               onChange={(e) => setPosition(e.target.value)}
             />
           </div>
+
           <div className="form-group">
             <label>4. 지원 마감일을 알려주세요.</label>
             <input
               type="date"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
+              className="input-field data-input"
             />
           </div>
         </div>
@@ -111,4 +114,4 @@ const CoverLetterUploadPage = () => {
   );
 };
 
-export default CoverLetterUploadPage;
+export default TotalUploadPage;

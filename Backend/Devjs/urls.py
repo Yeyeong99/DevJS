@@ -19,11 +19,15 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('accounts.urls')),    # 로그인 관련
+    path('api/accounts/', include('accounts.urls')),    # 로그인 관련
     path('api/analyzes/', include('analyzes.urls')),    # 분석 관련
+<<<<<<< HEAD
     path('api/feedbacks/', include('feedbacks.urls')),    # 피드백 관련
     path('api/', include('coverletters.urls')),   # 자기소개서 관련
     path('api/', include('jobdescriptions.urls')),  # JD 관련
     # path('api/auth/', include('accounts.urls')),  # 닉네임 관련 (유찬 추가)
 
+=======
+    path('api/total/', include('total.urls')),  # 전체 관리
+>>>>>>> 4df78ee98378997ca877217f4a47742102b664cf
 ]
