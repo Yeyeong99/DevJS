@@ -10,6 +10,8 @@ from .serializers import UserSerializer, CompanySerializer, CompanyUserSerialize
 
 
 # Create your views here.
+
+# 업로드에서 추가할 때
 @api_view(['POST'])
 def total_list(request):
     if request == 'POST':
@@ -17,4 +19,3 @@ def total_list(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
