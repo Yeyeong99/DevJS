@@ -11,7 +11,7 @@ from groq import Groq
 from transformers import AutoTokenizer, AutoModel
 
 
-file_path = os.path.join("analyze", "rag", "faiss", "rag_data.jsonl")    
+file_path = os.path.join("analyzes", "rag", "faiss", "rag_data.jsonl")    
 data = []
 
 with jsonlines.open(file_path) as reader:
@@ -24,8 +24,8 @@ texts = [item["text"] for item in data]
 tokenizer = AutoTokenizer.from_pretrained("BM-K/KoSimCSE-roberta")
 model = AutoModel.from_pretrained("BM-K/KoSimCSE-roberta")
 
-index_path = os.path.join("analyze", "rag", "faiss", "faiss.index")    
-metadata_path = os.path.join("analyze", "rag", "faiss", "metadata.pkl")    
+index_path = os.path.join("analyzes", "rag", "faiss", "faiss.index")    
+metadata_path = os.path.join("analyzes", "rag", "faiss", "metadata.pkl")    
 
 index = faiss.read_index(index_path)
 with open(metadata_path, "rb") as f:

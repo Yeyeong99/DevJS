@@ -4,8 +4,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../assets/Upload.css";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
 function Upload() {
   const [jdFile, setJdFile] = useState(null);
