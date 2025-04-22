@@ -175,20 +175,6 @@ class NaverLoginView(APIView):
         return Response(tokens)
 
 
-# 로그인된 유저 정보
-class UserInfoView(APIView):
-    permission_classes = [IsAuthenticated]  # JWT 인증 필요
-
-    def get(self, request):
-        user = request.user  # 인증된 사용자 객체
-        return Response({
-            "id": user.id,
-            "email": user.email,
-            "username": user.username,
-            "provider": user.provider,
-        })
-        
-        
 # 로그아웃
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
@@ -202,15 +188,21 @@ class LogoutView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# 로그인된 유저 정보
+class UserInfoView(APIView):
+    permission_classes = [IsAuthenticated]  # JWT 인증 필요
+
+    def get(self, request):
+        user = request.user  # 인증된 사용자 객체
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
         
+#### 유찬 수정코드가 'UserInfoView'와 동일해서 serializer 적용해서 수정했습니다. ####
+#### ==> api만 맞춰주면 됩니다 ####
 
-# 유찬 추가
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def user_info(request):
-    serializer = UserSerializer(request.user)
-    return Response(serializer.data)
-
+# 닉네임 생성 조회 함수
 @api_view(['GET', 'PATCH'])  # 테스트용
 @permission_classes([IsAuthenticated])
 def update_nickname(request):

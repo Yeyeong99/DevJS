@@ -18,3 +18,9 @@ def total_list(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+# 분석한 것 추가 저장 함수
+
+
+# 특정 자소서 삭제 함수
+
