@@ -60,22 +60,27 @@ def build_total_prompt(question, coverletter, jd_keywords, retrieved_contexts):
 
     total_prompt = f"""
     다음은 사용자의 자기소개서 문항과 자기소개서 답변, 자기소개서 답변을 통해 강조하고자 하는 키워드입니다.
-    참고용 피드백의 내용을 바탕으로 종합 피드백을 제공해주세요.
+    첨삭 시 참고용 자소서 및 피드백의 내용을 바탕으로 종합 피드백을 제공해주세요.
 
-    자기소개서 문항:
+    사용자의 자기소개서 문항:
     {question.strip()}
 
-    자기소개서 답변:
+    사용자의 자기소개서 답변:
     {coverletter.strip()}
 
-    주요 키워드:
+    사용자의 주요 키워드:
     {jd_keywords.strip()}
 
-    참고용 자소서 및 피드백:
+    첨삭 시 참고용 자소서 및 피드백:
     {contexts.strip()}
 
     📌 다음 조건을 지켜주세요:
-    전체 자기소개서에 대한 종합 피드백을 구체적인 근거를 들어 작성하고, 필요할 경우 구체적인 예시를 직접 만들어 `feedback` 항목에 작성해주세요.
+    사용자의 자기소개서에 대해서만 종합 피드백을 구체적인 근거를 들어 작성하고, 필요할 경우 구체적인 문장 개선의 예시를 직접 만들어 `feedback` 항목에 작성해주세요.
+    피드백에는 키워드가 잘 반영되었는지에 관한 판단과, 잘한 점과 보완해야할 점이 들어가야 합니다. 문장 개선의 예시를 들 때, 사용자의 자기소개서 답변과 유사한 예시를 들면 안됩니다.
+    📌 출력 형식은 다음 스키마를 반드시 따릅니다. ✅
+        {{
+            'feedback': '...'
+        }}
     """
     return total_prompt
 
@@ -88,7 +93,7 @@ def build_sentence_prompt(coverletter, total_feedback):
     {coverletter.strip()}
 
     종합 피드백:
-    {total_feedback.feedback.strip()}
+    {total_feedback.strip()}
 
 
     📌 다음 조건을 지켜주세요:
@@ -107,18 +112,18 @@ def build_sentence_prompt(coverletter, total_feedback):
 
 class TotalFeedback(BaseModel):
     feedback: str
-
+    
 class Feedback(BaseModel):
     before_feedback: List[str]
     after_feedback: List[str]
 
-def get_llm_total_feedback(total_prompt):
+def get_llm_total_feedback(total_prompt) -> TotalFeedback:
     response = client.chat.completions.create(
         model=MODEL_NAME,
         messages=[
             {
                 "role": "system",
-                "content": "당신은 IT 분야로 진로를 정한 취업준비생들의 자기소개서를 첨삭해주는 전문가입니다.\n"
+                "content": "당신은 IT 분야로 진로를 정한 취업준비생들의 자기소개서를 첨삭해주는 전문가입니다.\n 반드시 한국어로만 답변하세요."
                 # json 스키마 전달
                 f" The JSON object must use the schema: {json.dumps(TotalFeedback.model_json_schema(), indent=2)}",
             },
@@ -132,14 +137,15 @@ def get_llm_total_feedback(total_prompt):
         # Json으로 포맷 지정
         response_format={"type": "json_object"},        
     )
-    return TotalFeedback.model_validate_json(response.choices[0].message.content)
+    raw_json = json.loads(response.choices[0].message.content)
+    return raw_json
 
 def get_sentence_feedback(prompt) -> Feedback:
     response = client.chat.completions.create(
         messages=[
             {
                 "role": "system",
-                "content": "당신은 IT 분야로 진로를 정한 취업준비생들의 자기소개서를 첨삭해주는 전문가입니다.\n"
+                "content": "당신은 IT 분야로 진로를 정한 취업준비생들의 자기소개서를 첨삭해주는 전문가입니다.\n 반드시 한국어로만 답변하세요."
                 # json 스키마 전달
                 f" The JSON object must use the schema: {json.dumps(Feedback.model_json_schema(), indent=2)}",
             },
@@ -156,5 +162,5 @@ def get_sentence_feedback(prompt) -> Feedback:
     )
 
     raw_json = json.loads(response.choices[0].message.content)
-    clean_json = raw_json.get("properties", raw_json)  
-    return Feedback.model_validate(clean_json)
+
+    return raw_json

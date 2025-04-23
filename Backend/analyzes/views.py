@@ -4,7 +4,7 @@ from rest_framework import status
 from total.models import Company_User
 import json
 # 모델, 인덱스 로드
-from .utils import texts, index, metadatas, encode, build_total_prompt, build_sentence_prompt, get_llm_total_feedback, get_sentence_feedback 
+from .utils import texts, index, metadatas, TotalFeedback, Feedback, encode, build_total_prompt, build_sentence_prompt, get_llm_total_feedback, get_sentence_feedback 
 
 import numpy as np
 
@@ -38,12 +38,26 @@ def get_feedback(request):
         # Groq API 호출 -> 답변 받기
         total_feedback = get_llm_total_feedback(total_prompt)
 
+        try:
+            formatted_total_feedback = TotalFeedback.model_validate(total_feedback)
+        except:
+            clean_json = total_feedback.get("properties", total_feedback)  
+            formatted_total_feedback = TotalFeedback.model_validate(clean_json)
+
+
         # 프롬프트 구성: 문장 별 피드백
-        sentence_prompt = build_sentence_prompt(coverletter, total_feedback)
+        sentence_prompt = build_sentence_prompt(coverletter, "\n".join(formatted_total_feedback.feedback))
         sentence_feedback = get_sentence_feedback(sentence_prompt)
 
-        before_feedback = sentence_feedback.before_feedback
-        after_feedback = sentence_feedback.after_feedback
+        # sentence_feedback의 결과에 properties가 포함될 경우가 있음 except로 처리
+        try:
+            formatted_sentence_feedback = Feedback.model_validate(sentence_feedback)
+        except:
+            clean_json = sentence_feedback.get("properties", sentence_feedback)  
+            formatted_sentence_feedback = Feedback.model_validate(clean_json)
+
+        before_feedback = formatted_sentence_feedback.before_feedback
+        after_feedback = formatted_sentence_feedback.after_feedback
         
         final_before_feedback = []
         final_after_feedback = []
@@ -52,4 +66,4 @@ def get_feedback(request):
                 final_before_feedback.append(before)
                 final_after_feedback.append(after)
 
-        return Response(data={'total_feedback': total_feedback, 'final_before_feedback': final_before_feedback, 'final_after_feedback': final_after_feedback}, status=status.HTTP_200_OK)
+        return Response(data={'total_feedback': formatted_total_feedback.feedback, 'final_before_feedback': final_before_feedback, 'final_after_feedback': final_after_feedback}, status=status.HTTP_200_OK)
