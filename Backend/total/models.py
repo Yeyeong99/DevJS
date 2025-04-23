@@ -16,3 +16,4 @@ class Company_User(models.Model):
     answer = models.TextField()
     feedback = models.TextField(blank=True, null=True)
     is_reviewed = models.CharField(max_length=20, blank=True, null=True)
+    created_at = models.DateField(auto_now_add=True)

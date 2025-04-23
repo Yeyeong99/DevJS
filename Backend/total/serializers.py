@@ -17,7 +17,7 @@ class CompanyUserSerializer(serializers.ModelSerializer):
         model = Company_User
         fields = '__all__'
         extra_kwargs = {
-            'company': {'read_only': True},  # ❗ serializer에선 직접 받지 않고, views.py에서 넘겨줌
+            'company': {'read_only': True},  # serializer에선 직접 받지 않고, views.py에서 넘겨줌
             'user': {'read_only': True},
         }        
         # fields = [
