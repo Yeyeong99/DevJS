@@ -7,6 +7,14 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 
+
+# 유찬 추가
+from .serializers import UserSerializer
+from rest_framework.decorators import api_view, permission_classes
+
+
+
+
 from django.conf import settings
 
 from .utils import get_or_create_social_user, generate_jwt_for_user
@@ -167,20 +175,6 @@ class NaverLoginView(APIView):
         return Response(tokens)
 
 
-# 로그인된 유저 정보
-class UserInfoView(APIView):
-    permission_classes = [IsAuthenticated]  # JWT 인증 필요
-
-    def get(self, request):
-        user = request.user  # 인증된 사용자 객체
-        return Response({
-            "id": user.id,
-            "email": user.email,
-            "username": user.username,
-            "provider": user.provider,
-        })
-        
-        
 # 로그아웃
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
@@ -194,3 +188,31 @@ class LogoutView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# 로그인된 유저 정보
+class UserInfoView(APIView):
+    permission_classes = [IsAuthenticated]  # JWT 인증 필요
+
+    def get(self, request):
+        user = request.user  # 인증된 사용자 객체
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+        
+#### 유찬 수정코드가 'UserInfoView'와 동일해서 serializer 적용해서 수정했습니다. ####
+#### ==> api만 맞춰주면 됩니다 ####
+
+# 닉네임 생성 조회 함수
+@api_view(['GET', 'PATCH'])  # 테스트용
+@permission_classes([IsAuthenticated])
+def update_nickname(request):
+    if request.method == 'GET':
+        return Response({"message": "GET 작동함"})
+
+    if request.method == 'PATCH':
+        nickname = request.data.get("nickname")
+        if not nickname:
+            return Response({"error": "닉네임을 입력해주세요."}, status=400)
+        request.user.nickname = nickname
+        request.user.save()
+        return Response({"message": "닉네임 저장 완료!"})

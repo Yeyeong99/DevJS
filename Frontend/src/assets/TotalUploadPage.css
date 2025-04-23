@@ -1,0 +1,97 @@
+/* TotalUploadPage.css */
+
+.container {
+  padding: 2rem;
+  font-family: 'Pretendard', sans-serif;
+  padding-top: 10rem;
+  min-height: 100vh;
+  
+}
+
+
+
+.form-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 5rem;
+}
+
+.left-form,
+.right-form {
+  flex: 1;
+  min-width: 380px;
+}
+
+.right-form{
+  margin-top: 50px;
+}
+
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.helper {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+input[type='text'],
+input[type='date'],
+textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #000;
+  resize: none;
+  box-sizing: border-box;
+  margin: 20px 0rem 1rem 0rem;
+
+  
+}
+
+
+
+textarea {
+  height: 80px;
+}
+
+.right-form textarea {
+  height: 380px;
+  margin-top: 1rem;
+}
+
+.button-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.submit-button {
+  background-color: #7b61ff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #5c45d3;
+}

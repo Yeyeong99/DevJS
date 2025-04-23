@@ -5,7 +5,7 @@ from .models import Company, Company_User
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = get_user_model
+        model = get_user_model()
         fields = ['id', 'nickname']
 
 
@@ -15,17 +15,23 @@ class CompanyUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company_User
-        fields = [
-            'id',
-            'company',
-            'user',
-            'keyword',
-            'job_category',
-            'question',
-            'coverletter',
-            'new_coverletter',
-            'is_reviewsd'
-        ]
+        fields = '__all__'
+        extra_kwargs = {
+            'company': {'read_only': True},  # ❗ serializer에선 직접 받지 않고, views.py에서 넘겨줌
+            'user': {'read_only': True},
+        }        
+        # fields = [
+        #     'id',
+        #     'company',
+        #     'user',
+        #     'keywords',
+        #     'deadline',
+        #     'position',
+        #     'question',
+        #     'answer',
+        #     'feedback',
+        #     'is_reviewed'
+        # ]
 
 
 # 회사 시리얼라이저
