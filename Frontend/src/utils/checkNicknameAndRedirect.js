@@ -3,7 +3,7 @@ import axios from "axios";
 export const checkNicknameAndRedirect = async (navigate) => {
   const access = localStorage.getItem("access_token");
   try {
-    const res = await axios.get("http://localhost:8000/api/user-info/", {
+    const res = await axios.get("http://localhost:8000/api/auth/user", {
       headers: {
         Authorization: `Bearer ${access}`,
       },
