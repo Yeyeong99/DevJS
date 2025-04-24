@@ -70,5 +70,4 @@ def get_feedback(request):
             'final_before_feedback': final_before_feedback, 
             'final_after_feedback': final_after_feedback
             }
-        print(data)
         return Response(data=data, status=status.HTTP_200_OK)
