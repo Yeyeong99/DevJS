@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import axiosInstance from "../api/axiosInstance"
 import { useNavigate } from "react-router-dom";
 import "../assets/SetNickname.css";
 
@@ -11,7 +12,7 @@ const SetNickname = () => {
   const handleSubmit = async () => {
     const access = localStorage.getItem("access_token");
 
-    await axios.patch("http://localhost:8000/api/auth/nickname/", 
+    await axiosInstance.patch("http://localhost:8000/api/auth/nickname/", 
       { nickname },
       { headers: { Authorization: `Bearer ${access}` } }
     );

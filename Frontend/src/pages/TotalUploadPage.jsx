@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../assets/TotalUploadPage.css";
 import axios from "axios";
 import Header from "../components/Header";
+import axiosInstance from "../api/axiosInstance";
 
 const TotalUploadPage = () => {
   const [keywords, setKeywords] = useState("");
@@ -26,7 +27,7 @@ const TotalUploadPage = () => {
         question,
         answer,
       };
-      await axios.post("http://localhost:8000/api/total/", payload);
+      await axiosInstance.post("total/total_list/", payload);
       alert("성공적으로 저장되었습니다!");
       navigate("/feedback");
     } catch (error) {

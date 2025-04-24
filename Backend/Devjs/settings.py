@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 from decouple import config
-
+from datetime import timedelta
 KAKAO_CLIENT_ID = config("KAKAO_CLIENT_ID")
 
 GOOGLE_CLIENT_ID = config("GOOGLE_CLIENT_ID")
@@ -73,6 +73,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_BLACKLIST_ENABLED': True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # 토큰 유효 시간
 }
 
 MIDDLEWARE = [
