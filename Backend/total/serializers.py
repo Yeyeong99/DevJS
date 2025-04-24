@@ -16,10 +16,11 @@ class CompanyUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company_User
         fields = '__all__'
-        extra_kwargs = {
-            'company': {'read_only': True},  # serializer에선 직접 받지 않고, views.py에서 넘겨줌
-            'user': {'read_only': True},
-        }        
+        read_only_fields = ('id', 'company', 'user', )
+        # extra_kwargs = {
+        #     'company': {'read_only': True},  # serializer에선 직접 받지 않고, views.py에서 넘겨줌
+        #     'user': {'read_only': True},
+        # }        
         # fields = [
         #     'id',
         #     'company',
@@ -32,7 +33,14 @@ class CompanyUserSerializer(serializers.ModelSerializer):
         #     'feedback',
         #     'is_reviewed'
         # ]
-
+        
+class CompanyUserDashboardSerializer(serializers.ModelSerializer):
+    
+    user = UserSerializer(read_only=True)
+   
+    class Meta:
+        model = Company_User
+        fields = ('id', 'question', 'coverletter', 'new_coverletter', )    # id, 질문, 원본 자소서, 피드백 자소서 전달할 수 있도록 만들었음.
 
 # 회사 시리얼라이저
 class CompanySerializer(serializers.ModelSerializer):

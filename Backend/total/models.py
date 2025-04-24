@@ -13,6 +13,7 @@ class Company_User(models.Model):
     position = models.CharField(max_length=50)
     deadline = models.DateField()
     question = models.CharField(max_length=200)
+    question_number = models.IntegerField(blank=True)
     answer = models.TextField()
     feedback = models.TextField(blank=True, null=True)
     is_reviewed = models.CharField(max_length=20, blank=True, null=True)

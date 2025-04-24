@@ -21,6 +21,9 @@ def total_list(request):
             # company name으로 Company 인스턴스 생성 or 조회
             company, _ = Company.objects.get_or_create(name=company_name)
 
+            # 각 자소서에 번호 붙이기
+            len_of_coverletter = Company_User.objects.filter(user=request.user, company=company).count()
+            
             # request.data에는 여전히 "company": "삼성전자" 문자열이 있으니 제거해야 함
             data = request.data.copy()
             data.pop("company", None)
@@ -29,14 +32,14 @@ def total_list(request):
 
             serializer = CompanyUserSerializer(data=data)
             if serializer.is_valid():
-                serializer.save(company=company, user=request.user)
+                serializer.save(company=company, user=request.user, question_number=len_of_coverletter + 1)
                 return Response(serializer.data, status=201)
             else:
-                print("❗유효성 검사 실패:", serializer.errors)
+                print("유효성 검사 실패:", serializer.errors)
                 return Response(serializer.errors, status=400)
 
         except Exception as e:
-            print("🔥 예외 발생:", e)
+            print("예외 발생:", e)
             return Response({"error": str(e)}, status=500)
         
     elif request.method == 'GET':
@@ -44,7 +47,7 @@ def total_list(request):
         serializer = CompanyUserSerializer(company_users, many=True)
         return Response(serializer.data)
     
-
+        
 @api_view(['PUT'])
 def total_feedback(request, pk):
     try:
