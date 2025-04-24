@@ -15,14 +15,14 @@ def get_feedback(request):
     # 피드백 받기
     if request.method == 'POST':
         # JD 키워드들
-        jd_keywords = request.data.get('jd_keywords') 
+        keywords = request.data.get('keywords') 
         # 자기소개서 문항
-        coverletter = request.data.get('coverletter')
+        answer = request.data.get('answer')
         # 질문
         question = request.data.get('question')
 
         # 벡터 검색
-        query_embedding = encode(jd_keywords)
+        query_embedding = encode(keywords)
         D, I = index.search(np.array([query_embedding]), k=3)
         retrieved_contexts = [
             {
@@ -33,7 +33,7 @@ def get_feedback(request):
         ]
     
         # 프롬프트 구성: 종합 피드백
-        total_prompt = build_total_prompt(question, coverletter, jd_keywords, retrieved_contexts)
+        total_prompt = build_total_prompt(question, answer, keywords, retrieved_contexts)
 
         # Groq API 호출 -> 답변 받기
         total_feedback = get_llm_total_feedback(total_prompt)
@@ -46,7 +46,7 @@ def get_feedback(request):
 
 
         # 프롬프트 구성: 문장 별 피드백
-        sentence_prompt = build_sentence_prompt(coverletter, "\n".join(formatted_total_feedback.feedback))
+        sentence_prompt = build_sentence_prompt(answer, "\n".join(formatted_total_feedback.feedback))
         sentence_feedback = get_sentence_feedback(sentence_prompt)
 
         # sentence_feedback의 결과에 properties가 포함될 경우가 있음 except로 처리
@@ -65,5 +65,10 @@ def get_feedback(request):
             if before != after:
                 final_before_feedback.append(before)
                 final_after_feedback.append(after)
-
-        return Response(data={'total_feedback': formatted_total_feedback.feedback, 'final_before_feedback': final_before_feedback, 'final_after_feedback': final_after_feedback}, status=status.HTTP_200_OK)
+        data = {
+            'total_feedback': formatted_total_feedback.feedback, 
+            'final_before_feedback': final_before_feedback, 
+            'final_after_feedback': final_after_feedback
+            }
+        print(data)
+        return Response(data=data, status=status.HTTP_200_OK)
