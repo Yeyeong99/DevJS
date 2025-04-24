@@ -1,0 +1,106 @@
+/* FeedbackPage.css */
+
+.feedback-container {
+    font-family: 'Pretendard', sans-serif;
+    padding: 3rem;
+    background-color: #f8f8f8;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .navigation-bar {
+    font-size: 0.9rem;
+    color: #999;
+    margin-bottom: 1rem;
+  }
+  
+  .back-link {
+    cursor: pointer;
+    margin-right: 0.5rem;
+    color: #999;
+  }
+  
+  .feedback-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+  
+  .question-block {
+    margin-bottom: 1.5rem;
+  }
+  
+  .question-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tag {
+    display: inline-block;
+    background-color: #6c63ff;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+  
+  .feedback-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+  
+  .original-answer,
+  .ai-feedback {
+    flex: 1;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    min-height: 500px;
+    white-space: pre-line;
+    min-width: 480px;
+  }
+  
+  .original-answer h3,
+  .ai-feedback h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .btn {
+    background-color: white;
+    border: 1px solid #6c63ff;
+    color: #6c63ff;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn:hover {
+    background-color: #f0eeff;
+  }
+  
+  .btn-primary {
+    background-color: #6c63ff;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #5849f8;
+  }
+  

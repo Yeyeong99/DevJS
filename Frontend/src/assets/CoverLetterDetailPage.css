@@ -1,0 +1,92 @@
+.detail-container {
+    max-width: 900px;
+    margin: 5rem auto;
+    padding: 2rem;
+    font-family: 'Pretendard', sans-serif;
+    color: #222;
+    background-color: white;
+  }
+  
+  .question-block {
+    margin-bottom: 2rem;
+  }
+  
+  .question-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tag {
+    display: inline-block;
+    background-color: #a855f7;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.4rem;
+  }
+  
+  .feedback-content {
+    border: 1px solid #ccc;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background-color: #f9f9f9;
+    margin-bottom: 2rem;
+  }
+  
+  .ai-feedback h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .ai-feedback p {
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  
+  .original-answer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #aaa;
+  }
+  
+  .original-answer h4 {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #444;
+  }
+  
+  .original-answer p {
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: #6b21a8;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .delete-btn {
+    background-color: #ef4444;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+    float: right;
+  }
+  
+  .delete-btn:hover {
+    background-color: #dc2626;
+  }
+  

@@ -29,7 +29,7 @@ const TotalUploadPage = () => {
       };
       await axiosInstance.post("total/total_list/", payload);
       alert("성공적으로 저장되었습니다!");
-      navigate("/feedback");
+      navigate("/finalsavepage");
     } catch (error) {
       console.error("전송 실패:", error);
       alert("저장에 실패했습니다.");

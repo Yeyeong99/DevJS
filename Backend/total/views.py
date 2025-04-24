@@ -7,10 +7,12 @@ from django.shortcuts import render
 
 from .models import Company, Company_User
 from .serializers import UserSerializer, CompanySerializer, CompanyUserSerializer
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 @api_view(['POST', 'GET'])
+@login_required
 def total_list(request):
     if request.method == 'POST':
         try:

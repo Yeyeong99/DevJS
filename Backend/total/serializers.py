@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 # 중개 테이블 시리얼라이저
 class CompanyUserSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    company_name = serializers.CharField(source="company.name", read_only=True)
 
     class Meta:
         model = Company_User

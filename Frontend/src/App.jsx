@@ -9,6 +9,8 @@ import JDSelection from './pages/JDSelection';
 import SetNickname from './pages/SetNickname';
 import CompanyInfo from "./pages/CompanyInfo";
 import TotalUploadPage from "./pages/TotalUploadPage";
+import FinalSavePage from "./pages/FinalSavePage";
+import CoverLetterDetailPage from "./pages/CoverLetterDetailPage";
 
 
 
@@ -33,6 +35,8 @@ function App() {
         <Route path="/setnickname" element={<SetNickname />} />
         <Route path="/companyinfo" element={<CompanyInfo />} />
         <Route path="/totalupload" element={<TotalUploadPage />} />
+        <Route path="/finalsavepage" element={<FinalSavePage />} />
+        <Route path="/coverletter/:id" element={<CoverLetterDetailPage />} />
 
 
 

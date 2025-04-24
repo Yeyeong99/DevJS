@@ -1,5 +1,3 @@
-// Dashboard.jsx
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,12 +6,10 @@ import Header from "../components/Header";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
-  const [jobs, setJobs] = useState([]); // 기존 const → useState로 변경
-
+  const [jobs, setJobs] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -23,28 +19,20 @@ const Dashboard = () => {
       return;
     }
 
-    // axios.get("http://localhost:8000/api/coverletters/", {
-    //   headers: { Authorization: `Bearer ${accessToken}` }
-    // })
-    // .then(res => setJobs(res.data));  자소서 가져오기. (유현)
-    
+    // 자소서 목록 불러오기
+    axios.get("http://localhost:8000/api/total/total_list/", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    })
+      .then(res => setJobs(res.data))
+      .catch(err => console.error("자소서 목록 가져오기 실패:", err));
+
+    // 사용자 정보 불러오기
     axios.get("http://localhost:8000/api/auth/user/", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       }
     })
-      .then((res) => {
-        setUser(res.data);
-
-        // ✅ 여기서 자소서 목록도 불러올 수 있음 (임시 하드코딩)
-        setJobs([
-          // { company: '삼성전자', deadline: '2025-03-19', status: '수정 중' },
-          // { company: '삼성카드', deadline: '2025-03-19', status: '제출 완료' },
-          // { company: '제일기획', deadline: '2025-03-19', status: '수정 중' },
-          // { company: 'LG전자', deadline: '2025-03-22', status: '수정 중' },
-          // { company: '카카오', deadline: '2025-03-25', status: '제출 완료' },
-        ]);
-      })
+      .then((res) => setUser(res.data))
       .catch(async (err) => {
         const errorCode = err.response?.data?.code;
 
@@ -62,9 +50,7 @@ const Dashboard = () => {
             localStorage.setItem("access_token", newAccessToken);
 
             const retry = await axios.get("http://localhost:8000/api/auth/user/", {
-              headers: {
-                Authorization: `Bearer ${newAccessToken}`,
-              }
+              headers: { Authorization: `Bearer ${newAccessToken}` }
             });
 
             setUser(retry.data);
@@ -78,7 +64,6 @@ const Dashboard = () => {
           console.error("⛔ 유저 정보 요청 실패:", err.response?.data || err);
         }
       });
-
   }, []);
 
   const visibleJobs = showMore ? jobs : jobs.slice(0, 3);
@@ -123,22 +108,6 @@ const Dashboard = () => {
 
   const handleSeeMore = () => setShowMore(true);
 
-  const fetchUser = async () => {
-    const access = localStorage.getItem("access_token");
-    try {
-      const res = await axios.get("http://localhost:8000/api/auth/user", {
-        headers: {
-          Authorization: `Bearer ${access}`,
-        },
-      });
-      setUser(res.data);  // nickname 포함된 사용자 정보 저장!
-    } catch (err) {
-      console.error("유저 정보 가져오기 실패:", err);
-    }
-  };
-
-  fetchUser();
-
   if (!user) return <p className="loading">유저 정보를 불러오는 중입니다...</p>;
 
   return (
@@ -163,15 +132,21 @@ const Dashboard = () => {
                 <th onClick={() => handleSort('deadline')} style={{ cursor: 'pointer' }}>
                   마감일 {getSortIndicator('deadline')}
                 </th>
-                <th onClick={() => handleSort('status')} style={{ cursor: 'pointer' }}>
+                {/* 추후 추가 예정 ( 상태 ) */}
+                {/* <th onClick={() => handleSort('status')} style={{ cursor: 'pointer' }}>
                   상태 {getSortIndicator('status')}
-                </th>
+                </th> */}  
               </tr>
             </thead>
             <tbody>
               {sortedJobs.map((job, index) => (
                 <tr key={index}>
-                  <td>{job.company}</td>
+                  <td
+                    onClick={() => navigate(`/coverletter/${job.id}`)}
+                    style={{ cursor: "pointer", fontWeight: "bold", color: "#4f46e5" }}
+                  >
+                    {job.company_name}
+                  </td>
                   <td>{job.deadline}</td>
                   <td>
                     <span className={`status ${job.status === '수정 중' ? 'editing' : 'submitted'}`}>
