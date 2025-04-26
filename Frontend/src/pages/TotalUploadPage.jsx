@@ -27,9 +27,23 @@ const TotalUploadPage = () => {
         question,
         answer,
       };
+      const answerInfo = {
+        keywords,
+        question,
+        answer,
+      }
       await axiosInstance.post("total/total_list/", payload);
+          // 2) 두 번째 분석 → 결과 받기
+      const accessToken = localStorage.getItem("access_token");
+      const { data: feedback } = await axiosInstance.post(
+        "http://localhost:8000/api/analyzes/",
+        answerInfo,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      // feedback = { total_feedback, final_before_feedback, final_after_feedback }
+
       alert("성공적으로 저장되었습니다!");
-      navigate("/finalsavepage");
+      navigate("/feedback",  { state: { ...payload, feedback } });
     } catch (error) {
       console.error("전송 실패:", error);
       alert("저장에 실패했습니다.");

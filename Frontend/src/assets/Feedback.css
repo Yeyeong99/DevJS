@@ -1,7 +1,8 @@
 /* DevJSFeedbackPage.css */
 
 html, body {
-  height: 100%;
+  overflow-y: auto;
+  max-height: 100vh;
   background-color: #ffffff;
   margin: 0;
   padding: 0;
@@ -10,10 +11,10 @@ html, body {
 }
 
 .container {
-  min-height: 100vh;
+  max-height: 100vh;
   max-width: 100%; /* 화면 전체 사용 */
-  padding: 2rem;
-  padding-top: 5rem;
+  padding: 0.5rem;
+  padding-top: 0.5rem;
   box-sizing: border-box;
   background-color: #fff;
 }
@@ -70,6 +71,10 @@ html, body {
   margin-bottom: 16px;
 }
 
+pre {
+  white-space: pre-wrap;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -86,9 +91,24 @@ table th, table td {
   word-wrap: break-word;
 }
 
+table td, table tr {
+  margin: 0;
+  height: 100%;
+}
+
 table th {
   background-color: #f6f6f6;
   font-weight: 600;
+}
+
+textarea {
+  height: 100%;
+  width: 100%;
+  margin: 5rem;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  resize: vertical;
 }
 
 .summary {
