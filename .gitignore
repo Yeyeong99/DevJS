@@ -452,6 +452,6 @@ Thumbs.db
 
 
 # RAG
-analyzes/rag/faiss/
+Backend/analyzes/rag/faiss/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,node,react
