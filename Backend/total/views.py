@@ -6,13 +6,13 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 
 from .models import Company, Company_User
-from .serializers import UserSerializer, CompanySerializer, CompanyUserSerializer
-from django.contrib.auth.decorators import login_required
+from .serializers import UserSerializer, CompanyUserSerializer
+
+User = get_user_model()
 
 
 # Create your views here.
-@api_view(['POST', 'GET'])
-@login_required
+@api_view(['POST', 'PUT', 'GET'])
 def total_list(request):
     if request.method == 'POST':
         try:
@@ -43,33 +43,51 @@ def total_list(request):
         except Exception as e:
             print("예외 발생:", e)
             return Response({"error": str(e)}, status=500)
-        
+    
+    # 피드백 받은 거 저장하는 기능
+    elif request.method == 'PUT':
+        company_name = request.data.get('company')
+        company = Company.objects.get(name=company_name)
+        try:
+            feedbacks = Company_User.objects.filter(user=request.user, company=company)
+            feedback_need = feedbacks.all().order_by('-created_at')[0]
+        except Company_User.DoesNotExist:
+            return Response({"error": "자기소개서를 찾을 수 없습니다."}, status=404)
+
+        # feedback 필드만 수정
+        feedback_text = request.data.get("feedback")
+        if feedback_text is None:
+            return Response({"error": "feedback 필드가 필요합니다."}, status=400)
+
+        feedback_need.feedback = feedback_text
+        feedback_need.save()
+
+        serializer = CompanyUserSerializer(feedback_need)
+        return Response(serializer.data, status=200)
+    
+    # 대시보드에 넘기는 기능
     elif request.method == 'GET':
         company_users = Company_User.objects.filter(user=request.user).order_by('-id')  # 자신이 작성한 항목만
         serializer = CompanyUserSerializer(company_users, many=True)
         return Response(serializer.data)
+
+# ---------------------------------------------------
+# 특정 회사의 자소서 확인 기능
+@api_view(['GET'])
+def detail(request, company_pk):
+    company = Company.objects.get(pk=company_pk)
+    user = request.user
+    company_user = Company_User.objects.filter(user=user, company=company)
+    serializer = CompanyUserSerializer(instance=company_user, many=True)
+    return Response(serializer.data)
+
     
-        
-@api_view(['PUT'])
-def total_feedback(request, pk):
-    try:
-        feedback_need = Company_User.objects.get(pk=pk, user=request.user)
-    except Company_User.DoesNotExist:
-        return Response({"error": "자기소개서를 찾을 수 없습니다."}, status=404)
-
-    # feedback 필드만 수정
-    feedback_text = request.data.get("feedback")
-    if feedback_text is None:
-        return Response({"error": "feedback 필드가 필요합니다."}, status=400)
-
-    feedback_need.feedback = feedback_text
-    feedback_need.save()
-
-    serializer = CompanyUserSerializer(feedback_need)
-    return Response(serializer.data, status=200)
-
-# 분석한 것 추가 저장 함수
-
-
 # 특정 자소서 삭제 함수
-
+@api_view(['DELETE'])
+def delete(request, total_pk):
+    company_user = Company_User.objects.get(pk=total_pk)
+    
+    if request.method == 'DELETE':
+        company_user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    

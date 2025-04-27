@@ -4,9 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../assets/FinalSavePage.css";
 import axios from 'axios';
 
-
 const FinalSavePage = () => {
-  const { id } = useParams(); // URL에서 id 받아옴
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [question, setQuestion] = useState("");
@@ -21,30 +20,30 @@ const FinalSavePage = () => {
         const access = localStorage.getItem("access_token");
         const res = await axios.get(`http://localhost:8000/api/total/total_list/`, {
           headers: {
-            Authorization: `Bearer ${access}`, 
+            Authorization: `Bearer ${access}`,
           },
         });
-  
-        const latest = res.data[0];  
+
+        const latest = res.data[0];
 
         setCompany(latest.company);
         setQuestion(latest.question);
         setKeywords(latest.keywords);
         setOriginalAnswer(latest.answer);
-        setAiFeedback(latest.feedback); // 
+        setAiFeedback(latest.feedback);
       } catch (err) {
-        console.error("데이터 가져오기 실패!", err);
+        console.error("❌ 데이터 가져오기 실패!", err);
       }
     };
-  
+
     fetchData();
   }, [id]);
-
 
   const saveFeedback = async () => {
     try {
       const access = localStorage.getItem("access_token");
       await axios.put(`http://localhost:8000/api/total/total_list/`, {
+        company: company,
         feedback: aiFeedback,
       }, {
         headers: { Authorization: `Bearer ${access}` },
@@ -55,7 +54,11 @@ const FinalSavePage = () => {
       alert("❌ 저장 중 오류가 발생했습니다.");
     }
   };
-  
+
+  const handleGetMoreFeedback = () => {
+    navigate("/totalupload"); // ✅ TotalUploadPage로 이동
+  };
+
   return (
     <div className="feedback-container">
       <Header />
@@ -77,8 +80,12 @@ const FinalSavePage = () => {
       </div>
 
       <div className="button-wrapper">
-        <button className="btn" onClick={saveFeedback}>피드백 더 받기</button>
-        <button className="btn btn-primary" onClick={saveFeedback}>피드백버전으로 저장하기</button>
+        <button className="btn" onClick={handleGetMoreFeedback}>
+          피드백 더 받기
+        </button>
+        <button className="btn btn-primary" onClick={saveFeedback}>
+          피드백버전으로 저장하기
+        </button>
       </div>
     </div>
   );
