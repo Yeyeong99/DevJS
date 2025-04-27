@@ -75,6 +75,10 @@ pre {
   white-space: pre-wrap;
 }
 
+[id^="feedback-"] {
+  background-color: #ca91ff; /* 원하는 색상으로 변경 가능 */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
