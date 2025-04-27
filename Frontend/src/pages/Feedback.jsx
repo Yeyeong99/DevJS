@@ -1,80 +1,88 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, {useEffect} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import "../assets/Feedback.css";
 import Header from "../components/Header";
+import axiosInstance from "../api/axiosInstance";
 
-
-const JD_LABELS = [
-  "DW 및 Datalake 관련 Platform/Architecture 구축 및 운영",
-  "Data 모델링 및 구축 및 운영",
-  "AI/ML 개발 및 운영"
-];
+const JD_LABELS = ["DW 및 Datalake 관련 Platform/Architecture 구축 및 운영", "Data 모델링 및 구축 및 운영", "AI/ML 개발 및 운영"];
 
 const DevJSFeedbackPage = () => {
-  const location = useLocation();
-  const { jdItems = [], coverLetter = '', selectedEssays = {} } = location.state || {};
+  const navigate = useNavigate();
 
+  const location = useLocation();
+  const {
+    answer = "",
+    question = "",
+    keywords = "",
+    feedback = []
+  } = location.state || {};
+  console.log(feedback);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const essayLabels = {
-    q1: "Q1. 가장 중요한 요소는?",
-    q2: "Q2. 내 취미는",
-    q3: "Q3. 나이"
+  const toFinalPage = async () => {
+    try {
+      const answerInfo = {
+        keywords,
+        question,
+        aiFeedback: answer
+      };
+
+      navigate("/finalsavepage", {state: {
+          answerInfo
+        }});
+    } catch (error) {
+      console.error("전송 실패:", error);
+      alert("저장에 실패했습니다.");
+    }
   };
+  return (<div className="container">
+    <Header/>
 
-  return (
-    <div className="container">
-            <Header />
+    <div className="layout">
+      <section className="question-section">
+        <p className="keywords">선택된 JD 항목: {keywords}</p>
 
-      
-      <div className="layout">
-        <section className="question-section">
-          <h2 className="question">선택된 JD 항목</h2>
-          <ul>
-            {jdItems.map((itemIdx) => (
-              <li key={itemIdx}>{JD_LABELS[itemIdx]}</li>
-            ))}
-          </ul>
-  
-          <h2 className="question">강조된 요소</h2>
-          <ul>
-            {Object.entries(selectedEssays).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key.toUpperCase()}. {value.question}</strong>: {value.answer}
-              </li>
-            ))}
-          </ul>
-  
-          <h2 className="question">피드백 분석</h2>
-          <div className="paragraph">
-            {jdItems.length === 0 ? (
-              <p>선택된 JD 항목이 없습니다. JD 항목을 먼저 선택해주세요!</p>
-            ) : (
-              jdItems.map((itemIdx) => {
-                const jd = JD_LABELS[itemIdx];
-                const answers = Object.values(selectedEssays).map((v) => v.answer);
-                const matched = answers.some((ans) => coverLetter.includes(ans));
-  
-                return (
-                  <div key={itemIdx} style={{ marginBottom: "1rem" }}>
-                    <strong>{jd}</strong>
-                    <p>
-                      {matched
-                        ? "✔ 강조된 요소가 자기소개서에 잘 반영되어 있습니다."
-                        : "❗ 강조된 요소가 자기소개서에 충분히 반영되지 않았습니다. 선택한 JD와 연결될 수 있도록 내용을 보완해주세요."}
-                    </p>
-                  </div>
-                );
-              })
-            )}
-          </div>
-        </section>
-      </div>
+        <h4 className="question">{question}</h4>
+        <pre className="aiFeedback">{answer}</pre>
+
+        {/* 종합 피드백 */}
+        <h3 className="aiFeedback">종합 피드백</h3>
+        <div className="paragraph">{feedback.total_feedback}</div>
+
+        {/* 수정 전·후 문장 비교 표 */}
+        <h3 className="sentenceFeedback">문장별 개선 내역</h3>
+        <form action="" method="post">
+          <table className="feedback-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>수정 전</th>
+                <th>수정 후</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {
+                feedback.final_before_feedback
+                  ?.map((prev, i) => (<tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{prev}</td>
+                    <td>
+                      <textarea type="text" value={feedback.final_after_feedback[i]}/>
+                    </td>
+                  </tr>))
+              }
+            </tbody>
+          </table>
+        </form>
+      </section>
+      <button type="btn btn-primary" onClick={toFinalPage}>
+        수정 사항 반영하기
+      </button>
     </div>
-  );
-  
+  </div>);
 };
 
 export default DevJSFeedbackPage;
