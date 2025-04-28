@@ -95,23 +95,37 @@ const DevJSFeedbackPage = () => {
 
   const toFinalPage = async () => {
     try {
-      // 업데이트된 parsedAnswer로부터 전체 답변 재구성
-      const updatedFullAnswer = parsedAnswer.map(segment => segment.text).join("");
-      
+      // 수정된 문장들 반영하기
+      const updatedParsedAnswer = parsedAnswer.map(segment => {
+        if (segment.isFeedback && editedFeedback[segment.feedbackIndex] !== undefined) {
+          return {
+            ...segment,
+            text: editedFeedback[segment.feedbackIndex]
+          };
+        }
+        return segment;
+      });
+  
+      // 최종 answer 완성
+      const updatedFullAnswer = updatedParsedAnswer.map(segment => segment.text).join("");
+  
       const answerInfo = {
         keywords,
         question,
         aiFeedback: updatedFullAnswer
       };
-
-      navigate("/finalsavepage", {state: {
+  
+      navigate("/finalsavepage", {
+        state: {
           answerInfo
-        }});
+        }
+      });
     } catch (error) {
       console.error("전송 실패:", error);
       alert("저장에 실패했습니다.");
     }
   };
+  
 
   return (
     <div className="container">

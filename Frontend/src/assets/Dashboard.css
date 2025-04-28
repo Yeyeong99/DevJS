@@ -1,75 +1,77 @@
-/* Dashboard.css */
 .dashboard-container {
   max-width: 960px;
-  margin: 100px auto;
+  margin: 6rem auto 2rem;
+  padding: 0 1rem;
   text-align: center;
-  font-family: 'Pretendard', sans-serif;
 }
 
 .greeting {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: black;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
 }
 
 .welcome {
-  font-size: 18px;
-  color: #000000;
-  margin-bottom: 30px;
+  font-size: 1.125rem;
+  color: var(--color-text);
+  margin-bottom: 2rem;
 }
-
 
 .create-button {
   background: linear-gradient(to right, #8758f1, #9678da);
-  color: white;
-  padding: 10px 20px;
+  color: #ffffff;
+  padding: 0.75em 1.5em;
   border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 17px;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 600;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  float: right;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
   transition: all 0.3s ease-in-out;
 }
 
 .create-button:hover {
   background: linear-gradient(to right, #8758f1, #a520c6);
-  box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.5);
+  box-shadow: 0 4px 12px rgba(135, 88, 241, 0.5);
+  transform: translateY(-2px);
 }
 
-
 .no-jobs {
-  margin: 40px 100px;
-
+  margin: 4rem 2rem;
+  font-size: 1.2rem;
+  color: var(--color-text);
 }
 
 .job-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 60px;
-  color: black;
+  margin-top: 3rem;
+  color: var(--color-text);
 }
 
 .job-table th,
 .job-table td {
-  padding: 14px 12px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
   text-align: center;
 }
 
 .job-table th {
-  color: #000000;
-  font-weight: 600;
+  background-color: #f8f9fa;
+  font-weight: 700;
+}
+
+.job-table tr:hover {
+  background-color: #f1f3f5;
 }
 
 .status {
-  padding: 5px 10px;
+  display: inline-block;
+  padding: 0.4em 0.8em;
   border-radius: 6px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .status.editing {
@@ -83,15 +85,15 @@
 }
 
 .see-more {
-  margin-top: 15px;
+  margin-top: 1.5rem;
   font-weight: 500;
-  color: #000000;
+  color: var(--color-text);
   cursor: pointer;
-  transition: all 0.2s ease; 
+  transition: all 0.2s ease;
 }
 
 .see-more:hover {
-  color: #1a73e8; 
+  color: var(--color-primary-hover);
   font-weight: 600;
   transform: scale(1.05);
   text-decoration: underline;

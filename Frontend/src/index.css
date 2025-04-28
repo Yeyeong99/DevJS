@@ -1,61 +1,136 @@
+/* === Global Reset === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* === Root Variables === */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  --font-family-base: 'Pretendard', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --color-text: #212529;
+  --color-bg: #ffffff;
+  --color-primary: #646cff;
+  --color-primary-hover: #535bf2;
+  --color-border: #dee2e6;
+}
+
+/* === Base Styles === */
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-family-base);
+  font-size: 16px;
   font-weight: 400;
-  color: #213547;
-  background-color: #ffffff;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-body {
-  margin: 0; 
-  padding: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  overflow-x: hidden; 
-  overflow-y: auto;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #ffffff;
+#root {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+/* === Typography === */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text);
+}
 
+p {
+  margin-bottom: 1rem;
+}
+
+/* === Links === */
 a {
+  color: var(--color-primary);
+  text-decoration: none;
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  transition: color 0.2s ease-in-out;
 }
+
 a:hover {
-  color: #535bf2;
+  color: var(--color-primary-hover);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
+/* === Buttons === */
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.6em 1.2em;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f9f9f9;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
+
 button:hover {
-  border-color: #646cff;
+  background-color: #f1f3f5;
+  border-color: var(--color-primary);
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.page-container, main, section, .form-wrapper {
-  margin-top: calc(60px + 5rem); /* ✅ Header 높이 + 3rem */
+/* === Layout === */
+main, section, .page-container, .form-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
 }
 
+header, footer {
+  width: 100%;
+}
+
+/* === Scroll Behavior === */
+html {
+  scroll-behavior: smooth;
+}
+
+/* === Image === */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === List === */
+ul, ol {
+  list-style: none;
+}
+
+/* === Inputs === */
+input, textarea, select {
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.5em;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
