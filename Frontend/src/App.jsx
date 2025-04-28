@@ -37,6 +37,7 @@ function App() {
         <Route path="/totalupload" element={<TotalUploadPage />} />
         <Route path="/finalsavepage" element={<FinalSavePage />} />
         <Route path="/coverletter/:id" element={<CoverLetterDetailPage />} />
+        {/* <Route path="/finalsavepage/:id" element={<FinalSavePage />} /> */}
 
 
 

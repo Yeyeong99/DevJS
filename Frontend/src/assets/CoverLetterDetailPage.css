@@ -1,5 +1,4 @@
 .page-container {
-  padding-top: 100px; /* Header 높이 고려 */
   padding-left: 1rem;
   padding-right: 1rem;
   min-height: 100vh;
@@ -10,6 +9,8 @@
 }
 
 .detail-container {
+  margin-top: 5000px; 
+
   width: 100%;
   max-width: 800px;
   background-color: #ffffff;

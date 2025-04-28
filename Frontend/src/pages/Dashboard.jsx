@@ -12,50 +12,46 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
+    console.log(jobs)
+    const fetchData = async () => {
+      const accessToken = localStorage.getItem("access_token");
 
-    if (!accessToken) {
-      console.warn("⛔ access_token이 없습니다.");
-      return;
-    }
-
-    // 자소서 목록 불러오기
-    axios.get("http://localhost:8000/api/total/total_list/", {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    })
-      .then(res => setJobs(res.data))
-      .catch(err => console.error("자소서 목록 가져오기 실패:", err));
-
-    // 사용자 정보 불러오기
-    axios.get("http://localhost:8000/api/auth/user/", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+      if (!accessToken) {
+        console.warn("\u26d4 access_token이 없습니다.");
+        return;
       }
-    })
-      .then((res) => setUser(res.data))
-      .catch(async (err) => {
+
+      try {
+        const [jobsRes, userRes] = await Promise.all([
+          axios.get("http://localhost:8000/api/total/total_list/", {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          }),
+          axios.get("http://localhost:8000/api/auth/user/", {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          })
+        ]);
+
+        setJobs(jobsRes.data);
+        setUser(userRes.data);
+      } catch (err) {
         const errorCode = err.response?.data?.code;
 
         if (errorCode === "token_not_valid") {
-          console.warn("🔄 access_token 만료 → refresh 시도");
+          console.warn("\u{1F501} access_token 만료 → refresh 시도");
 
           const refreshToken = localStorage.getItem("refresh_token");
-
           try {
-            const res = await axios.post("http://localhost:8000/api/token/refresh/", {
-              refresh: refreshToken,
-            });
-
-            const newAccessToken = res.data.access;
+            const refreshRes = await axios.post("http://localhost:8000/api/token/refresh/", { refresh: refreshToken });
+            const newAccessToken = refreshRes.data.access;
             localStorage.setItem("access_token", newAccessToken);
 
-            const retry = await axios.get("http://localhost:8000/api/auth/user/", {
+            const retryUserRes = await axios.get("http://localhost:8000/api/auth/user/", {
               headers: { Authorization: `Bearer ${newAccessToken}` }
             });
 
-            setUser(retry.data);
+            setUser(retryUserRes.data);
           } catch (refreshError) {
-            console.error("⛔ refresh_token도 만료됨 → 로그아웃 처리");
+            console.error("\u26d4 refresh_token도 만료됨 → 로그아웃 처리");
             alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
             localStorage.clear();
             window.location.href = "/";
@@ -63,16 +59,32 @@ const Dashboard = () => {
         } else {
           console.error("⛔ 유저 정보 요청 실패:", err.response?.data || err);
         }
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const visibleJobs = showMore ? jobs : jobs.slice(0, 3);
+  // jobs를 company_name 기준으로 그룹화
+  const groupedJobs = jobs.reduce((acc, job) => {
+    if (!acc[job.company_name]) {
+      acc[job.company_name] = {
+        company_name: job.company_name,
+        jobs: [],
+      };
+    }
+    acc[job.company_name].jobs.push(job);
+    return acc;
+  }, {});
 
-  const sortedJobs = [...visibleJobs].sort((a, b) => {
+  const groupedArray = Object.values(groupedJobs);
+  const visibleGroups = showMore ? groupedArray : groupedArray.slice(0, 3);
+
+  const sortedGroupedJobs = [...visibleGroups].sort((a, b) => {
     if (!sortConfig.key) return 0;
 
-    const aVal = a[sortConfig.key];
-    const bVal = b[sortConfig.key];
+    const aVal = a.jobs[0][sortConfig.key];
+    const bVal = b.jobs[0][sortConfig.key];
 
     if (sortConfig.key === 'deadline') {
       return sortConfig.direction === 'asc'
@@ -106,6 +118,10 @@ const Dashboard = () => {
     navigate("/totalupload");
   };
 
+  const handleGroupClick = (companyId) => {
+    navigate(`/coverletter/${companyId}`);
+  };
+
   const handleSeeMore = () => setShowMore(true);
 
   if (!user) return <p className="loading">유저 정보를 불러오는 중입니다...</p>;
@@ -118,7 +134,7 @@ const Dashboard = () => {
       <p className="welcome">개발자를 위한 자기소개서 첨삭 서비스 DevJS에 오신 것을 환영합니다.</p>
       <button className="create-button" onClick={handleCreateClick}>+ 새로 만들기</button>
 
-      {jobs.length === 0 ? (
+      {groupedArray.length === 0 ? (
         <div className="no-jobs">
           <p>📝 아직 등록된 자소서가 없습니다.</p>
           <p>+ 새로 만들기를 눌러 자소서를 등록해보세요!</p>
@@ -129,32 +145,33 @@ const Dashboard = () => {
             <thead>
               <tr>
                 <th>기업</th>
+                <th>자소서 수</th>
                 <th onClick={() => handleSort('deadline')} style={{ cursor: 'pointer' }}>
-                  마감일 {getSortIndicator('deadline')}
+                  지원 마감일 {getSortIndicator('deadline')}
                 </th>
-                {/* 추후 추가 예정 ( 상태 ) */}
-                {/* <th onClick={() => handleSort('status')} style={{ cursor: 'pointer' }}>
-                  상태 {getSortIndicator('status')}
-                </th> */}  
               </tr>
             </thead>
             <tbody>
-              {sortedJobs.map((job, index) => (
-                <tr key={index}>
-                  <td
-                    onClick={() => navigate(`/coverletter/${job.id}`)}
-                    style={{ cursor: "pointer", fontWeight: "bold", color: "#4f46e5" }}
-                  >
-                    {job.company_name}
-                  </td>
-                  <td>{job.deadline}</td>
-                  <td>
-                    <span className={`status ${job.status === '수정 중' ? 'editing' : 'submitted'}`}>
-                      {job.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {sortedGroupedJobs.map((group, index) => {
+                const earliestDeadline = group.jobs
+                  .map(job => new Date(job.deadline))
+                  .sort((a, b) => a - b)[0]
+                  .toISOString()
+                  .split('T')[0];
+
+                return (
+                  <tr key={index}>
+                      <td
+                        onClick={() => handleGroupClick(group.jobs[0].company)}
+                        style={{ cursor: "pointer", fontWeight: "bold", color: "#4f46e5" }}
+                      >
+                        {group.company_name}
+                      </td>
+                    <td>{group.jobs.length}</td>
+                    <td>{earliestDeadline}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
 
