@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import KakaoLoginView, GoogleLoginView, GithubLoginView, NaverLoginView, UserInfoView, LogoutView, update_nickname
+from .views import KakaoLoginView, GoogleLoginView, GithubLoginView, UserInfoView, LogoutView, update_nickname
 from rest_framework_simplejwt.views import TokenRefreshView
 
 app_name = 'accounts'
