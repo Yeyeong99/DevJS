@@ -28,6 +28,7 @@ const TotalUploadPage = () => {
         answer,
       };
       const answerInfo = {
+        company,
         keywords,
         question,
         answer,

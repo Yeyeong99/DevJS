@@ -12,11 +12,15 @@ const DevJSFeedbackPage = () => {
   const location = useLocation();
   const {
     answer = "",
-    question = "",
-    keywords = "",
     feedback = []
   } = location.state || {};
-  
+
+  const [question, setQuestion] = useState("");
+  const [keywords, setKeywords] = useState("");
+  const [originalAnswer, setOriginalAnswer] = useState("");
+  const [aiFeedback, setAiFeedback] = useState("");
+
+  const [company, setCompany] = useState("");
   const [editedFeedback, setEditedFeedback] = useState(feedback.final_after_feedback || []);
   // 문장들을 배열로 분리하여 관리
   const [parsedAnswer, setParsedAnswer] = useState([]);
@@ -30,6 +34,28 @@ const DevJSFeedbackPage = () => {
       const parsed = parseAnswerIntoSegments(answer, feedback.final_before_feedback);
       setParsedAnswer(parsed);
     }
+
+    const fetchData = async () => {
+      try {
+        const access = localStorage.getItem("access_token");
+        const res = await axiosInstance.get(`http://localhost:8000/api/total/total_list/`, {
+          headers: {
+            Authorization: `Bearer ${access}`,
+          },
+        });
+        const latest = res.data[0];
+        console.log(latest)
+
+        setCompany(latest.company);
+        setQuestion(latest.question);
+        setKeywords(latest.keywords);
+        setOriginalAnswer(latest.answer);
+      } catch (err) {
+        console.error("❌ 데이터 가져오기 실패!", err);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // answer를 feedback.final_before_feedback 문장들을 기준으로 분리하는 함수
@@ -104,6 +130,13 @@ const DevJSFeedbackPage = () => {
         aiFeedback: updatedFullAnswer,
         originalAnswer: answer,
       };
+      
+      const payload = {
+        company,
+        feedback: updatedFullAnswer,
+      };
+
+      await axiosInstance.put("total/total_list/", payload);
 
       navigate("/finalsavepage", {state: {
           answerInfo
