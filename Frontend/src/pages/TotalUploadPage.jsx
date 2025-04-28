@@ -1,19 +1,24 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../assets/TotalUploadPage.css";
-import axios from "axios";
-import Header from "../components/Header";
-import axiosInstance from "../api/axiosInstance";
+import React, { useState } from "react"
+import { useNavigate, useLocation  } from "react-router-dom"
+import "../assets/TotalUploadPage.css"
+import axios from "axios"
+import Header from "../components/Header"
+import axiosInstance from "../api/axiosInstance"
 
 const TotalUploadPage = () => {
-  const [keywords, setKeywords] = useState("");
-  const [company, setCompany] = useState("");
-  const [position, setPosition] = useState("");
-  const [deadline, setDeadline] = useState("");
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
 
-  const navigate = useNavigate();
+  const location = useLocation()
+  const prefill = location.state || {};
+
+
+  const [keywords, setKeywords] = useState(prefill.keywords || "")
+  const [company, setCompany] = useState(prefill.company_name || "")
+  const [position, setPosition] = useState(prefill.position || "");
+  const [deadline, setDeadline] = useState(prefill.deadline || "")
+  const [question, setQuestion] = useState(prefill.question || "")
+  const [answer, setAnswer] = useState(prefill.answer || "")
+
+  const navigate = useNavigate()
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -29,13 +34,15 @@ const TotalUploadPage = () => {
         question,
         answer,
       };
+      console.log(payload)
       const answerInfo = {
+        company,
         keywords,
         question,
         answer,
       }
       await axiosInstance.post("total/total_list/", payload);
-          // 2) 두 번째 분석 → 결과 받기
+      // 2) 두 번째 분석 → 결과 받기
       const accessToken = localStorage.getItem("access_token");
       const { data: feedback } = await axiosInstance.post(
         "http://localhost:8000/api/analyzes/",
