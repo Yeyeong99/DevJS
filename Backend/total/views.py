@@ -46,10 +46,9 @@ def total_list(request):
     
     # 피드백 받은 거 저장하는 기능
     elif request.method == 'PUT':
-        company_name = request.data.get('company')
-        company = Company.objects.get(name=company_name)
+        company_id = request.data.get('company')
         try:
-            feedbacks = Company_User.objects.filter(user=request.user, company=company)
+            feedbacks = Company_User.objects.filter(user=request.user, company_id=company_id)
             feedback_need = feedbacks.all().order_by('-created_at')[0]
         except Company_User.DoesNotExist:
             return Response({"error": "자기소개서를 찾을 수 없습니다."}, status=404)
