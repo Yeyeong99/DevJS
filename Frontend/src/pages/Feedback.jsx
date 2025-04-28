@@ -101,7 +101,8 @@ const DevJSFeedbackPage = () => {
       const answerInfo = {
         keywords,
         question,
-        aiFeedback: updatedFullAnswer
+        aiFeedback: updatedFullAnswer,
+        originalAnswer: answer,
       };
 
       navigate("/finalsavepage", {state: {

@@ -13,7 +13,7 @@ const FinalSavePage = () => {
 
   const [question, setQuestion] = useState("");
   const [keywords, setKeywords] = useState("");
-  const [originalAnswer, setOriginalAnswer] = useState("");
+  // const [originalAnswer, setOriginalAnswer] = useState("");
   const [aiFeedback, setAiFeedback] = useState("");
   const [company, setCompany] = useState("");
 
@@ -22,6 +22,7 @@ const FinalSavePage = () => {
     
     // Feedback 페이지 내용 디버깅을 위해 콘솔에 출력
     console.log("Received answerInfo:", answerInfo.aiFeedback);
+    console.log("Received answerInfo:", answerInfo.originalAnswer);
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
@@ -78,11 +79,11 @@ const FinalSavePage = () => {
       <div className="feedback-content">
         <div className="original-answer">
           <h3>원본 자기소개서</h3>
-          <p>{originalAnswer}</p>
+          <p>{answerInfo.originalAnswer}</p>
         </div>
         <div className="ai-feedback">
           <h3>AI 피드백 반영본</h3>
-          <p>{aiFeedback}</p>
+          <p>{answerInfo.aiFeedback}</p>
         </div>
       </div>
 
