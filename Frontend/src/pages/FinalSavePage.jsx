@@ -7,29 +7,23 @@ import axios from 'axios';
 const FinalSavePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const { answerInfo } = location.state || {};
 
   const [question, setQuestion] = useState("");
   const [keywords, setKeywords] = useState("");
   const [originalAnswer, setOriginalAnswer] = useState("");
   const [aiFeedback, setAiFeedback] = useState("");
-  const [company, setCompany] = useState("");
-  const [highlightedParts, setHighlightedParts] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
+    
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
         const res = await axios.get(`http://localhost:8000/api/total/total_list/`, {
           headers: { Authorization: `Bearer ${access}` },
         });
-
         const latest = res.data[0];
 
-        setCompany(latest.company);
         setQuestion(latest.question);
         setKeywords(latest.keywords);
         setOriginalAnswer(latest.answer);
@@ -66,35 +60,12 @@ const FinalSavePage = () => {
     setHighlightedParts(highlights);
   };
 
-  const saveFeedback = async () => {
-    try {
-      const access = localStorage.getItem("access_token");
-  
-      if (!id) {
-        alert("❌ 저장할 글 ID가 없습니다!");
-        return;
-      }
-  
-      await axios.put(`http://localhost:8000/api/total/${id}/`, {
-        feedback: aiFeedback,
-      }, {
-        headers: { Authorization: `Bearer ${access}` },
-      });
-  
-      alert("✅ 피드백이 성공적으로 저장되었습니다!");
-      // 저장 성공하면 다른 페이지로 이동도 가능
-      navigate("/dashboard");  // 예시: 저장 후 대시보드로 이동
-    } catch (error) {
-      console.error("❌ 피드백 저장 실패:", error);
-      alert("❌ 저장 중 오류가 발생했습니다.");
-    }
-  };
-  
-
   const handleGetMoreFeedback = () => {
     navigate("/totalupload");
   };
-
+  const handleGoToHome = () => {
+    navigate("/dashboard"); // ✅ Dashboard로 이동
+  };
   return (
     <div className="feedback-container">
       <Header />
@@ -133,8 +104,8 @@ const FinalSavePage = () => {
         <button className="btn" onClick={handleGetMoreFeedback}>
           피드백 더 받기
         </button>
-        <button className="btn btn-primary" onClick={saveFeedback}>
-          피드백버전으로 저장하기
+        <button className="btn btn-primary" onClick={handleGoToHome}>
+          홈으로 돌아가기
         </button>
       </div>
     </div>
