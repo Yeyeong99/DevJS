@@ -15,9 +15,11 @@ const TotalUploadPage = () => {
 
   const navigate = useNavigate();
 
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;  // 이미 제출 중이면 함수 중단
+    setIsSubmitting(true);     // 버튼 누르면 바로 잠금
     try {
       const payload = {
         keywords,
@@ -47,6 +49,9 @@ const TotalUploadPage = () => {
     } catch (error) {
       console.error("전송 실패:", error);
       alert("저장에 실패했습니다.");
+    }
+    finally {
+      setIsSubmitting(false);   // 성공이든 실패든 다시 활성화
     }
   };
 
