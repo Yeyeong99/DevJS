@@ -30,7 +30,6 @@ def total_list(request):
             data = request.data.copy()
             data.pop("company", None)
             data["feedback"] = data.get("feedback", "")
-            data["is_reviewed"] = data.get("is_reviewed", "")
 
             serializer = CompanyUserSerializer(data=data)
             if serializer.is_valid():

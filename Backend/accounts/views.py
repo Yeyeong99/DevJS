@@ -139,42 +139,6 @@ class GithubLoginView(APIView):
         return Response(tokens)
 
 
-# 네이버 로그인 관련
-class NaverLoginView(APIView):
-    def post(self, request):
-        code = request.data.get("code")
-        state = request.data.get("state")
-        redirect_uri = "http://localhost:5173/naver/callback"
-
-        # 1. 토큰 요청
-        token_res = requests.post("https://nid.naver.com/oauth2.0/token", params={
-            "grant_type": "authorization_code",
-            "client_id": settings.NAVER_CLIENT_ID,
-            "client_secret": settings.NAVER_CLIENT_SECRET,
-            "code": code,
-            "state": state,
-            "redirect_uri": redirect_uri
-        })
-
-        token_json = token_res.json()
-        access_token = token_json.get("access_token")
-
-        # 2. 사용자 정보 요청
-        user_res = requests.get("https://openapi.naver.com/v1/nid/me", headers={
-            "Authorization": f"Bearer {access_token}"
-        })
-        user_data = user_res.json()
-        profile = user_data.get("response", {})
-
-        naver_id = profile.get("id")
-        email = profile.get("email") or f"naver_{naver_id}@example.com"
-
-        user = get_or_create_social_user("naver", naver_id, email)
-        tokens = generate_jwt_for_user(user)
-
-        return Response(tokens)
-
-
 # 로그아웃
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
