@@ -32,13 +32,15 @@ const TotalUploadPage = () => {
         question,
         answer,
       };
+      console.log(payload)
       const answerInfo = {
+        company,
         keywords,
         question,
         answer,
       }
       await axiosInstance.post("total/total_list/", payload);
-          // 2) 두 번째 분석 → 결과 받기
+      // 2) 두 번째 분석 → 결과 받기
       const accessToken = localStorage.getItem("access_token");
       const { data: feedback } = await axiosInstance.post(
         "http://localhost:8000/api/analyzes/",
