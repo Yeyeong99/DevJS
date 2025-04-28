@@ -36,17 +36,30 @@ const CoverLetterDetailPage = () => {
   }, [id]);
 
   const handleDelete = async (itemId) => {
+    const confirmDelete = window.confirm("정말 삭제할까요?");
+    if (!confirmDelete) {
+      return;
+    }
+  
     const access = localStorage.getItem("access_token");
     try {
       await axios.delete(`http://localhost:8000/api/total/delete/${itemId}/`, {
         headers: { Authorization: `Bearer ${access}` },
       });
       alert("삭제 완료!");
-      window.location.reload();
+  
+      const updatedDatas = datas.filter(item => item.id !== itemId);
+      setDatas(updatedDatas);
+  
+      if (updatedDatas.length === 0) {
+        navigate("/dashboard");
+      }
     } catch (err) {
       console.error("삭제 실패!", err);
     }
   };
+  
+  
 
   if (datas.length === 0) return <p>로딩 중...</p>;
 
