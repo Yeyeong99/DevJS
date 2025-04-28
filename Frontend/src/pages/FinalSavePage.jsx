@@ -7,64 +7,52 @@ import axios from 'axios';
 const FinalSavePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  // Feedback 페이지에서 데이터 가져와지는지 확인
+  const { answerInfo } = location.state || {};
 
   const [question, setQuestion] = useState("");
   const [keywords, setKeywords] = useState("");
   const [originalAnswer, setOriginalAnswer] = useState("");
   const [aiFeedback, setAiFeedback] = useState("");
+  const [company, setCompany] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
     
+    // Feedback 페이지 내용 디버깅을 위해 콘솔에 출력
+    console.log("Received answerInfo:", answerInfo.aiFeedback);
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
         const res = await axios.get(`http://localhost:8000/api/total/total_list/`, {
-          headers: { Authorization: `Bearer ${access}` },
+          headers: {
+            Authorization: `Bearer ${access}`,
+          },
         });
+
         const latest = res.data[0];
 
+        setCompany(latest.company);
         setQuestion(latest.question);
         setKeywords(latest.keywords);
         setOriginalAnswer(latest.answer);
-
-        if (answerInfo && answerInfo.aiFeedback) {
-          setAiFeedback(answerInfo.aiFeedback);
-        }
+        setAiFeedback(latest.feedback);
       } catch (err) {
         console.error("❌ 데이터 가져오기 실패!", err);
       }
     };
 
     fetchData();
-  }, [id, answerInfo]);
+  }, [id]);
 
-  useEffect(() => {
-    if (originalAnswer && aiFeedback) {
-      highlightChanges();
-    }
-  }, [originalAnswer, aiFeedback]);
 
-  const highlightChanges = () => {
-    // 문장 단위로 대충 쪼개기 (., !, ? 뒤에 공백 기준)
-    const originalSentences = originalAnswer.split(/(?<=[.!?])\s+/);
-    const feedbackSentences = aiFeedback.split(/(?<=[.!?])\s+/);
-
-    const highlights = feedbackSentences.map((sentence, idx) => {
-      if (sentence !== originalSentences[idx]) {
-        return { text: sentence, highlight: true };
-      }
-      return { text: sentence, highlight: false };
-    });
-
-    setHighlightedParts(highlights);
-  };
 
   const handleGetMoreFeedback = () => {
-    navigate("/totalupload");
+    navigate("/totalupload"); // ✅ TotalUploadPage로 이동
   };
-  const handleGoToHome = () => {
-    navigate("/dashboard"); // ✅ Dashboard로 이동
+  const GoToDashboard = () => {
+    navigate("/dashboard"); // ✅ TotalUploadPage로 이동
   };
   return (
     <div className="feedback-container">
@@ -80,23 +68,9 @@ const FinalSavePage = () => {
           <h3>원본 자기소개서</h3>
           <p>{originalAnswer}</p>
         </div>
-
         <div className="ai-feedback">
-          <h3>AI 피드백 반영본 (하이라이트)</h3>
-          <p>
-            {highlightedParts.map((part, idx) => (
-              <span
-                key={idx}
-                style={{
-                  backgroundColor: part.highlight ? "yellow" : "transparent",
-                  padding: "2px",
-                  borderRadius: "3px",
-                }}
-              >
-                {part.text + " "}
-              </span>
-            ))}
-          </p>
+          <h3>AI 피드백 반영본</h3>
+          <p>{aiFeedback}</p>
         </div>
       </div>
 
@@ -104,7 +78,7 @@ const FinalSavePage = () => {
         <button className="btn" onClick={handleGetMoreFeedback}>
           피드백 더 받기
         </button>
-        <button className="btn btn-primary" onClick={handleGoToHome}>
+        <button className="btn btn-primary" onClick={GoToDashboard}>
           홈으로 돌아가기
         </button>
       </div>
