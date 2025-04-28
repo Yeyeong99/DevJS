@@ -5,9 +5,9 @@ import Header from "../components/Header";
 import "../assets/CoverLetterDetailPage.css";
 
 const CoverLetterDetailPage = () => {
-  const { id } = useParams(); // 이 id는 companyId!
+  const { id } = useParams(); 
   const navigate = useNavigate();
-  const [datas, setDatas] = useState([]); // 여러 개 데이터로 변경
+  const [datas, setDatas] = useState([]); 
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,7 +19,7 @@ const CoverLetterDetailPage = () => {
           headers: { Authorization: `Bearer ${access}` },
         });
 
-        // 해당 회사(company id)와 일치하는 것만 필터링
+ 
         const filtered = res.data.filter(item => String(item.company) === id);
 
         if (filtered.length > 0) {
@@ -42,7 +42,7 @@ const CoverLetterDetailPage = () => {
         headers: { Authorization: `Bearer ${access}` },
       });
       alert("삭제 완료!");
-      window.location.reload(); // 새로고침해서 리스트 갱신
+      window.location.reload();
     } catch (err) {
       console.error("삭제 실패!", err);
     }
@@ -68,7 +68,28 @@ const CoverLetterDetailPage = () => {
               <div className="feedback-content">
                 <div className="ai-feedback">
                   <h3>AI 피드백 반영본</h3>
-                  <p>{item.feedback || "AI 피드백이 없습니다."}</p>
+                  {item.feedback ? (
+                    <p>{item.feedback}</p>
+                  ) : (
+                    <>
+                      <p>AI 피드백이 없습니다.</p>
+                      <button
+                        className="go-upload-btn"
+                        onClick={() => navigate("/totalupload", { state: {
+                          company: item.company,
+                          company_name: item.company_name,
+                          position: item.position,
+                          question: item.question,
+                          keywords: item.keywords,
+                          answer: item.answer,
+                          deadline: item.deadline,
+                          id: item.id,  // 필요하면
+                        } })}
+                      >
+                        ✨ AI 피드백 받으러 가기
+                      </button>
+                    </>
+                  )}
                 </div>
 
                 <details>
