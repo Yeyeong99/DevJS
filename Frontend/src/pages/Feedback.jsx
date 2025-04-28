@@ -44,7 +44,6 @@ const DevJSFeedbackPage = () => {
           },
         });
         const latest = res.data[0];
-        console.log(latest)
 
         setCompany(latest.company);
         setQuestion(latest.question);

@@ -12,7 +12,6 @@ const FinalSavePage = () => {
   const [keywords, setKeywords] = useState("");
   const [originalAnswer, setOriginalAnswer] = useState("");
   const [aiFeedback, setAiFeedback] = useState("");
-  const [company, setCompany] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,9 +25,7 @@ const FinalSavePage = () => {
           },
         });
         const latest = res.data[0];
-        console.log(latest)
 
-        setCompany(latest.company);
         setQuestion(latest.question);
         setKeywords(latest.keywords);
         setOriginalAnswer(latest.answer);
