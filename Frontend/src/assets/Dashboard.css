@@ -1,8 +1,20 @@
 .dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1.5rem 2rem;
+  width: 100%;
+}
+
+.dashboard-main {
+  width: 100%;
   max-width: 960px;
-  margin: 6rem auto 2rem;
-  padding: 0 1rem;
+  flex: 1;
+}
+
+.dashboard-header {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
 .greeting {
@@ -26,9 +38,7 @@
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
 .create-button:hover {
@@ -38,15 +48,20 @@
 }
 
 .no-jobs {
-  margin: 4rem 2rem;
+  text-align: center;
+  margin-top: 5rem;
   font-size: 1.2rem;
   color: var(--color-text);
+}
+
+.job-section {
+  margin-top: 2rem;
 }
 
 .job-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 3rem;
+  margin-top: 1rem;
   color: var(--color-text);
 }
 
@@ -62,32 +77,29 @@
   font-weight: 700;
 }
 
-.job-table tr:hover {
+.job-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.job-row:hover {
   background-color: #f1f3f5;
 }
 
-.status {
-  display: inline-block;
-  padding: 0.4em 0.8em;
-  border-radius: 6px;
+.company-name {
   font-weight: bold;
-  font-size: 0.875rem;
+  color: #4f46e5;
 }
 
-.status.editing {
-  background-color: #e0f7fa;
-  color: #007b8f;
-}
-
-.status.submitted {
-  background-color: #e0f2e9;
-  color: #388e3c;
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
 }
 
 .see-more {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: var(--color-primary);
   cursor: pointer;
   transition: all 0.2s ease;
 }

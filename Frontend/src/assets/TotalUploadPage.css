@@ -1,10 +1,11 @@
 /* TotalUploadPage.css */
 
 .container {
-  padding: 2rem;
-  font-family: 'Pretendard', sans-serif;
-  padding-top: 10rem;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 1.5rem 2rem;
+  width: 100%;
   
 }
 
@@ -144,12 +145,14 @@ textarea {
   background-color: #7b61ff;
   color: white;
   padding: 0.75rem 1.5rem;
+  margin: 1.5rem 0 3rem 0;
   font-size: 1rem;
   font-weight: bold;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
+
 }
 
 .submit-button:hover {
@@ -160,4 +163,45 @@ textarea {
   color: red;
   font-size: 0.85rem;
   margin-top: 4px;
+}
+
+
+
+.company-input-group {
+  position: relative;
+}
+
+.company-sidebar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 0 0 8px 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
+  margin-top: -4px; /* input과 자연스럽게 이어지도록 조정 */
+}
+
+.company-list {
+  padding: 0.5rem 0;
+}
+
+.company-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.company-item:hover {
+  background-color: #f1f3f5;
+}
+
+.no-results {
+  padding: 0.75rem 1rem;
+  color: #888;
+  font-size: 0.875rem;
 }

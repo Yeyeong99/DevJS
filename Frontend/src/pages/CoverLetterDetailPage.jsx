@@ -8,6 +8,8 @@ const CoverLetterDetailPage = () => {
   const { id } = useParams(); 
   const navigate = useNavigate();
   const [datas, setDatas] = useState([]); 
+  const [openId, setOpenId] = useState(null);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,6 +36,10 @@ const CoverLetterDetailPage = () => {
 
     fetchDetails();
   }, [id]);
+
+  const toggleAnswer = (id) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  };
 
   const handleDelete = async (itemId) => {
     const confirmDelete = window.confirm("정말 삭제할까요?");
@@ -64,10 +70,10 @@ const CoverLetterDetailPage = () => {
   if (datas.length === 0) return <p>로딩 중...</p>;
 
   return (
-    <>
-      <Header />
 
-      <div className="page-container">
+      <div className="container">
+        <Header />
+
         <div className="detail-container">
           <h2 className="company-title">등록된 자기소개서 목록</h2>
 
@@ -75,7 +81,7 @@ const CoverLetterDetailPage = () => {
             <div key={item.id} className="coverletter-card">
               <div className="question-block">
                 <p className="question-title">{item.question}</p>
-                <span className="tag">AI 분석: {item.keywords}</span>
+                <span className="tag">강조한 키워드 : {item.keywords}</span>
               </div>
 
               <div className="feedback-content">
@@ -105,13 +111,28 @@ const CoverLetterDetailPage = () => {
                   )}
                 </div>
 
-                <details>
-                  <summary>원본 자소서 보기</summary>
-                  <div className="original-answer">
-                    <h4>원본 자기소개서</h4>
-                    <p>{item.answer}</p>
+                {datas.map((item) => (
+                  <div key={item.id} className="coverletter-card">
+                    {/* 기존 내용 생략 */}
+
+                    <div className="original-toggle">
+                      <button
+                        className="toggle-btn"
+                        onClick={() => toggleAnswer(item.id)}
+                      >
+                        {openId === item.id ? "▲ 원본 자소서 닫기" : " ▼ 원본 자소서 보기"}
+                      </button>
+
+                      {openId === item.id && (
+                        <div className="original-answer">
+                          <h3>원본 자기소개서</h3>
+                          <p>{item.answer}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </details>
+                ))}
+
               </div>
 
               <button className="delete-btn" onClick={() => handleDelete(item.id)}>
@@ -121,7 +142,6 @@ const CoverLetterDetailPage = () => {
           ))}
         </div>
       </div>
-    </>
   );
 };
 

@@ -129,61 +129,60 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <Header />
-
-      <h1 className="greeting">안녕하세요, {user.nickname}님</h1>
-      <p className="welcome">개발자를 위한 자기소개서 첨삭 서비스 DevJS에 오신 것을 환영합니다.</p>
-      <button className="create-button" onClick={handleCreateClick}>+ 새로 만들기</button>
-
-      {groupedArray.length === 0 ? (
-        <div className="no-jobs">
-          <p>📝 아직 등록된 자소서가 없습니다.</p>
-          <p>+ 새로 만들기를 눌러 자소서를 등록해보세요!</p>
-        </div>
-      ) : (
-        <>
-          <table className="job-table">
-            <thead>
-              <tr>
-                <th>기업</th>
-                <th>자소서 수</th>
-                <th onClick={() => handleSort('deadline')} style={{ cursor: 'pointer' }}>
-                  지원 마감일 {getSortIndicator('deadline')}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedGroupedJobs.map((group, index) => {
-                const earliestDeadline = group.jobs
-                  .map(job => new Date(job.deadline))
-                  .sort((a, b) => a - b)[0]
-                  .toISOString()
-                  .split('T')[0];
-
-                return (
-                  <tr key={index}>
-                      <td
-                        onClick={() => handleGroupClick(group.jobs[0].company)}
-                        style={{ cursor: "pointer", fontWeight: "bold", color: "#4f46e5" }}
-                      >
-                        {group.company_name}
-                      </td>
-                    <td>{group.jobs.length}</td>
-                    <td>{earliestDeadline}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-
-          {!showMore && (
-            <div className="see-more" onClick={handleSeeMore}>
-              더보기
-            </div>
-          )}
-        </>
-      )}
+  
+      <main className="dashboard-main">
+        <section className="dashboard-header">
+          <h1 className="greeting">안녕하세요, {user.nickname}님</h1>
+          <p className="welcome">개발자를 위한 자기소개서 첨삭 서비스 DevJS에 오신 것을 환영합니다.</p>
+          <button className="create-button" onClick={handleCreateClick}>+ 새로 만들기</button>
+        </section>
+  
+        {groupedArray.length === 0 ? (
+          <div className="no-jobs">
+            <p>📝 아직 등록된 자소서가 없습니다.</p>
+            <p>+ 새로 만들기를 눌러 자소서를 등록해보세요!</p>
+          </div>
+        ) : (
+          <section className="job-section">
+            <table className="job-table">
+              <thead>
+                <tr>
+                  <th>기업</th>
+                  <th>자소서 수</th>
+                  <th onClick={() => handleSort('deadline')} className="sortable-header">
+                    지원 마감일 {getSortIndicator('deadline')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedGroupedJobs.map((group, index) => {
+                  const earliestDeadline = group.jobs
+                    .map(job => new Date(job.deadline))
+                    .sort((a, b) => a - b)[0]
+                    .toISOString()
+                    .split('T')[0];
+  
+                  return (
+                    <tr key={index} className="job-row" onClick={() => handleGroupClick(group.jobs[0].company)}>
+                      <td className="company-name">{group.company_name}</td>
+                      <td>{group.jobs.length}</td>
+                      <td>{earliestDeadline}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+  
+            {!showMore && (
+              <div className="see-more" onClick={handleSeeMore}>
+                더보기
+              </div>
+            )}
+          </section>
+        )}
+      </main>
     </div>
   );
-};
+}  
 
 export default Dashboard;
