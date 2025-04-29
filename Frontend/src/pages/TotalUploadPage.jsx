@@ -19,27 +19,42 @@ const TotalUploadPage = () => {
   const [question, setQuestion] = useState(prefill.question || "")
   const [answer, setAnswer] = useState(prefill.answer || "")
   const [companyList, setCompanyList] = useState([])
+  const [positionList, setPositionList] = useState([])
   const [showSidebar, setShowSidebar] = useState(false)
+  const [showSidebarPosition, setShowSidebarPosition] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const [searchTermPosition, setSearchTermPosition] = useState("")
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [searchActive, setSearchActive] = useState(false)
+  const [searchActivePosition, setSearchActivePosition] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate()
 
-  // 회사 리스트 가져오기
+  // 회사 리스트, 유저정보 가져오기
   useEffect(() => {
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
-        const res = await axiosInstance.get('http://localhost:8000/api/total/company_list/', {
+        const companys = await axiosInstance.get('http://localhost:8000/api/total/company_list/', {
+          headers: {
+            Authorization: `Bearer ${access}`,
+          },
+        });
+        const userData = await axiosInstance.get('http://localhost:8000/api/total/total_list/', {
           headers: {
             Authorization: `Bearer ${access}`,
           },
         });
 
-        setCompanyList(res.data);
+        setCompanyList(companys.data);
+        // 지원직무만 추출
+        const positions = [];
+        for (const idx in userData.data) {
+          positions.push(userData.data[idx]['position'])
+        }
+        setPositionList(positions)
       }
       catch (err) {
         console.error("❌ 데이터 가져오기 실패!", err);
@@ -48,6 +63,8 @@ const TotalUploadPage = () => {
     
     fetchData();
   }, []);
+
+
 
   
   const handleSubmit = async () => {
@@ -66,8 +83,6 @@ const TotalUploadPage = () => {
         answer,
       };
 
-      console.log(payload)
-
       // POST 요청 후 응답 받기
       const saveResponse = await axiosInstance.post("total/total_list/", payload);
       // DB에 저장된 company_id 추출
@@ -84,9 +99,9 @@ const TotalUploadPage = () => {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
 
-      // alert("성공적으로 저장되었습니다!");
       navigate("/feedback",  { state: { ...payload, feedback } });
-    } catch (error) {
+    }
+    catch (error) {
       if (error.response) {
         console.error("전송 실패:", error.response.data);
     
@@ -122,12 +137,26 @@ const TotalUploadPage = () => {
     comp.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const filteredPositions = positionList.filter(pos => 
+    pos?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   // 회사 선택 처리
-  const handleSelectCompany = (selectedCompany) => {
-    setCompany(selectedCompany.name)
-    setSearchTerm(selectedCompany.name)
-    setSearchActive(false)
-    setShowSidebar(false)
+  const handleSelectData = (selectedData) => {
+    if (selectedData === companyList) {
+      setCompany(selectedData.name)
+      setSearchTerm(selectedData.name)
+      setSearchActive(false)
+      setShowSidebar(false)
+    }
+    else if (selectedData === positionList) {
+      setPosition(selectedData)
+      setSearchTermPosition(selectedData)
+      setSearchActivePosition(false)
+      setShowSidebarPosition(false)
+    }
+    
+    
   }
 
   // 지원 기업 창 외부 클릭하면 검색 창 닫기
@@ -192,10 +221,8 @@ const TotalUploadPage = () => {
                   }
                 }}
                 onFocus={() => {
-                  if (company.trim().length > 0) {
-                    setShowSidebar(true);
-                    setSearchActive(true);
-                  }
+                  setShowSidebar(true);
+                  setSearchActive(true);
                 }}
                 className="campany-input"
               />
@@ -212,7 +239,7 @@ const TotalUploadPage = () => {
                     <div
                       key={index}
                       className="company-item"
-                      onClick={() => handleSelectCompany(comp)}>
+                      onClick={() => handleSelectData(comp)}>
                       {comp.name}
                     </div>
                     ))
@@ -233,10 +260,52 @@ const TotalUploadPage = () => {
               type="text"
               placeholder="예) 프론트엔드 개발자"
               value={position}
-              onChange={(e) => setPosition(e.target.value)}
+              onChange={(e) => {
+                setPosition(e.target.value);
+                setSearchTermPosition(e.target.value);
+
+                if (e.target.value.trim().length > 0) {
+                  setSearchActivePosition(true);
+                  if (!showSidebar) {
+                    setShowSidebarPosition(true);
+                  }
+                }
+                else {
+                  setSearchActivePosition(false);
+                  setShowSidebarPosition(false);
+                }
+              }}
+              onFocus={() => {
+                setShowSidebarPosition(true);
+                setSearchActivePosition(true);
+              }}
+              className="position-input" 
             />
             {errors.position && <p className="error-message">{errors.position[0]}</p>}
           </div>
+
+          {showSidebar && (
+            <div className="position-sidebar">
+              <div className="position-list">
+                {searchActive ? (
+                filteredPositions.length > 0 ? (
+                  filteredPositions.map((pos, index) => (
+                    <div
+                      key={index}
+                      className="position-item"
+                      onClick={() => handleSelectData(pos)}>
+                      {pos}
+                    </div>
+                    ))
+                  ) : (
+                    <div className="no-results">
+                      검색 결과가 없습니다. 직접 입력해주세요.
+                    </div>
+                  )
+                ) : null}
+              </div>
+            </div>
+          )}
 
           <div className="form-group">
             <label>4. 지원 마감일을 알려주세요.</label>

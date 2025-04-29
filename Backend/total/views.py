@@ -1,5 +1,6 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 
@@ -14,6 +15,7 @@ User = get_user_model()
 
 
 # Create your views here.
+@permission_classes([IsAuthenticated])
 @api_view(['POST', 'PUT', 'GET'])
 def total_list(request):
     if request.method == 'POST':
@@ -83,6 +85,7 @@ def total_list(request):
 
 # ---------------------------------------------------
 # 특정 회사의 자소서 확인 기능
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def detail(request, company_pk):
     company = Company.objects.get(pk=company_pk)
@@ -93,6 +96,7 @@ def detail(request, company_pk):
 
     
 # 특정 자소서 삭제 함수
+@permission_classes([IsAuthenticated])
 @api_view(['DELETE'])
 def delete(request, total_pk):
     company_user = Company_User.objects.get(pk=total_pk)
@@ -103,6 +107,7 @@ def delete(request, total_pk):
 
 
 # 회사 정보 조회
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def company_list(request):
     company = Company.objects.all()
