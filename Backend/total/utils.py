@@ -23,10 +23,9 @@ def is_invalid_text(text):
     if not re.search(r'[A-Za-z가-힣]', text):
         return "정상적으로 입력해주세요"
 
-    # 4. 영어/숫자/특수문자만 (한글 하나도 없음)
-    if not re.search(r'[가-힣]', text):
+    # 3. 숫자+특수문자만 (한글, 영어 없는 경우)
+    if not (re.search(r'[가-힣]', text) or re.search(r'[A-Za-z]', text)):
         return "정상적으로 입력해주세요"
-    
 
     # 5. 연속된 자음/모음 3글자 이상 체크
     count = 0

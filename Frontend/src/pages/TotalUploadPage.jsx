@@ -11,7 +11,13 @@ const TotalUploadPage = () => {
   const location = useLocation()
   const prefill = location.state || {};
 
-
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const date = String(today.getDate()).padStart(2, '0');
+  
+  const todaySTR = `${year}-${month}-${date}`;
+  
   const [keywords, setKeywords] = useState(prefill.keywords || "")
   const [company, setCompany] = useState(prefill.company_name || "")
   const [position, setPosition] = useState(prefill.position || "");
@@ -314,7 +320,7 @@ const TotalUploadPage = () => {
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
               className="input-field data-input"
-              min=""
+              min={todaySTR}
               max="2099-12-31"
             />
             {errors.deadline && <p className="error-message">{errors.deadline[0]}</p>}
