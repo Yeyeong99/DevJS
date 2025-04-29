@@ -43,10 +43,10 @@ class CompanyUserDashboardSerializer(serializers.ModelSerializer):
         model = Company_User
         fields = ('id', 'question', 'coverletter', 'new_coverletter', )    # id, 질문, 원본 자소서, 피드백 자소서 전달할 수 있도록 만들었음.
 
+
 # 회사 시리얼라이저
 class CompanySerializer(serializers.ModelSerializer):
-    company_user_set = CompanyUserSerializer(source='company_user_set', many=True, read_only=True)
 
     class Meta:
         model = Company
-        fields = ['id', 'name', 'company_user_set']
+        fields = ('id', 'name', )

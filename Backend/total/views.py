@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 
 from .models import Company, Company_User
-from .serializers import UserSerializer, CompanyUserSerializer
+from .serializers import UserSerializer, CompanyUserSerializer, CompanySerializer
 
 User = get_user_model()
 
@@ -88,4 +88,11 @@ def delete(request, total_pk):
     if request.method == 'DELETE':
         company_user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+
+# 회사 정보 조회
+@api_view(['GET'])
+def company_list(request):
+    company = Company.objects.all()
+    serializer = CompanySerializer(company, many=True)
+    return Response(serializer.data)
