@@ -21,10 +21,12 @@ const TotalUploadPage = () => {
   const navigate = useNavigate()
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async () => {
     if (isSubmitting) return;  // 이미 제출 중이면 함수 중단
     setIsSubmitting(true);     // 버튼 누르면 바로 잠금
+    setErrors({}); // 제출할 때마다 에러 초기화
     try {
       const payload = {
         keywords,
@@ -54,8 +56,29 @@ const TotalUploadPage = () => {
       alert("성공적으로 저장되었습니다!");
       navigate("/feedback",  { state: { ...payload, feedback } });
     } catch (error) {
-      console.error("전송 실패:", error);
-      alert("저장에 실패했습니다.");
+      if (error.response) {
+        console.error("전송 실패:", error.response.data);
+    
+        const errorData = error.response.data;
+    
+        if (typeof errorData === 'object') {
+          setErrors(errorData);  // 필드별 에러를 저장
+    
+          // ✨ 정상적이지 않은 값이 있으면 통합 팝업 띄우기
+          if (Object.keys(errorData).length > 0) {
+            alert("정상적인 값을 입력해주세요.");
+          }
+    
+        } else if (errorData.detail) {
+          // detail 에러가 따로 있으면 띄움
+          alert(errorData.detail);
+        } else {
+          alert("문제가 발생했습니다.");
+        }
+      } else {
+        console.error("전송 실패:", error.message);
+        alert("저장에 실패했습니다.");
+      }
     }
     finally {
       setIsSubmitting(false);   // 성공이든 실패든 다시 활성화
@@ -80,6 +103,7 @@ const TotalUploadPage = () => {
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
             />
+            {errors.keywords && <p className="error-message">{errors.keywords[0]}</p>}
           </div>
           <div className="form-group">
             <label>2. 지원하는 기업 이름을 알려주세요.</label>
@@ -89,6 +113,7 @@ const TotalUploadPage = () => {
               value={company}
               onChange={(e) => setCompany(e.target.value)}
             />
+            {errors.company && <p className="error-message">{errors.company[0]}</p>}
           </div>
           <div className="form-group">
             <label>3. 지원하는 직무를 알려주세요.</label>
@@ -98,6 +123,7 @@ const TotalUploadPage = () => {
               value={position}
               onChange={(e) => setPosition(e.target.value)}
             />
+            {errors.position && <p className="error-message">{errors.position[0]}</p>}
           </div>
 
           <div className="form-group">
@@ -108,6 +134,7 @@ const TotalUploadPage = () => {
               onChange={(e) => setDeadline(e.target.value)}
               className="input-field data-input"
             />
+            {errors.deadline && <p className="error-message">{errors.deadline[0]}</p>}
           </div>
         </div>
 
@@ -119,11 +146,13 @@ const TotalUploadPage = () => {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
           />
+          {errors.question && <p className="error-message">{errors.question[0]}</p>}
           <textarea
             placeholder="답변"
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
           />
+          {errors.answer && <p className="error-message">{errors.answer[0]}</p>}
         </div>
       </div>
 
