@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Company, Company_User
+from django.utils import timezone
+from .utils import is_invalid_text
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,6 +21,37 @@ class CompanyUserSerializer(serializers.ModelSerializer):
         model = Company_User
         fields = '__all__'
         read_only_fields = ('id', 'company', 'user', )
+    
+    def common_validate(self, value, field_name):
+        error_message = is_invalid_text(value)
+        if error_message:
+            raise serializers.ValidationError(f"{field_name}을(를) {error_message}")
+
+
+
+    def validate_keywords(self, value):
+        self.common_validate(value, "강조하고 싶은 키워드")
+        return value
+    
+    # 회사명은 어떻게 검증하지...
+    
+    def validate_position(self, value):
+        self.common_validate(value, "지원하는 직무명")
+        return value
+
+    def validate_question(self, value):
+        self.common_validate(value, "자기소개서 질문")
+        return value
+
+    def validate_answer(self, value):
+        self.common_validate(value, "자기소개서 답변")
+        return value
+
+    def validate_deadline(self, value):
+        if value < timezone.now().date():
+            raise serializers.ValidationError("마감일은 오늘 이후 날짜여야 합니다.")
+        return value
+        
         # extra_kwargs = {
         #     'company': {'read_only': True},  # serializer에선 직접 받지 않고, views.py에서 넘겨줌
         #     'user': {'read_only': True},
@@ -43,10 +77,10 @@ class CompanyUserDashboardSerializer(serializers.ModelSerializer):
         model = Company_User
         fields = ('id', 'question', 'coverletter', 'new_coverletter', )    # id, 질문, 원본 자소서, 피드백 자소서 전달할 수 있도록 만들었음.
 
+
 # 회사 시리얼라이저
 class CompanySerializer(serializers.ModelSerializer):
-    company_user_set = CompanyUserSerializer(source='company_user_set', many=True, read_only=True)
 
     class Meta:
         model = Company
-        fields = ['id', 'name', 'company_user_set']
+        fields = ('id', 'name', )

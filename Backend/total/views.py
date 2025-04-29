@@ -1,12 +1,14 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 
 from .models import Company, Company_User
-from .serializers import UserSerializer, CompanyUserSerializer
+from .serializers import UserSerializer, CompanyUserSerializer, CompanySerializer
+from .utils import is_invalid_text, common_validate
 
 User = get_user_model()
 
@@ -19,6 +21,10 @@ def total_list(request):
             company_name = request.data.get("company")
             if not company_name:
                 return Response({"error": "회사 이름이 필요합니다."}, status=400)
+            
+            # 회사명 유효성 검사하기.
+            common_validate(company_name, 'company')
+
 
             # company name으로 Company 인스턴스 생성 or 조회
             company, _ = Company.objects.get_or_create(name=company_name)
@@ -38,7 +44,11 @@ def total_list(request):
             else:
                 print("유효성 검사 실패:", serializer.errors)
                 return Response(serializer.errors, status=400)
-
+            
+        except ValidationError as e:
+            # ValidationError가 발생하면 정상적인 400 응답으로 내려보내기
+            return Response(e.detail, status=400)
+        
         except Exception as e:
             print("예외 발생:", e)
             return Response({"error": str(e)}, status=500)
@@ -88,4 +98,11 @@ def delete(request, total_pk):
     if request.method == 'DELETE':
         company_user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+
+# 회사 정보 조회
+@api_view(['GET'])
+def company_list(request):
+    company = Company.objects.all()
+    serializer = CompanySerializer(company, many=True)
+    return Response(serializer.data)
