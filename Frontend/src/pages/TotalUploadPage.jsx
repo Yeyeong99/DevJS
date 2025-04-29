@@ -5,6 +5,7 @@ import axios from "axios"
 import Header from "../components/Header"
 import axiosInstance from "../api/axiosInstance"
 
+
 const TotalUploadPage = () => {
 
   const location = useLocation()
@@ -29,7 +30,6 @@ const TotalUploadPage = () => {
 
   // 회사 리스트 가져오기
   useEffect(() => {
-    console.log(companyList)
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
@@ -39,7 +39,6 @@ const TotalUploadPage = () => {
           },
         });
 
-        console.log(res.data);
         setCompanyList(res.data);
       }
       catch (err) {
@@ -51,7 +50,6 @@ const TotalUploadPage = () => {
   }, []);
 
   
-
   const handleSubmit = async () => {
     if (isSubmitting) return;  // 이미 제출 중이면 함수 중단
     setIsSubmitting(true);     // 버튼 누르면 바로 잠금
@@ -68,6 +66,7 @@ const TotalUploadPage = () => {
         answer,
       };
 
+      console.log(payload)
 
       // POST 요청 후 응답 받기
       const saveResponse = await axiosInstance.post("total/total_list/", payload);
@@ -84,7 +83,6 @@ const TotalUploadPage = () => {
         analyzePayload,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
-      // feedback = { total_feedback, final_before_feedback, final_after_feedback }
 
       // alert("성공적으로 저장되었습니다!");
       navigate("/feedback",  { state: { ...payload, feedback } });
@@ -201,7 +199,7 @@ const TotalUploadPage = () => {
                 }}
                 className="campany-input"
               />
-              {errors.company && <p className="error-message">{errors.company[0]}</p>}
+              {errors.name && <p className="error-message">{errors.name[0]}</p>}
             </div>
           </div>
               
@@ -247,7 +245,7 @@ const TotalUploadPage = () => {
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
               className="input-field data-input"
-              min="2000-01-01"
+              min=""
               max="2099-12-31"
             />
             {errors.deadline && <p className="error-message">{errors.deadline[0]}</p>}

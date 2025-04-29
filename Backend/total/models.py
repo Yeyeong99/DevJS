@@ -4,7 +4,7 @@ from django.conf import settings
 # Create your models here.
 class Company(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Company_User')
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
 class Company_User(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)

@@ -51,31 +51,6 @@ class CompanyUserSerializer(serializers.ModelSerializer):
         if value < timezone.now().date():
             raise serializers.ValidationError("마감일은 오늘 이후 날짜여야 합니다.")
         return value
-        
-        # extra_kwargs = {
-        #     'company': {'read_only': True},  # serializer에선 직접 받지 않고, views.py에서 넘겨줌
-        #     'user': {'read_only': True},
-        # }        
-        # fields = [
-        #     'id',
-        #     'company',
-        #     'user',
-        #     'keywords',
-        #     'deadline',
-        #     'position',
-        #     'question',
-        #     'answer',
-        #     'feedback',
-        #     'is_reviewed'
-        # ]
-        
-class CompanyUserDashboardSerializer(serializers.ModelSerializer):
-    
-    user = UserSerializer(read_only=True)
-   
-    class Meta:
-        model = Company_User
-        fields = ('id', 'question', 'coverletter', 'new_coverletter', )    # id, 질문, 원본 자소서, 피드백 자소서 전달할 수 있도록 만들었음.
 
 
 # 회사 시리얼라이저
@@ -84,3 +59,12 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = ('id', 'name', )
+
+    def common_validate(self, value, field_name):
+        error_message = is_invalid_text(value)
+        if error_message:
+            raise serializers.ValidationError(f"{field_name}을(를) {error_message}")
+        
+    def validate_name(self, value):
+        self.common_validate(value, "회사명")
+        return value

@@ -21,13 +21,15 @@ def total_list(request):
             company_name = request.data.get("company")
             if not company_name:
                 return Response({"error": "회사 이름이 필요합니다."}, status=400)
-            
-            # 회사명 유효성 검사하기.
-            common_validate(company_name, 'company')
 
+            serializer = CompanySerializer(data={'name':company_name})
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                print("유효성 검사 실패:", serializer.errors)
+                return Response(serializer.errors, status=400)
 
-            # company name으로 Company 인스턴스 생성 or 조회
-            company, _ = Company.objects.get_or_create(name=company_name)
+            company = Company.objects.get(name=company_name)
 
             # 각 자소서에 번호 붙이기
             len_of_coverletter = Company_User.objects.filter(user=request.user, company=company).count()
