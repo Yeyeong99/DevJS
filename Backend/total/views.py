@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
@@ -43,7 +44,11 @@ def total_list(request):
             else:
                 print("유효성 검사 실패:", serializer.errors)
                 return Response(serializer.errors, status=400)
-
+            
+        except ValidationError as e:
+            # ValidationError가 발생하면 정상적인 400 응답으로 내려보내기
+            return Response(e.detail, status=400)
+        
         except Exception as e:
             print("예외 발생:", e)
             return Response({"error": str(e)}, status=500)
