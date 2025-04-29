@@ -26,6 +26,17 @@ def is_invalid_text(text):
     # 4. 영어/숫자/특수문자만 (한글 하나도 없음)
     if not re.search(r'[가-힣]', text):
         return "정상적으로 입력해주세요"
+    
+
+    # 5. 연속된 자음/모음 3글자 이상 체크
+    count = 0
+    for ch in text:
+        if ('\u3131' <= ch <= '\u314E') or ('\u314F' <= ch <= '\u3163'):
+            count += 1
+            if count >= 3:
+                return "정상적으로 입력해주세요"
+        else:
+            count = 0  # 한글 자음/모음이 아니면 count 초기화
 
     return None  # 정상 입력
 
