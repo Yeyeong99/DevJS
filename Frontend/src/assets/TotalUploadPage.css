@@ -6,7 +6,6 @@
   align-items: center;
   padding: 20px 1.5rem 2rem;
   width: 100%;
-  
 }
 
 .loading-overlay {
@@ -37,10 +36,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
 
 .form-wrapper {
   display: flex;
@@ -56,10 +58,9 @@
   min-width: 380px;
 }
 
-.right-form{
+.right-form {
   margin-top: 50px;
 }
-
 
 .form-group {
   margin-bottom: 2rem;
@@ -79,8 +80,8 @@ label {
   line-height: 1.4;
 }
 
-input[type='text'],
-input[type='date'],
+input[type="text"],
+input[type="date"],
 textarea {
   width: 100%;
   padding: 1rem;
@@ -92,12 +93,7 @@ textarea {
   resize: none;
   box-sizing: border-box;
   margin: 20px 0rem 1rem 0rem;
-
-  
 }
-
-
-
 
 .right-form textarea {
   height: 380px;
@@ -112,11 +108,7 @@ textarea {
   resize: none;
   box-sizing: border-box;
   margin: 20px 0rem 1rem 0rem;
-
-  
-
 }
-
 
 .left-form textarea {
   height: 80px;
@@ -131,9 +123,6 @@ textarea {
   resize: none;
   box-sizing: border-box;
   margin: 20px 0rem 1rem 0rem;
-
-  
-
 }
 
 .button-wrapper {
@@ -152,7 +141,6 @@ textarea {
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
-
 }
 
 .submit-button:hover {
@@ -165,13 +153,11 @@ textarea {
   margin-top: 4px;
 }
 
-
-
-.company-input-group {
+.company-input-group, .position-input-group {
   position: relative;
 }
 
-.company-sidebar {
+.company-sidebar, .position-sidebar {
   position: absolute;
   top: 100%;
   left: 0;
@@ -182,21 +168,21 @@ textarea {
   border-radius: 0 0 8px 8px;
   max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
   margin-top: -4px; /* input과 자연스럽게 이어지도록 조정 */
 }
 
-.company-list {
+.company-list, .position-list {
   padding: 0.5rem 0;
 }
 
-.company-item {
+.company-item, .position-item {
   padding: 0.75rem 1rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.company-item:hover {
+.company-item:hover, .position-item:hover {
   background-color: #f1f3f5;
 }
 

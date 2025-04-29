@@ -43,36 +43,42 @@ const TotalUploadPage = () => {
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
-        const companys = await axiosInstance.get('http://localhost:8000/api/total/company_list/', {
+        const companysResponse = await axiosInstance.get('http://localhost:8000/api/total/company_list/', {
           headers: {
             Authorization: `Bearer ${access}`,
           },
         });
+        
+        console.log("받아온 회사 리스트:", companysResponse.data);
+        setCompanyList(companysResponse.data);
+        
         const userData = await axiosInstance.get('http://localhost:8000/api/total/total_list/', {
           headers: {
             Authorization: `Bearer ${access}`,
           },
         });
 
-        setCompanyList(companys.data);
-        // 지원직무만 추출
-        const positions = [];
-        for (const idx in userData.data) {
-          positions.push(userData.data[idx]['position'])
+      // 지원직무만 추출 및 중복 제거
+      const positionsWithDuplicates = [];
+      for (const idx in userData.data) {
+        if (userData.data[idx]['position']) {
+          positionsWithDuplicates.push(userData.data[idx]['position']);
         }
-        setPositionList(positions)
       }
-      catch (err) {
-        console.error("❌ 데이터 가져오기 실패!", err);
-      }
+      
+      // Set을 사용하여 중복 제거
+      const uniquePositions = [...new Set(positionsWithDuplicates)];
+      console.log("중복 제거된 직무 리스트:", uniquePositions);
+      setPositionList(uniquePositions);
+    }
+    catch (err) {
+      console.error("❌ 데이터 가져오기 실패!", err);
+    }
     };
     
     fetchData();
   }, []);
 
-
-
-  
   const handleSubmit = async () => {
     if (isSubmitting) return;  // 이미 제출 중이면 함수 중단
     setIsSubmitting(true);     // 버튼 누르면 바로 잠금
@@ -144,25 +150,23 @@ const TotalUploadPage = () => {
   );
 
   const filteredPositions = positionList.filter(pos => 
-    pos?.toLowerCase().includes(searchTerm.toLowerCase())
+    pos?.toLowerCase().includes(searchTermPosition.toLowerCase())
   );
 
   // 회사 선택 처리
-  const handleSelectData = (selectedData) => {
-    if (selectedData === companyList) {
-      setCompany(selectedData.name)
-      setSearchTerm(selectedData.name)
-      setSearchActive(false)
-      setShowSidebar(false)
+  const handleSelectData = (selectedData, type) => {
+    if (type === 'company') {
+      setCompany(selectedData.name);
+      setSearchTerm(selectedData.name);
+      setSearchActive(false);
+      setShowSidebar(false);
     }
-    else if (selectedData === positionList) {
-      setPosition(selectedData)
-      setSearchTermPosition(selectedData)
-      setSearchActivePosition(false)
-      setShowSidebarPosition(false)
+    else if (type === 'position') {
+      setPosition(selectedData);
+      setSearchTermPosition(selectedData);
+      setSearchActivePosition(false);
+      setShowSidebarPosition(false);
     }
-    
-    
   }
 
   // 지원 기업 창 외부 클릭하면 검색 창 닫기
@@ -179,17 +183,30 @@ const TotalUploadPage = () => {
     };
   }, [showSidebar]);
 
+  // 직무 창 외부 클릭하면 창 닫기
+  useEffect(() => {
+    const handleClickOutsidePosition = (event) => {
+      if (showSidebarPosition && !event.target.closest('.position-input-group')) {
+        setShowSidebarPosition(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutsidePosition);
+    return () => {
+      document.removeEventListener('click', handleClickOutsidePosition);
+    };
+  }, [showSidebarPosition]);
 
   return (
     <div className="container">
-        <Header/>
-        {/* 로딩 띄우기 */}
-        {isAnalyzing && (
-          <div className="loading-overlay">
-            <div className="loading-spinner"></div>
-              <div>피드백 받는 중입니다..</div>
-          </div>
-        )}
+      <Header/>
+      {/* 로딩 띄우기 */}
+      {isAnalyzing && (
+        <div className="loading-overlay">
+          <div className="loading-spinner"></div>
+          <div>피드백 받는 중입니다..</div>
+        </div>
+      )}
 
       <div className="form-wrapper">
         <div className="left-form">
@@ -233,85 +250,86 @@ const TotalUploadPage = () => {
                 className="campany-input"
               />
               {errors.name && <p className="error-message">{errors.name[0]}</p>}
+            
+              {showSidebar && (
+                <div className="company-sidebar">
+                  <div className="company-list">
+                    {searchActive && (
+                      filteredCompanies.length > 0 ? (
+                        filteredCompanies.map((comp, index) => (
+                          <div
+                            key={index}
+                            className="company-item"
+                            onClick={() => handleSelectData(comp, 'company')}>
+                            {comp.name}
+                          </div>
+                        ))
+                      ) : (
+                        <div className="no-results">
+                          검색 결과가 없습니다. 입력한 값이 반영됩니다.
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-              
-          {showSidebar && (
-            <div className="company-sidebar">
-              <div className="company-list">
-                {searchActive ? (
-                filteredCompanies.length > 0 ? (
-                    filteredCompanies.map((comp, index) => (
-                    <div
-                      key={index}
-                      className="company-item"
-                      onClick={() => handleSelectData(comp)}>
-                      {comp.name}
-                    </div>
-                    ))
-                  ) : (
-                    <div className="no-results">
-                      검색 결과가 없습니다. 직접 입력해주세요.
-                    </div>
-                  )
-                ) : null}
-              </div>
-            </div>
-          )}
 
-
-          <div className="form-group">
+          <div className="form-group position-input-group">
             <label>3. 지원하는 직무를 알려주세요.</label>
-            <input
-              type="text"
-              placeholder="예) 프론트엔드 개발자"
-              value={position}
-              onChange={(e) => {
-                setPosition(e.target.value);
-                setSearchTermPosition(e.target.value);
+            <div className="position-input-container">
+              <input
+                type="text"
+                placeholder="예) 프론트엔드 개발자"
+                value={position}
+                onChange={(e) => {
+                  setPosition(e.target.value);
+                  setSearchTermPosition(e.target.value);
 
-                if (e.target.value.trim().length > 0) {
-                  setSearchActivePosition(true);
-                  if (!showSidebar) {
-                    setShowSidebarPosition(true);
+                  if (e.target.value.trim().length > 0) {
+                    setSearchActivePosition(true);
+                    if (!showSidebarPosition) {
+                      setShowSidebarPosition(true);
+                    }
                   }
-                }
-                else {
-                  setSearchActivePosition(false);
-                  setShowSidebarPosition(false);
-                }
-              }}
-              onFocus={() => {
-                setShowSidebarPosition(true);
-                setSearchActivePosition(true);
-              }}
-              className="position-input" 
-            />
-            {errors.position && <p className="error-message">{errors.position[0]}</p>}
-          </div>
-
-          {showSidebar && (
-            <div className="position-sidebar">
-              <div className="position-list">
-                {searchActive ? (
-                filteredPositions.length > 0 ? (
-                  filteredPositions.map((pos, index) => (
-                    <div
-                      key={index}
-                      className="position-item"
-                      onClick={() => handleSelectData(pos)}>
-                      {pos}
-                    </div>
-                    ))
-                  ) : (
-                    <div className="no-results">
-                      검색 결과가 없습니다. 직접 입력해주세요.
-                    </div>
-                  )
-                ) : null}
-              </div>
+                  else {
+                    setSearchActivePosition(false);
+                    setShowSidebarPosition(false);
+                  }
+                }}
+                onFocus={() => {
+                  setShowSidebarPosition(true);
+                  setSearchActivePosition(true);
+                }}
+                className="position-input" 
+              />
+              {errors.position && <p className="error-message">{errors.position[0]}</p>}
+            
+              {showSidebarPosition && (
+                <div className="position-sidebar">
+                  <div className="position-list">
+                    {searchActivePosition && (
+                      filteredPositions.length > 0 ? (
+                        filteredPositions.map((pos, index) => (
+                          <div
+                            key={index}
+                            className="position-item"
+                            onClick={() => handleSelectData(pos, 'position')}>
+                            {pos}
+                          </div>
+                        ))
+                      ) : (
+                        <div className="no-results">
+                          검색 결과가 없습니다. 입력한 값이 반영됩니다.
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
 
           <div className="form-group">
             <label>4. 지원 마감일을 알려주세요.</label>
@@ -345,12 +363,7 @@ const TotalUploadPage = () => {
         </div>
       </div>
 
-
-
-
       <div className="button-wrapper">
-
-        
         <button className="submit-button" onClick={handleSubmit}>
           피드백 받기
         </button>
