@@ -17,4 +17,5 @@ class Company_User(models.Model):
     answer = models.TextField()
     is_reviewd = models.CharField(max_length=20, default='수정 중')
     feedback = models.TextField(blank=True, null=True)
+    total_feedback = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
