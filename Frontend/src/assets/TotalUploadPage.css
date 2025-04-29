@@ -155,3 +155,9 @@ textarea {
 .submit-button:hover {
   background-color: #5c45d3;
 }
+
+.error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}

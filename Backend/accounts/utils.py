@@ -2,6 +2,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 
+
 User = get_user_model()    # 현재 활성화된 user 모델 가져오기
 
 
@@ -25,3 +26,5 @@ def generate_jwt_for_user(user):
         "access": str(refresh.access_token),
         "refresh": str(refresh)
     }
+
+
