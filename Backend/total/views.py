@@ -7,6 +7,7 @@ from django.shortcuts import render
 
 from .models import Company, Company_User
 from .serializers import UserSerializer, CompanyUserSerializer
+from .utils import is_invalid_text, common_validate
 
 User = get_user_model()
 
@@ -19,6 +20,10 @@ def total_list(request):
             company_name = request.data.get("company")
             if not company_name:
                 return Response({"error": "회사 이름이 필요합니다."}, status=400)
+            
+            # 회사명 유효성 검사하기.
+            common_validate(company_name, 'company')
+
 
             # company name으로 Company 인스턴스 생성 or 조회
             company, _ = Company.objects.get_or_create(name=company_name)
