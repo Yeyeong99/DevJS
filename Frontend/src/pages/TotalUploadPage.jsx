@@ -66,7 +66,7 @@ const TotalUploadPage = () => {
     
           // ✨ 정상적이지 않은 값이 있으면 통합 팝업 띄우기
           if (Object.keys(errorData).length > 0) {
-            alert("정상적인 값을 입력해주세요.");
+            alert("뭔가 잘못 입력한 것 같아요😉");
           }
     
         } else if (errorData.detail) {
