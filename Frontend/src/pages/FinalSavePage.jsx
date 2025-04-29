@@ -7,9 +7,7 @@ import axios from 'axios';
 const FinalSavePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   // Feedback 페이지에서 데이터 가져와지는지 확인
-  const { answerInfo } = location.state || {};
 
   const [question, setQuestion] = useState("");
   const [keywords, setKeywords] = useState("");
@@ -21,7 +19,6 @@ const FinalSavePage = () => {
     window.scrollTo(0, 0);
     
     // Feedback 페이지 내용 디버깅을 위해 콘솔에 출력
-    console.log("Received answerInfo:", answerInfo.aiFeedback);
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");

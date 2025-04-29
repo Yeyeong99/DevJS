@@ -68,21 +68,20 @@ const TotalUploadPage = () => {
         answer,
       };
 
-      console.log(payload)
-      const answerInfo = {
-        company,
-        keywords,
-        question,
-        answer,
-      }
 
-      await axiosInstance.post("total/total_list/", payload);
-
-      // 2) 두 번째 분석 → 결과 받기
+      // POST 요청 후 응답 받기
+      const saveResponse = await axiosInstance.post("total/total_list/", payload);
+      // DB에 저장된 company_id 추출
+      const company_id = saveResponse.data.company;
+      console.log(company_id)
+      // 분석 → 결과 받기
       const accessToken = localStorage.getItem("access_token");
+      const analyzePayload = {
+        company_id: company_id
+      }
       const { data: feedback } = await axiosInstance.post(
         "http://localhost:8000/api/analyzes/",
-        answerInfo,
+        analyzePayload,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       // feedback = { total_feedback, final_before_feedback, final_after_feedback }
