@@ -84,7 +84,9 @@ const DevJSFeedbackPage = () => {
         <section className="question-section">
           <p className="keywords">선택된 JD 항목: {keywords}</p>
           <h4 className="question">{question}</h4>
-
+          {/* 종합 피드백 */}
+          <h3 className="totalFeedback">종합 피드백</h3>
+          <div className="paragraph">{totalFeedback}</div>
           <div className="answer-container">
             {/* 파싱된 답변 렌더링 */}
             <div className="original-answer">
@@ -95,9 +97,7 @@ const DevJSFeedbackPage = () => {
               <textarea value={editedFeedback} onChange={handleFeedbackChange}></textarea>
             </div>
           </div>
-          {/* 종합 피드백 */}
-          <h3 className="totalFeedback">종합 피드백</h3>
-          <div className="paragraph">{totalFeedback}</div>
+
         </section>
         <button type="button" onClick={toFinalPage}>
           수정 사항 반영하기
