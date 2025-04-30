@@ -96,9 +96,16 @@ def get_llm_total_feedback(total_prompt) -> TotalFeedback:
         messages=[
             {
                 "role": "system",
-                "content": "당신은 IT 분야로 진로를 정한 취업준비생들의 자기소개서를 첨삭해주는 전문가입니다.\n 반드시 한국어로만 답변하세요."
-                # json 스키마 전달
-                f" The JSON object must use the schema: {json.dumps(TotalFeedback.model_json_schema(), indent=2)}",
+                "content": 
+                """
+                    당신은 IT 분야로 진로를 정한 취업준비생들의 자기소개서를 첨삭해주는 전문가입니다.
+                    반드시 한국어로만 답변하세요.
+                    응답은 다음 JSON 구조를 정확히 따라야 합니다:
+                    {
+                        "feedback": "자기소개서에 대한 전반적인 피드백",
+                        "ai_feedback": "수정된 자기소개서 예시"
+                    }
+                """
             },
             {
                 "role": "user", 
@@ -107,8 +114,26 @@ def get_llm_total_feedback(total_prompt) -> TotalFeedback:
         ],
         temperature=0.5,
         stream=False,
-        # Json으로 포맷 지정
         response_format={"type": "json_object"},        
     )
-    raw_json = json.loads(response.choices[0].message.content)
-    return raw_json
+    
+    try:
+        raw_json = json.loads(response.choices[0].message.content)
+        # Validate that the required fields exist
+        if "feedback" not in raw_json or "ai_feedback" not in raw_json:
+            raise ValueError("Missing required fields in JSON response")
+            
+        return TotalFeedback(
+            feedback=raw_json["feedback"],
+            ai_feedback=raw_json["ai_feedback"]
+        )
+    except (json.JSONDecodeError, ValueError) as e:
+        # Log the error and the raw response for debugging
+        print(f"Error parsing LLM response: {e}")
+        print(f"Raw response: {response.choices[0].message.content}")
+        
+        # Provide a fallback response
+        return TotalFeedback(
+            feedback="자기소개서 분석 중 오류가 발생했습니다. 다시 시도해주세요.",
+            ai_feedback="피드백을 제공할 수 없습니다. 잠시 후 다시 시도해주세요."
+        )
