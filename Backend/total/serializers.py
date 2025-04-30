@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
+
 from django.contrib.auth import get_user_model
 from .models import Company, Company_User
 from django.utils import timezone
@@ -55,11 +57,18 @@ class CompanyUserSerializer(serializers.ModelSerializer):
 
 # 회사 시리얼라이저
 class CompanySerializer(serializers.ModelSerializer):
+    name = serializers.CharField(
+        validators=[]  # 기본 unique validator 제거
+    )
 
     class Meta:
         model = Company
         fields = ('id', 'name', )
 
+    def create(self, validated_data):
+        company, _ = Company.objects.get_or_create(name=validated_data['name'])
+        return company
+    
     def common_validate(self, value, field_name):
         error_message = is_invalid_text(value)
         if error_message:
