@@ -90,7 +90,7 @@ const DevJSFeedbackPage = () => {
           <div className="answer-container">
             {/* 파싱된 답변 렌더링 */}
             <div className="original-answer">
-              <pre>{originalAnswer}</pre>
+              <pre className="pre-answer">{originalAnswer}</pre>
             </div>
             {/* 파싱된 답변 렌더링 */}
             <div className="ai-feedback">
