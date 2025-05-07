@@ -1,15 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-body {
-  font-family: "Poppins", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  margin: 0;
-  color: white;
-}
+
 
 /* 회원가입 컨테이너 */
 .signup-container {

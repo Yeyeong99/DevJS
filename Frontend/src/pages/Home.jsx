@@ -18,7 +18,7 @@ function Home() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.5 }}
     >
-      {/* ✅ 클릭 가능한 로고 */}
+
       <motion.div 
         className="logo"
         onClick={goHome}
@@ -30,7 +30,6 @@ function Home() {
         DevJS
       </motion.div>
 
-      {/* 텍스트 컨테이너 - 순차적 등장 효과 */}
       <motion.div 
         className="text-container"
         initial="hidden"
@@ -63,7 +62,6 @@ function Home() {
         </motion.p>
       </motion.div>
 
-      {/* 로그인 버튼 - 클릭 애니메이션 추가 */}
       <motion.button 
         className="login-btn"
         onClick={() => navigate("/login")}

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 1.5rem 2rem;
+  padding: 6rem 1.5rem 2rem;
   width: 100%;
 }
 
@@ -10,7 +10,6 @@
   width: 100%;
   max-width: 800px;
   background-color: #ffffff;
-  padding: 2.5rem;
   border-radius: 1.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   display: flex;
@@ -18,6 +17,8 @@
   gap: 2.5rem;
   transition: all 0.3s ease-in-out;
   box-sizing: border-box;
+  padding: 3rem;
+
 }
 
 .question-block {
