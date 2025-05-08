@@ -1,0 +1,22 @@
+# python 버전 설정
+FROM python:3.9-slim
+
+# python 환경 최적화
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+WORKDIR /app
+
+# python 패키지의 목록과 버전 정보를 복사
+COPY requirements.txt .
+
+# python 패키지들을 가상환경 내에 설치
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# 개발된 소스 전체 복사
+COPY . .
+
+EXPOSE 8000
+
+# 컨테이너 기본 실행 프로그램 설정
+CMD ["gunicorn", "Devjs.wsgi:application", "--bind", "0.0.0.0:8000"]
