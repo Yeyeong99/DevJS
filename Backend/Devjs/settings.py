@@ -14,6 +14,7 @@ from pathlib import Path
 
 from decouple import config
 from datetime import timedelta
+
 KAKAO_CLIENT_ID = config("KAKAO_CLIENT_ID")
 
 GOOGLE_CLIENT_ID = config("GOOGLE_CLIENT_ID")
@@ -30,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+%!2#rv2sii+=a&e%u0d$g&!hnqm7o5#e&ky_1jcuu8bh%=3l8'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -113,8 +114,12 @@ WSGI_APPLICATION = 'Devjs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'devjs',
+        'USER': 'postgres',
+        'PASSWORD': 'devjs',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
