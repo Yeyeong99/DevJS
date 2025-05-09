@@ -16,7 +16,7 @@
   max-width: 1200px;
   width: 100%;
   background-color: #ffffff;
-  padding: 5rem 2rem 3rem; /* 위 아래 padding으로 여백 확보 */
+  padding: 1.5rem 2rem 3rem; /* 위 아래 padding으로 여백 확보 */
   border-radius: 1.25rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -95,9 +95,7 @@
   color: #333;
   max-height: 400px;
   overflow-y: auto;
-  margin-top: auto;
   width: 100%;
-
 }
 
 .ai-feedback {
@@ -117,6 +115,7 @@
   color: #212529;
   box-sizing: border-box;
   height: 100%;
+  margin: 0;
 }
 
 button[type="button"] {
@@ -146,11 +145,16 @@ button[type="button"]:hover {
 
 
 .original-answer::before {
-  content: "원본 답변";
+  content: "원본 자기소개서";
+  font-size: 18px;
+  margin: 0.5rem 0 0.8rem 0;
 }
 
 .ai-feedback::before {
-  content: "피드백 편집";
+  content: "AI 피드백 반영본";
+  font-size: 18px;
+  margin: 0.5rem 0 0.8rem 0;
+
 }
 
 

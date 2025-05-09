@@ -173,7 +173,7 @@ const Dashboard = () => {
               </tbody>
             </table>
   
-            {!showMore && (
+            {!showMore && groupedArray.length >= 4 && (
               <div className="see-more" onClick={handleSeeMore}>
                 더보기
               </div>

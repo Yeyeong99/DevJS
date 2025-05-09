@@ -63,7 +63,6 @@
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    min-height: 500px;
     white-space: pre-line;
     min-width: 480px;
   }

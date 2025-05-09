@@ -79,6 +79,11 @@ const TotalUploadPage = () => {
     fetchData();
   }, []);
 
+  // 컴포넌트 마운트 시 스크롤을 맨 위로 이동시키는 효과 추가
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSubmit = async () => {
     if (isSubmitting) return;  // 이미 제출 중이면 함수 중단
     setIsSubmitting(true);     // 버튼 누르면 바로 잠금
@@ -198,175 +203,177 @@ const TotalUploadPage = () => {
   }, [showSidebarPosition]);
 
   return (
-    <div className="container">
-      <Header/>
-      {/* 로딩 띄우기 */}
-      {isAnalyzing && (
-        <div className="loading-overlay">
-          <div className="loading-spinner"></div>
-          <div>피드백 받는 중입니다..</div>
-        </div>
-      )}
-
-      <div className="form-wrapper">
-        <div className="left-form">
-          <div className="form-group">
-            <label>1. 강조하고 싶은 키워드를 알려주세요.</label>
-            <p className="helper">키워드가 여러 개인 경우 쉼표로 구분해주세요.<br />예) React를 이용한 웹 개발 경험, 커뮤니케이션 스킬</p>
-            <textarea
-              placeholder="예) Django를 이용한 웹 서버 개발 경험"
-              value={keywords}
-              onChange={(e) => setKeywords(e.target.value)}
-            />
-            {errors.keywords && <p className="error-message">{errors.keywords[0]}</p>}
+    <div className="page-wrap">
+      <div className="container">
+        <Header/>
+        {/* 로딩 띄우기 */}
+        {isAnalyzing && (
+          <div className="loading-overlay">
+            <div className="loading-spinner"></div>
+            <div>피드백 받는 중입니다..</div>
           </div>
+        )}
 
-          <div className="form-group company-input-group">
-            <label>2. 지원하는 기업 이름을 알려주세요.</label>
-            <div className="company-input-container">
-              <input
-                type="text"
-                placeholder="예) 멀티캠퍼스"
-                value={company}
-                onChange={(e) => {
-                  setCompany(e.target.value);
-                  setSearchTerm(e.target.value);
+        <div className="form-wrapper">
+          <div className="left-form">
+            <div className="form-group">
+              <label>1. 강조하고 싶은 키워드를 알려주세요.</label>
+              <p className="helper">키워드가 여러 개인 경우 쉼표로 구분해주세요.<br />예) React를 이용한 웹 개발 경험, 커뮤니케이션 스킬</p>
+              <textarea
+                placeholder="예) Django를 이용한 웹 서버 개발 경험"
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
+              />
+              {errors.keywords && <p className="error-message">{errors.keywords[0]}</p>}
+            </div>
 
-                  if (e.target.value.trim().length > 0) {
+            <div className="form-group company-input-group">
+              <label>2. 지원하는 기업 이름을 알려주세요.</label>
+              <div className="company-input-container">
+                <input
+                  type="text"
+                  placeholder="예) 멀티캠퍼스"
+                  value={company}
+                  onChange={(e) => {
+                    setCompany(e.target.value);
+                    setSearchTerm(e.target.value);
+
+                    if (e.target.value.trim().length > 0) {
+                      setSearchActive(true);
+                      if (!showSidebar) {
+                        setShowSidebar(true);
+                      }
+                    }
+                    else {
+                      setSearchActive(false);
+                      setShowSidebar(false);
+                    }
+                  }}
+                  onFocus={() => {
+                    setShowSidebar(true);
                     setSearchActive(true);
-                    if (!showSidebar) {
-                      setShowSidebar(true);
-                    }
-                  }
-                  else {
-                    setSearchActive(false);
-                    setShowSidebar(false);
-                  }
-                }}
-                onFocus={() => {
-                  setShowSidebar(true);
-                  setSearchActive(true);
-                }}
-                className="campany-input"
-              />
-              {errors.name && <p className="error-message">{errors.name[0]}</p>}
-            
-              {showSidebar && (
-                <div className="company-sidebar">
-                  <div className="company-list">
-                    {searchActive && (
-                      filteredCompanies.length > 0 ? (
-                        filteredCompanies.map((comp, index) => (
-                          <div
-                            key={index}
-                            className="company-item"
-                            onClick={() => handleSelectData(comp, 'company')}>
-                            {comp.name}
+                  }}
+                  className="campany-input"
+                />
+                {errors.name && <p className="error-message">{errors.name[0]}</p>}
+              
+                {showSidebar && (
+                  <div className="company-sidebar">
+                    <div className="company-list">
+                      {searchActive && (
+                        filteredCompanies.length > 0 ? (
+                          filteredCompanies.map((comp, index) => (
+                            <div
+                              key={index}
+                              className="company-item"
+                              onClick={() => handleSelectData(comp, 'company')}>
+                              {comp.name}
+                            </div>
+                          ))
+                        ) : (
+                          <div className="no-results">
+                            검색 결과가 없습니다. 입력한 값이 반영됩니다.
                           </div>
-                        ))
-                      ) : (
-                        <div className="no-results">
-                          검색 결과가 없습니다. 입력한 값이 반영됩니다.
-                        </div>
-                      )
-                    )}
+                        )
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="form-group position-input-group">
-            <label>3. 지원하는 직무를 알려주세요.</label>
-            <div className="position-input-container">
-              <input
-                type="text"
-                placeholder="예) 프론트엔드 개발자"
-                value={position}
-                onChange={(e) => {
-                  setPosition(e.target.value);
-                  setSearchTermPosition(e.target.value);
+            <div className="form-group position-input-group">
+              <label>3. 지원하는 직무를 알려주세요.</label>
+              <div className="position-input-container">
+                <input
+                  type="text"
+                  placeholder="예) 프론트엔드 개발자"
+                  value={position}
+                  onChange={(e) => {
+                    setPosition(e.target.value);
+                    setSearchTermPosition(e.target.value);
 
-                  if (e.target.value.trim().length > 0) {
+                    if (e.target.value.trim().length > 0) {
+                      setSearchActivePosition(true);
+                      if (!showSidebarPosition) {
+                        setShowSidebarPosition(true);
+                      }
+                    }
+                    else {
+                      setSearchActivePosition(false);
+                      setShowSidebarPosition(false);
+                    }
+                  }}
+                  onFocus={() => {
+                    setShowSidebarPosition(true);
                     setSearchActivePosition(true);
-                    if (!showSidebarPosition) {
-                      setShowSidebarPosition(true);
-                    }
-                  }
-                  else {
-                    setSearchActivePosition(false);
-                    setShowSidebarPosition(false);
-                  }
-                }}
-                onFocus={() => {
-                  setShowSidebarPosition(true);
-                  setSearchActivePosition(true);
-                }}
-                className="position-input" 
-              />
-              {errors.position && <p className="error-message">{errors.position[0]}</p>}
-            
-              {showSidebarPosition && (
-                <div className="position-sidebar">
-                  <div className="position-list">
-                    {searchActivePosition && (
-                      filteredPositions.length > 0 ? (
-                        filteredPositions.map((pos, index) => (
-                          <div
-                            key={index}
-                            className="position-item"
-                            onClick={() => handleSelectData(pos, 'position')}>
-                            {pos}
+                  }}
+                  className="position-input" 
+                />
+                {errors.position && <p className="error-message">{errors.position[0]}</p>}
+              
+                {showSidebarPosition && (
+                  <div className="position-sidebar">
+                    <div className="position-list">
+                      {searchActivePosition && (
+                        filteredPositions.length > 0 ? (
+                          filteredPositions.map((pos, index) => (
+                            <div
+                              key={index}
+                              className="position-item"
+                              onClick={() => handleSelectData(pos, 'position')}>
+                              {pos}
+                            </div>
+                          ))
+                        ) : (
+                          <div className="no-results">
+                            검색 결과가 없습니다. 입력한 값이 반영됩니다.
                           </div>
-                        ))
-                      ) : (
-                        <div className="no-results">
-                          검색 결과가 없습니다. 입력한 값이 반영됩니다.
-                        </div>
-                      )
-                    )}
+                        )
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>4. 지원 마감일을 알려주세요.</label>
+              <input
+                type="date"
+                value={deadline}
+                onChange={(e) => setDeadline(e.target.value)}
+                className="input-field data-input"
+                min={todaySTR}
+                max="2099-12-31"
+              />
+              {errors.deadline && <p className="error-message">{errors.deadline[0]}</p>}
             </div>
           </div>
 
-          <div className="form-group">
-            <label>4. 지원 마감일을 알려주세요.</label>
+          <div className="right-form">
+            <label>5. 자기소개서를 업로드 해주세요.</label>
             <input
-              type="date"
-              value={deadline}
-              onChange={(e) => setDeadline(e.target.value)}
-              className="input-field data-input"
-              min={todaySTR}
-              max="2099-12-31"
+              type="text"
+              placeholder="질문"
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
             />
-            {errors.deadline && <p className="error-message">{errors.deadline[0]}</p>}
+            {errors.question && <p className="error-message">{errors.question[0]}</p>}
+            <textarea
+              placeholder="답변"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+            />
+            {errors.answer && <p className="error-message">{errors.answer[0]}</p>}
           </div>
         </div>
 
-        <div className="right-form">
-          <label>5. 자기소개서를 업로드 해주세요.</label>
-          <input
-            type="text"
-            placeholder="질문"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-          />
-          {errors.question && <p className="error-message">{errors.question[0]}</p>}
-          <textarea
-            placeholder="답변"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-          />
-          {errors.answer && <p className="error-message">{errors.answer[0]}</p>}
+        <div className="button-wrapper">
+          <button className="submit-button" onClick={handleSubmit} disabled={isSubmitting}>
+            {isSubmitting ? "처리 중..." : "피드백 받기"}
+          </button>
         </div>
-      </div>
-
-      <div className="button-wrapper">
-        <button className="submit-button" onClick={handleSubmit}>
-          피드백 받기
-        </button>
       </div>
     </div>
   );

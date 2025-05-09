@@ -62,11 +62,9 @@ const FinalSavePage = () => {
 
       <div className="feedback-content">
         <div className="original-answer">
-          <h3>원본 자기소개서</h3>
           <p>{originalAnswer}</p>
         </div>
         <div className="ai-feedback">
-          <h3>AI 피드백 반영본</h3>
           <p>{aiFeedback}</p>
         </div>
       </div>

@@ -80,7 +80,6 @@ const CoverLetterDetailPage = () => {
 
             <div className="feedback-content">
               <div className="ai-feedback">
-                <h3>AI 피드백 반영본</h3>
                 {item.feedback ? (
                   <p>{item.feedback}</p>
                 ) : (
@@ -117,7 +116,6 @@ const CoverLetterDetailPage = () => {
 
                 {openId === item.id && (
                   <div className="original-answer">
-                    <h3>원본 자기소개서</h3>
                     <p>{item.answer}</p>
                   </div>
                 )}

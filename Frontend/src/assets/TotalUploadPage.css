@@ -1,20 +1,50 @@
-/* TotalUploadPage.css */
+/* Reset CSS to ensure consistent behavior */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main container styling */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 1.5rem 2rem;
   width: 100%;
+  padding: 20px 1.5rem 2rem;
+  overflow-y: visible; /* Critical: allow content to overflow */
+  position: relative; /* Ensure this container has a position context */
+  flex: 1; /* Take up available space */
 }
 
+/* Header styles - ensure it doesn't cause overflow issues */
+header, .header {
+  width: 100%;
+  position: relative; /* Not fixed to allow scrolling */
+  z-index: 100;
+}
+
+/* Loading overlay */
 .loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.7); /* 약간 하얗게 */
+  background-color: rgba(255, 255, 255, 0.7);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,8 +56,8 @@
 }
 
 .loading-spinner {
-  border: 8px solid #f3f3f3; /* Light grey */
-  border-top: 8px solid #3498db; /* Blue */
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -36,36 +66,37 @@
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
+/* Form layout */
 .form-wrapper {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
-  margin-top: 5rem;
+  margin-top: 1rem; /* Reduced from previous value */
+  width: 100%;
+  max-width: 1200px;
+  flex: 1; /* Take up available space */
 }
 
 .left-form,
 .right-form {
   flex: 1;
-  min-width: 380px;
+  min-width: 300px;
 }
 
 .right-form {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .form-group {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
+/* Form elements */
 label {
   display: block;
   font-weight: 600;
@@ -84,7 +115,7 @@ input[type="text"],
 input[type="date"],
 textarea {
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -92,14 +123,14 @@ textarea {
   color: #000;
   resize: none;
   box-sizing: border-box;
-  margin: 20px 0rem 1rem 0rem;
+  margin: 10px 0 0.5rem 0;
 }
 
 .right-form textarea {
-  height: 380px;
-  margin-top: 1rem;
+  height: 300px;
+  margin-top: 10px;
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -107,14 +138,13 @@ textarea {
   color: #000;
   resize: none;
   box-sizing: border-box;
-  margin: 20px 0rem 1rem 0rem;
 }
 
 .left-form textarea {
   height: 80px;
-  margin-top: 1rem;
+  margin-top: 10px;
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -122,19 +152,20 @@ textarea {
   color: #000;
   resize: none;
   box-sizing: border-box;
-  margin: 20px 0rem 1rem 0rem;
 }
 
+/* Button styling */
 .button-wrapper {
   text-align: center;
-  margin-top: 2rem;
+  margin: 1.5rem 0;
+  width: 100%;
 }
 
 .submit-button {
   background-color: #7b61ff;
   color: white;
   padding: 0.75rem 1.5rem;
-  margin: 1.5rem 0 3rem 0;
+  margin: 1rem 0 1.5rem 0;
   font-size: 1rem;
   font-weight: bold;
   border: none;
@@ -153,23 +184,23 @@ textarea {
   margin-top: 4px;
 }
 
+/* Company and position input related styles */
 .company-input-group, .position-input-group {
   position: relative;
 }
 
 .company-sidebar, .position-sidebar {
   position: absolute;
-  top: 100%;
+  top: calc(100% - 5px);
   left: 0;
   right: 0;
   z-index: 10;
   background: #ffffff;
-  border: 1px solid var(--color-border);
+  border: 1px solid #ccc;
   border-radius: 0 0 8px 8px;
   max-height: 200px;
   overflow-y: auto;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
-  margin-top: -4px; /* input과 자연스럽게 이어지도록 조정 */
 }
 
 .company-list, .position-list {
@@ -190,4 +221,44 @@ textarea {
   padding: 0.75rem 1rem;
   color: #888;
   font-size: 0.875rem;
+}
+
+/* Media queries for better responsiveness */
+@media (max-width: 768px) {
+  .form-wrapper {
+    flex-direction: column;
+    margin-top: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .left-form, .right-form {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .right-form {
+    margin-top: 0;
+  }
+  
+  .container {
+    padding: 10px 1rem 1rem;
+  }
+}
+
+/* Fix for the specific issue where top content gets cut off */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Ensure the page is scrollable from the very top */
+main, #app, .app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
 }

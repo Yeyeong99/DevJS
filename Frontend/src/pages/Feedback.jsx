@@ -82,8 +82,9 @@ const DevJSFeedbackPage = () => {
 
       <div className="layout">
         <section className="question-section">
-          <p className="keywords">선택된 JD 항목: {keywords}</p>
           <h4 className="question">{question}</h4>
+          <span className="tag">선택된 JD 항목 : {keywords}</span>
+
           {/* 종합 피드백 */}
           <h3 className="totalFeedback">종합 피드백</h3>
           <div className="paragraph">{totalFeedback}</div>
