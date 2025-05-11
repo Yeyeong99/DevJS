@@ -26,7 +26,7 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    const redirectUri = "http://localhost:5173/google/callback";
+    const redirectUri = "http://localhost/google/callback";
     const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
   
     window.location.href = oauthUrl;
@@ -36,7 +36,7 @@ function Login() {
   const handleKakaoLogin = () => {
     if (window.Kakao) {
       window.Kakao.Auth.authorize({
-        redirectUri: "http://localhost:5173/kakao/callback",
+        redirectUri: "http://localhost/kakao/callback",
       });
     } else {
       console.error("❌ Kakao SDK not available");
@@ -46,7 +46,7 @@ function Login() {
 
   const handleGithubLogin = () => {
     const client_id = "Ov23licXbDo6SK3Lpcqt";
-    const redirect_uri = "http://localhost:5173/github/callback";
+    const redirect_uri = "http://localhost/github/callback";
   
     const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=user`;
   
