@@ -39,6 +39,6 @@ IT 분야 취업준비생을 위한 자기소개서 첨삭 및 저장 서비스
 | 프론트엔드 | React |
 | 백엔드 | Django, Django REST Framework, PostgreSQL | 
 | AI 모델 | LLM API (Gemma), RAG (FAISS) |
-| 배포 | AWS (EC2, S3, Lambda 등) / Vercel (프론트엔드) |
+| 배포 | Docker, AWS (EC2) |
 | 버전 관리 | GitHub |
 | 일정 관리 | JIRA |
