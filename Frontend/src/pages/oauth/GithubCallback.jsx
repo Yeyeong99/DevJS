@@ -13,7 +13,7 @@ const GitHubCallback = () => {
     if (code) {
       axios.post("http://localhost:8000/api/auth/github/", {
         code,
-        redirect_uri: "http://localhost:5173/github/callback",  // ✅ redirect_uri 꼭 함께 보내기
+        redirect_uri: "http://localhost/github/callback",  // ✅ redirect_uri 꼭 함께 보내기
       })
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);

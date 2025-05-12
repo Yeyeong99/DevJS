@@ -12,7 +12,7 @@ const KakaoCallback = () => {
     if (code) {
       axios.post("http://localhost:8000/api/auth/kakao/", {
         code,
-        redirect_uri: "http://localhost:5173/kakao/callback",  // ✅ redirect_uri 꼭 보내기
+        redirect_uri: "http://localhost/kakao/callback",  // ✅ redirect_uri 꼭 보내기
       })
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);

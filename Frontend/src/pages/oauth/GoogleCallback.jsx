@@ -13,7 +13,7 @@ const GoogleCallback = () => {
     if (code) {
       axios.post("http://localhost:8000/api/auth/google/", {
         code,
-        redirect_uri: "http://localhost:5173/google/callback",  // ✅ redirect_uri 반드시 명시
+        redirect_uri: "http://localhost/google/callback",  // ✅ redirect_uri 반드시 명시
       })
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);
