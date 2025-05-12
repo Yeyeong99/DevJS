@@ -21,9 +21,7 @@ function Login() {
     }
   }, []);
 
-  const goHome = () => {
-    navigate("/");
-  };
+
 
   const handleGoogleLogin = () => {
     const redirectUri = "http://localhost:5173/google/callback";
@@ -60,9 +58,7 @@ function Login() {
 
 
         <div className="login-box">
-          <div className="logo" onClick={goHome} style={{ cursor: "pointer" }}>
-            DEVJS
-          </div>
+            <h1 className="logo">DevJS</h1>
           <h2>로그인</h2>
 
           <div className="social-login-buttons">

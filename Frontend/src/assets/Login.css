@@ -17,11 +17,7 @@
 
 
 
-.logo {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: rgb(255, 255, 255);
-}
+
 
 .login-box {
   background: rgba(255, 255, 255, 0.1);
@@ -42,6 +38,12 @@
 .login-box h2 {
   margin-bottom: 2rem;
   font-size: 1.5rem;
+  color: #000000;
+}
+
+.login-box h1 {
+  margin-bottom: 0.7rem;
+  font-size: 1.8rem;
   color: #000000;
 }
 

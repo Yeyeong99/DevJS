@@ -17,7 +17,6 @@ const KakaoCallback = () => {
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);
           localStorage.setItem("refresh_token", res.data.refresh);
-          alert("카카오 로그인 성공!");
           checkNicknameAndRedirect(navigate);  // ✅ 닉네임 확인 후 페이지 이동
         })
         .catch((err) => {

@@ -18,7 +18,6 @@ const GoogleCallback = () => {
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);
           localStorage.setItem("refresh_token", res.data.refresh);
-          alert("구글 로그인 성공!");
           checkNicknameAndRedirect(navigate);  // ✅ 닉네임 존재 여부에 따라 분기 처리!
         })
         .catch((err) => {
