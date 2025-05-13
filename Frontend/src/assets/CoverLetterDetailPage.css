@@ -73,8 +73,8 @@
 
 .company-position {
   display: inline-block;
-  background-color: #f2f9fb;
-  color: #4267b5c3;
+  background-color: #001eff24;
+  color: #4771cced;
   padding: 0.4rem 1rem;
   border-radius: 9999px;
   font-size: 0.85rem;
@@ -90,7 +90,7 @@
 .toggle-btn {
   background-color: transparent;
   border: none;
-  color: #1976d2;
+  color: #5098e0;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -103,6 +103,7 @@
 .toggle-btn:hover {
   text-decoration: underline;
   color: #0d47a1;
+  background-color: white;
 }
 
 

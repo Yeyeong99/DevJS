@@ -28,7 +28,7 @@ const SetNickname = () => {
                 className="nickname-input"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
-                placeholder="예: dev_yuchan"
+                placeholder="예 : dev_개발자"
             />
             <button className="nickname-submit" onClick={handleSubmit}>
                 확인

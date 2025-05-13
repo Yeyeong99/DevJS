@@ -33,6 +33,10 @@
   padding-top: 3rem; /* 상단 여백 부드럽게 주기 */
 }
 
+.tag {
+  background-color: rgb(228, 245, 229) !important;
+}
+
 .keywords {
   font-size: 0.95rem;
   font-weight: 500;
@@ -41,7 +45,8 @@
 }
 
 .question {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
   font-weight: 600;
   color: #212529;
 }
@@ -50,15 +55,15 @@
   font-size: 1.1rem;
   font-weight: 700;
   margin-top: 1rem;
-  color: #4c48cc;
+  color: #726ce4;
 }
 
 .paragraph {
   font-size: 0.95rem;
   line-height: 1.8;
   white-space: pre-line;
-  border: 1px solid #dee2e6;
-  background-color: #f8f9fa;
+  border: 1px solid #ffffff;
+  background-color: #fff9fe;
   border-radius: 1rem;
   padding: 1.25rem;
   color: #333;
@@ -78,7 +83,7 @@
   min-width: 280px;
   display: flex;
   flex-direction: column;
-  background-color: #f1f3f5;
+  background-color: #ffffff !important;
   border-radius: 1rem;
   padding: 1.25rem;
   box-sizing: border-box;
@@ -99,7 +104,7 @@
 }
 
 .ai-feedback {
-  background-color: #ffffff;
+  background-color: #fff9fe !important;
 }
 
 .ai-feedback textarea {

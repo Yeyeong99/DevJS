@@ -48,7 +48,7 @@ const Header = () => {
   return (
     <header className="devjs-header">
       <div className="left">
-        <div className="logo" onClick={handleLogoClick}>DEVJS</div>
+        <div className="logo" onClick={handleLogoClick}>DevJS</div>
       </div>
       <div className="right">
         <button className="logout-button" onClick={handleLogout}>로그아웃</button>
