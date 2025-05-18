@@ -7,18 +7,27 @@ const Header = () => {
 
   const handleLogoClick = () => {
     const isDashboard = location.pathname === "/dashboard";
+    const isTotalUploadPage = location.pathname === "/totalupload";
+    const isFeedbackPage = location.pathname === "/feedback";
 
     if (isDashboard) {
       return;
     }
-
-    const confirmMove = window.confirm(
-      "작성 중인 내용이 있다면 저장 후 이동해 주세요.\n정말 대시보드로 이동할까요?"
-    );
-    if (confirmMove) {
-      navigate("/dashboard");
+    
+    if (isTotalUploadPage || isFeedbackPage) {
+      const confirmMove = window.confirm(
+        "작성 중인 내용이 있다면 저장 후 이동해 주세요.\n정말 대시보드로 이동할까요?"
+      );
+      if (confirmMove) {
+        navigate("/dashboard");
+      }
     }
-  };
+    else {
+      navigate("/dashboard")
+    }
+  }
+
+
 
   const handleLogout = () => {
     const isDashboard = location.pathname === "/dashboard";
@@ -39,7 +48,7 @@ const Header = () => {
   return (
     <header className="devjs-header">
       <div className="left">
-        <div className="logo" onClick={handleLogoClick}>DEVJS</div>
+        <div className="logo" onClick={handleLogoClick}>DevJS</div>
       </div>
       <div className="right">
         <button className="logout-button" onClick={handleLogout}>로그아웃</button>

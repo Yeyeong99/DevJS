@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../assets/FinalSavePage.css";
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const FinalSavePage = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const FinalSavePage = () => {
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
-        const res = await axios.get(`http://localhost:8000/api/total/total_list/`, {
+        const res = await axios.get(`${BASE_URL}total/total_list/`, {
           headers: {
             Authorization: `Bearer ${access}`,
           },

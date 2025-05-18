@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { checkNicknameAndRedirect } from "../../utils/checkNicknameAndRedirect";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const GITHUB_REDIRECT_URI = import.meta.env.VITE_GITHUB_REDIRECT_URI;
 
 const GitHubCallback = () => {
   const navigate = useNavigate();
@@ -11,9 +13,9 @@ const GitHubCallback = () => {
     const code = new URL(window.location.href).searchParams.get("code");
 
     if (code) {
-      axios.post("http://localhost:8000/api/auth/github/", {
+      axios.post(`${BASE_URL}auth/github/`, {
         code,
-        redirect_uri: "http://localhost/github/callback",  // ✅ redirect_uri 꼭 함께 보내기
+        redirect_uri: GITHUB_REDIRECT_URI,  // ✅ redirect_uri 꼭 함께 보내기
       })
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);

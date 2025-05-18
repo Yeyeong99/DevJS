@@ -4,7 +4,7 @@ import "../assets/TotalUploadPage.css"
 import axios from "axios"
 import Header from "../components/Header"
 import axiosInstance from "../api/axiosInstance"
-
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const TotalUploadPage = () => {
 
@@ -43,7 +43,7 @@ const TotalUploadPage = () => {
     const fetchData = async () => {
       try {
         const access = localStorage.getItem("access_token");
-        const companysResponse = await axiosInstance.get('http://localhost:8000/api/total/company_list/', {
+        const companysResponse = await axiosInstance.get(`${BASE_URL}total/company_list/`, {
           headers: {
             Authorization: `Bearer ${access}`,
           },
@@ -52,7 +52,7 @@ const TotalUploadPage = () => {
         console.log("받아온 회사 리스트:", companysResponse.data);
         setCompanyList(companysResponse.data);
         
-        const userData = await axiosInstance.get('http://localhost:8000/api/total/total_list/', {
+        const userData = await axiosInstance.get(`${BASE_URL}total/total_list/`, {
           headers: {
             Authorization: `Bearer ${access}`,
           },
@@ -111,7 +111,7 @@ const TotalUploadPage = () => {
         company_id: company_id
       }
       const { data: feedback } = await axiosInstance.post(
-        "http://localhost:8000/api/analyzes/",
+        `${BASE_URL}analyzes/`,
         analyzePayload,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );

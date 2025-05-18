@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../assets/Dashboard.css";
 import Header from "../components/Header";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -23,10 +25,10 @@ const Dashboard = () => {
 
       try {
         const [jobsRes, userRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/total/total_list/", {
+          axios.get(`${BASE_URL}total/total_list/`, {
             headers: { Authorization: `Bearer ${accessToken}` }
           }),
-          axios.get("http://localhost:8000/api/auth/user/", {
+          axios.get(`${BASE_URL}auth/user/`, {
             headers: { Authorization: `Bearer ${accessToken}` }
           })
         ]);
@@ -41,11 +43,11 @@ const Dashboard = () => {
 
           const refreshToken = localStorage.getItem("refresh_token");
           try {
-            const refreshRes = await axios.post("http://localhost:8000/api/token/refresh/", { refresh: refreshToken });
+            const refreshRes = await axios.post(`${BASE_URL}token/refresh/`, { refresh: refreshToken });
             const newAccessToken = refreshRes.data.access;
             localStorage.setItem("access_token", newAccessToken);
 
-            const retryUserRes = await axios.get("http://localhost:8000/api/auth/user/", {
+            const retryUserRes = await axios.get(`${BASE_URL}auth/user/`, {
               headers: { Authorization: `Bearer ${newAccessToken}` }
             });
 

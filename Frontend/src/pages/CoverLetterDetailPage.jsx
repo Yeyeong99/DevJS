@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, data } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Header";
 import "../assets/CoverLetterDetailPage.css";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const CoverLetterDetailPage = () => {
   const { id } = useParams(); 
@@ -16,7 +17,7 @@ const CoverLetterDetailPage = () => {
     const fetchDetails = async () => {
       const access = localStorage.getItem("access_token");
       try {
-        const res = await axios.get(`http://localhost:8000/api/total/total_list/`, {
+        const res = await axios.get(`${BASE_URL}total/total_list/`, {
           headers: { Authorization: `Bearer ${access}` },
         });
 
@@ -45,7 +46,7 @@ const CoverLetterDetailPage = () => {
 
     const access = localStorage.getItem("access_token");
     try {
-      await axios.delete(`http://localhost:8000/api/total/delete/${itemId}/`, {
+      await axios.delete(`${BASE_URL}total/delete/${itemId}/`, {
         headers: { Authorization: `Bearer ${access}` },
       });
       alert("삭제 완료!");
@@ -62,17 +63,18 @@ const CoverLetterDetailPage = () => {
   };
 
   if (datas.length === 0) return <p>로딩 중...</p>;
-
   return (
     <div className="container">
       <Header />
 
       <div className="detail-container">
-        <h2 className="company-title">등록된 자기소개서 목록</h2>
+        
 
         {datas.map((item) => (
+          
           <div key={item.id} className="coverletter-card">
-            
+            <div className="company-position">{item.company_name} | {item.position}</div>
+
             <div className="question-block">
               <p className="question-title">{item.question}</p>
               <span className="tag">강조한 키워드 : {item.keywords}</span>
@@ -125,6 +127,7 @@ const CoverLetterDetailPage = () => {
             <button className="delete-btn" onClick={() => handleDelete(item.id)}>
               삭제하기
             </button>
+            <div></div>
           </div>
         ))}
       </div>

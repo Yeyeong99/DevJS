@@ -3,7 +3,7 @@ import axios from "axios";
 import axiosInstance from "../api/axiosInstance"
 import { useNavigate } from "react-router-dom";
 import "../assets/SetNickname.css";
-
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const SetNickname = () => {
   const [nickname, setNickname] = useState("");
@@ -12,7 +12,7 @@ const SetNickname = () => {
   const handleSubmit = async () => {
     const access = localStorage.getItem("access_token");
 
-    await axiosInstance.patch("http://localhost:8000/api/auth/nickname/", 
+    await axiosInstance.patch(`${BASE_URL}auth/nickname/`, 
       { nickname },
       { headers: { Authorization: `Bearer ${access}` } }
     );

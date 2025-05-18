@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-
+from decouple import config
 
 # 유찬 추가
 from .serializers import UserSerializer
@@ -14,16 +14,19 @@ from rest_framework.decorators import api_view, permission_classes
 
 
 
-
 from django.conf import settings
 
 from .utils import get_or_create_social_user, generate_jwt_for_user
+
+GOOGLE_REDIRECT_URI=config("GOOGLE_REDIRECT_URI")
+KAKAO_REDIRECT_URI=config("KAKAO_REDIRECT_URI")
+GITHUB_REDIRECT_URI=config("GITHUB_REDIRECT_URI")
 
 # 카카오
 class KakaoLoginView(APIView):
     def post(self, request):
         code = request.data.get("code")
-        redirect_uri = "http://localhost/kakao/callback"
+        redirect_uri = KAKAO_REDIRECT_URI
 
         # 1. 카카오 토큰 요청
         token_res = requests.post("https://kauth.kakao.com/oauth/token", data={
@@ -72,7 +75,7 @@ class KakaoLoginView(APIView):
 class GoogleLoginView(APIView):
     def post(self, request):
         code = request.data.get("code")
-        redirect_uri = "http://localhost/google/callback"
+        redirect_uri = GOOGLE_REDIRECT_URI
 
         # 1. 토큰 요청
         token_res = requests.post("https://oauth2.googleapis.com/token", data={
@@ -109,7 +112,7 @@ class GoogleLoginView(APIView):
 class GithubLoginView(APIView):
     def post(self, request):
         code = request.data.get("code")
-        redirect_uri = "http://localhost/github/callback"
+        redirect_uri = GITHUB_REDIRECT_URI
 
         token_res = requests.post("https://github.com/login/oauth/access_token", data={
             "client_id": settings.GITHUB_CLIENT_ID,

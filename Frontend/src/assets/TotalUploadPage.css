@@ -20,6 +20,7 @@ body {
 
 /* Main container styling */
 .container {
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -119,7 +120,7 @@ textarea {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   color: #000;
   resize: none;
   box-sizing: border-box;
@@ -134,7 +135,7 @@ textarea {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   color: #000;
   resize: none;
   box-sizing: border-box;
@@ -148,7 +149,7 @@ textarea {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   color: #000;
   resize: none;
   box-sizing: border-box;

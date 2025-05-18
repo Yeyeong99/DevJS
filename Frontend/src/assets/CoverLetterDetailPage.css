@@ -48,6 +48,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .ai-feedback {
@@ -59,10 +60,37 @@
   min-height: 200px;
 }
 
+.coverletter-card {
+  background-color: #ffffff;
+  padding: 2rem;
+  margin-bottom: 2rem; /* 카드 간 간격 */
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e0e0e0; /* 카드 경계 시각화 */
+  transition: all 0.3s ease-in-out;
+}
+
+
+.company-position {
+  display: inline-block;
+  background-color: #001eff24;
+  color: #4771cced;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0 2rem 0;
+}
+
+.ai-feedback p,
+.original-answer p {
+  text-align: left;
+}
+
 .toggle-btn {
   background-color: transparent;
   border: none;
-  color: #1976d2;
+  color: #5098e0;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -75,6 +103,7 @@
 .toggle-btn:hover {
   text-decoration: underline;
   color: #0d47a1;
+  background-color: white;
 }
 
 
@@ -95,18 +124,19 @@
 }
 
 .delete-btn {
-  align-self: flex-end;
-  margin-top: 0.5rem;
-  background-color: #e53935;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
+  display: inline-block;
+  background-color: #fbe9e9;
+  color: #ff4141c3;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  
 }
 
 .delete-btn:hover {
-  background-color: #d32f2f;
+  background-color: #ff4141c3; 
+  color: white;               
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }

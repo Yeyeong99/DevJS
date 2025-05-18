@@ -7,6 +7,9 @@ import "../assets/Login.css";
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
+const GOOGLE_REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+const KAKAO_REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+const GITHUB_REDIRECT_URI = import.meta.env.VITE_GITHUB_REDIRECT_URI;
 
 
 
@@ -26,7 +29,7 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    const redirectUri = "http://localhost/google/callback";
+    const redirectUri = GOOGLE_REDIRECT_URI;
     const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
   
     window.location.href = oauthUrl;
@@ -36,7 +39,7 @@ function Login() {
   const handleKakaoLogin = () => {
     if (window.Kakao) {
       window.Kakao.Auth.authorize({
-        redirectUri: "http://localhost/kakao/callback",
+        redirectUri: KAKAO_REDIRECT_URI,
       });
     } else {
       console.error("❌ Kakao SDK not available");
@@ -46,7 +49,7 @@ function Login() {
 
   const handleGithubLogin = () => {
     const client_id = "Ov23licXbDo6SK3Lpcqt";
-    const redirect_uri = "http://localhost/github/callback";
+    const redirect_uri = GITHUB_REDIRECT_URI;
   
     const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=user`;
   

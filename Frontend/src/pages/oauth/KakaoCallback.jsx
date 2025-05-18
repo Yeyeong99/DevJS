@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { checkNicknameAndRedirect } from "../../utils/checkNicknameAndRedirect";  // ✅ utils import
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const KAKAO_REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
 const KakaoCallback = () => {
   const navigate = useNavigate();
@@ -10,9 +12,9 @@ const KakaoCallback = () => {
     const code = new URL(window.location.href).searchParams.get("code");
 
     if (code) {
-      axios.post("http://localhost:8000/api/auth/kakao/", {
+      axios.post(`${BASE_URL}auth/kakao/`, {
         code,
-        redirect_uri: "http://localhost/kakao/callback",  // ✅ redirect_uri 꼭 보내기
+        redirect_uri: KAKAO_REDIRECT_URI,  // ✅ redirect_uri 꼭 보내기
       })
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);

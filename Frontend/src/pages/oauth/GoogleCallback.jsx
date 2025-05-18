@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { checkNicknameAndRedirect } from "../../utils/checkNicknameAndRedirect"; // ✅ utils에서 함수 불러오기
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const GOOGLE_REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+
 const GoogleCallback = () => {
   const navigate = useNavigate();
 
@@ -11,9 +14,9 @@ const GoogleCallback = () => {
     const code = new URL(window.location.href).searchParams.get("code");
 
     if (code) {
-      axios.post("http://localhost:8000/api/auth/google/", {
+      axios.post(`${BASE_URL}auth/google/`, {
         code,
-        redirect_uri: "http://localhost/google/callback",  // ✅ redirect_uri 반드시 명시
+        redirect_uri: GOOGLE_REDIRECT_URI,  // ✅ redirect_uri 반드시 명시
       })
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../assets/Feedback.css";
 import Header from "../components/Header";
 import axiosInstance from "../api/axiosInstance";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const JD_LABELS = [
   "DW 및 Datalake 관련 Platform/Architecture 구축 및 운영",
@@ -30,7 +31,7 @@ const DevJSFeedbackPage = () => {
       try {
         const access = localStorage.getItem("access_token");
         const res = await axiosInstance.get(
-          `http://localhost:8000/api/total/total_list/`,
+          `${BASE_URL}total/total_list/`,
           {
             headers: {
               Authorization: `Bearer ${access}`,
