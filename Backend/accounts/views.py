@@ -23,7 +23,7 @@ from .utils import get_or_create_social_user, generate_jwt_for_user
 class KakaoLoginView(APIView):
     def post(self, request):
         code = request.data.get("code")
-        redirect_uri = "http://localhost:5173/kakao/callback"
+        redirect_uri = "http://localhost/kakao/callback"
 
         # 1. 카카오 토큰 요청
         token_res = requests.post("https://kauth.kakao.com/oauth/token", data={
@@ -72,7 +72,7 @@ class KakaoLoginView(APIView):
 class GoogleLoginView(APIView):
     def post(self, request):
         code = request.data.get("code")
-        redirect_uri = "http://localhost:5173/google/callback"
+        redirect_uri = "http://localhost/google/callback"
 
         # 1. 토큰 요청
         token_res = requests.post("https://oauth2.googleapis.com/token", data={
@@ -109,7 +109,7 @@ class GoogleLoginView(APIView):
 class GithubLoginView(APIView):
     def post(self, request):
         code = request.data.get("code")
-        redirect_uri = "http://localhost:5173/github/callback"
+        redirect_uri = "http://localhost/github/callback"
 
         token_res = requests.post("https://github.com/login/oauth/access_token", data={
             "client_id": settings.GITHUB_CLIENT_ID,
