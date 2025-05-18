@@ -4,7 +4,7 @@ from rest_framework import status
 from total.models import Company_User
 import json
 # 모델, 인덱스 로드
-from .utils import texts, index, metadatas, TotalFeedback, encode, build_total_prompt, get_llm_total_feedback 
+from .utils import texts, index, metadatas, encode, build_total_prompt, get_llm_total_feedback, build_score_propmt, get_llm_score
 
 import numpy as np
 
@@ -48,6 +48,8 @@ def get_feedback(request):
                             "distance": distance
                         })
 
+                print(retrieved_contexts)
+
                 # 최대 3개까지만 사용
                 retrieved_contexts = filtered_contexts[:3]
                 
@@ -58,9 +60,13 @@ def get_feedback(request):
                 print(f"Error during vector search: {e}")
                 # 벡터 검색 실패 시 빈 컨텍스트로 진행
                 retrieved_contexts = []
-                
+            
+            # 프롬프트 구성: 점수
+            score_prompt = build_score_propmt(answer, retrieved_contexts)
+            score_result = get_llm_score(score_prompt)
+
             # 프롬프트 구성: 종합 피드백
-            total_prompt = build_total_prompt(question, answer, keywords, retrieved_contexts)
+            total_prompt = build_total_prompt(question, answer, score_result.score, retrieved_contexts)
 
             # Groq API 호출 -> 답변 받기
             try:
