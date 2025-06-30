@@ -84,7 +84,7 @@ Backend/
     - `api/` 하위로 연결
     - URL 동작 방법
         - POST : `api/auth/kakao` (카카오 로그인) , `api/auth/google` (구글 로그인)
-        - GET : `api/auth/user/` (JWT 필요) 현재 로그인된 사용자 정보 => **이거 프론트 / 백 맞추기**
+        - GET : `api/auth/user/` (JWT 필요) 현재 로그인된 사용자 정보 
 
 
 **로그인 기능** 
