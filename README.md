@@ -21,7 +21,7 @@ Correcting and storing self-introduction letters for job seekers in the IT field
 
 ## 3. Differences
 
-| ** Item*** | ** Existing service** | **DevJS** |
+| ** Item ** | ** Existing service ** | ** DevJS ** |
 | --- | --- | --- |
 | Specialized for job seekers in the IT field | Correcting ✖ general-purpose cover letter | Correcting ✅ specialized for the IT field |
 | Keyword reflection function | ✖ keyword-based analysis | ✅ JD-based keyword reflection feedback |
