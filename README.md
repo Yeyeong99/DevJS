@@ -1,44 +1,44 @@
 # DevJS
-IT 분야 취업준비생을 위한 자기소개서 첨삭 및 저장 서비스
+Correcting and storing self-introduction letters for job seekers in the IT field.
 
-## 1. 프로젝트 개요
+## 1. Project Overview
 
-### 📌 DevJS (Developer’s Job Script)는 IT 분야 취업준비생을 위한 AI 기반 자기소개서 첨삭 서비스입니다.
-- 기존 첨삭 서비스는 정해진 기준으로만 평가하지만,  
-- DevJS는 사용자가 자기소개서에서 강조하고자 하는 키워드(JD 요소 등)를 직접 입력할 수 있고,  
-- AI가 해당 키워드가 자기소개서에 얼마나 잘 반영되었는지를 평가합니다.  
-- 이후, 부족한 부분을 보완할 수 있도록 참고 예시 및 맞춤형 추천 문장을 제공합니다.
+### 📌 DevJS (Developer's Job Script) is an AI-based self-introduction correction service for job seekers in the IT field.
+- Existing correction services are evaluated only on a set basis, but
+- DevJS allows users to directly enter keywords (JD elements, etc.) that they want to emphasize in their cover letter,
+- AI evaluates how well the keyword is reflected in the cover letter.
+- After that, we provide reference examples and customized recommended sentences to make up for the shortcomings.
 
-> 이를 통해 채용 공고와 보다 일치하는, 강점 중심의 자기소개서를 작성하는 데 도움을 줍니다.
+> This helps you write a strength-oriented cover letter that is more consistent with job openings.
 
-## 2. 주요 기능
+## 2. Key Functions
 
-### 1) 자기소개서 첨삭
-- 사용자가 자기소개서와 강조 키워드를 입력하면,
-- RAG(Retrieval-Augmented Generation) 파이프라인을 활용하여 유사한 자소서를 검색하고 피드백에 반영
-- 키워드 반영도 평가 및 부족한 부분에 대해 RAG DB 기반의 문장 추천
-- 문법, 문맥, 가독성 측면의 첨삭 피드백도 함께 제공
+### 1) Correct the cover letter
+- When the user enters a cover letter and emphasis keyword,
+- Search for similar cover letters using the Retrieval-Augmented Generation (RAG) pipeline and reflect them in feedback.
+- Evaluation of keyword reflectivity and recommendation of sentences based on RAG DB for insufficient parts
+- Provides correction feedback in terms of grammar, context, and readability.
 
-## 3. 차별점
+## 3. Differences
 
-| **항목** | **기존 서비스** | **DevJS** |
+| ** Item*** | ** Existing service** | **DevJS** |
 | --- | --- | --- |
-| IT 분야 취업준비생 특화 | ✖ 범용적 자기소개서 첨삭 | ✅ IT 분야에 특화된 첨삭 |
-| 키워드 반영 기능 | ✖ 키워드 기반 분석 없음 | ✅ JD 기반 키워드 반영 피드백 |
+| Specialized for job seekers in the IT field | Correcting ✖ general-purpose cover letter | Correcting ✅ specialized for the IT field |
+| Keyword reflection function | ✖ keyword-based analysis | ✅ JD-based keyword reflection feedback |
 
-## 4. 팀원 소개
+## 4. Introduction of team members
 
-| 이예영 | 김나연 | 박유현 | 성수린 | 이유찬 |
-|:--:|:--:|:--:|:--:|:--:|
-| 팀장, AI | AI | Backend | Backend | Frontend |
+| Lee Ye-young | Park Yoo-hyun | Sung Soo-rin | Lee Yoo-chan |
+|:--:|:--:|:--:|:--:|
+| Team leader, AI | Backend | Backend | Frontend |
 
-## 5. 기술 스택
+## 5. Technology stack
 
-| **영역** | **기술** |
+| **Field** | **Stack** |
 | --- | --- |
-| 프론트엔드 | React |
-| 백엔드 | Django, Django REST Framework, PostgreSQL | 
-| AI 모델 | LLM API (Gemma), RAG (FAISS) |
-| 배포 | Docker, AWS (EC2) |
-| 버전 관리 | GitHub |
-| 일정 관리 | JIRA |
+| Frontend | React |
+| Backend | Django, Django REST Framework, PostgreSQL |
+| AI Pipeline| LLM API (Gemma), RAG (FAISS) |
+| Deploy | Docker, AWS (EC2) |
+| Version Management | GitHub |
+| Schedule Management  | JIRA | 
